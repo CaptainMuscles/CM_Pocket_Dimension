@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+	<ResearchProjectDef Name="CM_PocketDimension_ResearchBase" Abstract="True">
+		<tab>CM_Dimensional_Manipulation</tab>
+	</ResearchProjectDef>
+
+	<ResearchProjectDef ParentName="CM_PocketDimension_ResearchBase">
+		<defName>CM_PocketDimension_Research_PocketDimension</defName>
+		<label>pocket dimensions</label>
+		<description>Build containment fields for pocket dimensions.</description>
+		<baseCost>4000</baseCost>
+		<techLevel>Ultra</techLevel>
+		<prerequisites>
+			<li>AdvancedFabrication</li>
+		</prerequisites>
+		<requiredResearchFacilities>
+			<li>MultiAnalyzer</li>
+		</requiredResearchFacilities>
+		<requiredResearchBuilding>HiTechResearchBench</requiredResearchBuilding>
+		<researchViewX>0.00</researchViewX>
+		<researchViewY>0.00</researchViewY>
+	</ResearchProjectDef>
+
+</Defs>

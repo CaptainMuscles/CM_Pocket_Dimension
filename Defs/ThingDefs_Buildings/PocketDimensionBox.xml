@@ -153,6 +153,9 @@
 	<tradeTags>
       <li>ExoticBuilding</li>
     </tradeTags>
+	<researchPrerequisites>
+      <li>CM_PocketDimension_Research_PocketDimension</li>
+    </researchPrerequisites>
   </ThingDef>
   
   <ThingDef ParentName="BuildingBase">

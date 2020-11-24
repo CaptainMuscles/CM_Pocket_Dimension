@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+	
+	<ResearchTabDef>
+		<defName>CM_Dimensional_Manipulation</defName>
+		<label>Dimensional Manipulation</label>
+	</ResearchTabDef>
+
+</Defs>
