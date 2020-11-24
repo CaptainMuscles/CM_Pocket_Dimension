@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <GameConditionDef>
+    <defName>CM_PocketDimensionCondition</defName>
+    <conditionClass>GameCondition_NoSunlight</conditionClass>
+    <label>Pocket Dimension</label>
+    <description>You are in an empty space bordered by a thick fog.</description>
+    <endMessage>This never ends.</endMessage>
+    <letterText>You have entered into a pocket dimension.</letterText>
+    <letterDef>PositiveEvent</letterDef>
+    <canBePermanent>true</canBePermanent>
+  </GameConditionDef>
+
+
+</Defs>

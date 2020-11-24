@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Defs>
+	<JobDef>
+		<defName>CM_EnterPocket</defName>
+		<driverClass>CM_PocketDimension.JobDriver_EnterPocket</driverClass>
+		<reportString>Using TargetA.</reportString>
+	</JobDef>
+	<JobDef>
+		<defName>CM_ExitPocket</defName>
+		<driverClass>CM_PocketDimension.JobDriver_ExitPocket</driverClass>
+		<reportString>Using TargetA.</reportString>
+	</JobDef>
+	<JobDef>
+		<defName>CM_CarryToPocket</defName>
+		<driverClass>CM_PocketDimension.JobDriver_CarryToPocketDimension</driverClass>
+		<reportString>Carrying TargetA to TargetB.</reportString>
+	</JobDef>
+
+</Defs>

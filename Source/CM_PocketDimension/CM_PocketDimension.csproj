@@ -1,0 +1,87 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{A5F264E2-C19E-4E02-9E3D-0573CE2F77AC}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CM_PocketDimension</RootNamespace>
+    <AssemblyName>CM_PocketDimension</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>false</DebugSymbols>
+    <DebugType>none</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\Assemblies\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="0Harmony, Version=2.0.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Assemblies\0Harmony.dll</HintPath>
+    </Reference>
+    <Reference Include="Assembly-CSharp">
+      <HintPath>..\..\..\..\RimWorldWin64_Data\Managed\Assembly-CSharp.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+    <Reference Include="UnityEngine">
+      <HintPath>..\..\..\..\RimWorldWin64_Data\Managed\UnityEngine.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.CoreModule">
+      <HintPath>..\..\..\..\RimWorldWin64_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Buildings\Building_PocketDimensionEmpty.cs" />
+    <Compile Include="Buildings\Building_PocketDimensionWall.cs" />
+    <Compile Include="Comps\CompPocketDimensionContainer.cs" />
+    <Compile Include="Comps\CompProperties_PocketDimensionContainer.cs" />
+    <Compile Include="DefPatches.cs" />
+    <Compile Include="Dialog_RenamePocketDimensionEntranceBase.cs" />
+    <Compile Include="Map\GenStep_PocketDimensionStartSpot.cs" />
+    <Compile Include="PocketDimensionMod.cs" />
+    <Compile Include="PocketDimensionUtility.cs" />
+    <Compile Include="Map\BiomeWorker_NeverSpawn.cs" />
+    <Compile Include="Buildings\Building_PocketDimensionEntranceBase.cs" />
+    <Compile Include="Comps\CompPowerShare.cs" />
+    <Compile Include="Map\GenStep_PocketDimension.cs" />
+    <Compile Include="Jobs\JobDriver_CarryToPocketDimension.cs" />
+    <Compile Include="Jobs\JobDriver_EnterPocket.cs" />
+    <Compile Include="Jobs\JobDriver_ExitPocket.cs" />
+    <Compile Include="Logger.cs" />
+    <Compile Include="Map\MapParent_PocketDimension.cs" />
+    <Compile Include="Map\MapPatches.cs" />
+    <Compile Include="Jobs\Order_CarryToPocketDimension.cs" />
+    <Compile Include="Buildings\Building_PocketDimensionBox.cs" />
+    <Compile Include="PlaceWorkers\PlaceWorker_NextToDimensionalHopperAccepter.cs" />
+    <Compile Include="PocketDimensionDefOf.cs" />
+    <Compile Include="Buildings\Building_PocketDimensionExit.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

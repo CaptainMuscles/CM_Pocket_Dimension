@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Patch>
+
+	<Operation Class="PatchOperationFindMod">
+		<mods>
+			<li>Vanilla Furniture Expanded - Power</li>
+		</mods>
+		<match Class="PatchOperationSequence">
+		  <success>Always</success>
+		  <operations>
+			<li Class="PatchOperationAdd">
+			  <xpath>/Defs/VanillaPowerExpanded.SpecialPowerSpawnsDef[defName="VPE_SpawnHelixienVents"]/terrainValidationDisallowed</xpath>
+				<value>
+					<li>CM_PocketDimensionFloorWood</li>
+					<li>CM_PocketDimensionFloorStone</li>
+					<li>CM_PocketDimensionFloorMetal</li>
+				</value>
+			</li>
+			<li Class="PatchOperationAdd">
+			  <xpath>/Defs/VanillaPowerExpanded.SpecialPowerSpawnsDef[defName="VPE_SpawnChemfuelPonds"]/terrainValidationDisallowed</xpath>
+				<value>
+					<li>CM_PocketDimensionFloorWood</li>
+					<li>CM_PocketDimensionFloorStone</li>
+					<li>CM_PocketDimensionFloorMetal</li>
+				</value>
+			</li>
+		  </operations>
+		</match>
+	</Operation>
+
+</Patch>
+

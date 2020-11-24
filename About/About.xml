@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ModMetaData>
+  <name>Pocket Dimension</name>
+  <author>Nathan Harbour</author>
+  <packageId>CaptainMuscles.PocketDimension</packageId>
+  <supportedVersions>
+    <li>1.2</li>
+  </supportedVersions>
+  <description>This mod adds the ability to create a pocket dimension in a box. It leads to a small map that cannot be entered except by interacting with the box.</description>
+</ModMetaData>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+	<WorldObjectDef>
+		<defName>CM_WorldObject_PocketDimension</defName>
+		<label>Pocket Dimension</label>
+		<description>Pocket Dimension.</description>
+		<worldObjectClass>CM_PocketDimension.MapParent_PocketDimension</worldObjectClass>
+		<texture>World/WorldObjects/JourneyDestination</texture>
+		<expandingIcon>true</expandingIcon>
+		<expandingIconTexture>World/WorldObjects/Expanding/JourneyDestination</expandingIconTexture>
+		<expandingIconPriority>50</expandingIconPriority>
+		<expandMore>true</expandMore>
+		<mapGenerator>CM_PocketDimensionMapGenerator</mapGenerator>
+		<canBePlayerHome>false</canBePlayerHome>
+	</WorldObjectDef>
+</Defs>

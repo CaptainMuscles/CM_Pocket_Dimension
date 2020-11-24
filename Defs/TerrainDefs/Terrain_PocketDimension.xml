@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <TerrainDef ParentName="NaturalTerrainBase">
+    <defName>CM_PocketDimensionFloorWood</defName>
+    <label>pocket dimension floor</label>
+    <texturePath>Terrain/Surfaces/WoodFloor</texturePath>
+	<!--<color>(0,0,0)</color>-->
+	<!--<stuffCategories>
+      <li>Metallic</li>
+      <li>Woody</li>
+      <li>Stony</li>
+    </stuffCategories>-->
+    <edgeType>FadeRough</edgeType>
+    <renderPrecedence>350</renderPrecedence>
+    <statBases>
+      <Beauty>0</Beauty>
+	  <Cleanliness>0</Cleanliness>
+    </statBases>
+    <affordances>
+      <li>Light</li>
+      <li>Medium</li>
+      <li>Heavy</li>
+    </affordances>
+    <fertility>0.00</fertility>
+    <takeFootprints>True</takeFootprints>
+  </TerrainDef>
+  
+  <TerrainDef ParentName="NaturalTerrainBase">
+    <defName>CM_PocketDimensionFloorStone</defName>
+    <label>pocket dimension floor</label>
+    <texturePath>Terrain/Surfaces/SmoothStone</texturePath>
+	<!--<color>(0,0,0)</color>-->
+	<!--<stuffCategories>
+      <li>Metallic</li>
+      <li>Woody</li>
+      <li>Stony</li>
+    </stuffCategories>-->
+    <edgeType>FadeRough</edgeType>
+    <renderPrecedence>350</renderPrecedence>
+    <statBases>
+      <Beauty>0</Beauty>
+	  <Cleanliness>0</Cleanliness>
+    </statBases>
+    <affordances>
+      <li>Light</li>
+      <li>Medium</li>
+      <li>Heavy</li>
+    </affordances>
+    <fertility>0.00</fertility>
+    <takeFootprints>True</takeFootprints>
+  </TerrainDef>
+  
+  <TerrainDef ParentName="NaturalTerrainBase">
+    <defName>CM_PocketDimensionFloorMetal</defName>
+    <label>pocket dimension floor</label>
+    <texturePath>Terrain/Surfaces/GenericFloorTile</texturePath>
+	<!--<color>(0,0,0)</color>-->
+	<!--<stuffCategories>
+      <li>Metallic</li>
+      <li>Woody</li>
+      <li>Stony</li>
+    </stuffCategories>-->
+    <edgeType>FadeRough</edgeType>
+    <renderPrecedence>350</renderPrecedence>
+    <statBases>
+      <Beauty>0</Beauty>
+	  <Cleanliness>0</Cleanliness>
+    </statBases>
+    <affordances>
+      <li>Light</li>
+      <li>Medium</li>
+      <li>Heavy</li>
+    </affordances>
+    <fertility>0.00</fertility>
+    <takeFootprints>True</takeFootprints>
+  </TerrainDef>
+
+</Defs>

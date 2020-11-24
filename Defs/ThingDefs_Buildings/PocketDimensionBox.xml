@@ -1,0 +1,363 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <ThingDef ParentName="BuildingBase">
+    <defName>CM_PocketDimensionEmpty</defName>
+    <label>dimensional containment box</label>
+	<thingClass>CM_PocketDimension.Building_PocketDimensionEmpty</thingClass>
+    <description>An empty containment field for a pocket dimension.</description>
+    <graphicData>	
+      <texPath>Things/Building/Temp/SpacerContainer/SpacerContainer</texPath>
+      <graphicClass>Graphic_Multi</graphicClass>
+	  <drawSize>(1,1)</drawSize>
+    </graphicData>
+    <defaultPlacingRot>South</defaultPlacingRot>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <fillPercent>0.2</fillPercent>
+    <statBases>
+      <MaxHitPoints>500</MaxHitPoints>
+      <WorkToBuild>500</WorkToBuild>
+      <Mass>5</Mass>
+      <Flammability>0</Flammability>
+    </statBases>
+	<building>
+	</building>
+    <size>(1,1)</size>
+	<minifiedDef>MinifiedThing</minifiedDef>
+	<thingCategories>
+		<li>BuildingsSpecial</li>
+	</thingCategories>
+	<hasInteractionCell>True</hasInteractionCell>
+	<interactionCellOffset>(0,0,1)</interactionCellOffset>
+	<stuffCategories>
+      <li>Metallic</li>
+      <li>Woody</li>
+      <li>Stony</li>
+    </stuffCategories>
+	<costStuffCount>100</costStuffCount>
+    <costList>
+      <ComponentSpacer>2</ComponentSpacer>
+    </costList>
+    <!--<designationCategory>Misc</designationCategory>-->
+    <uiIconScale>1</uiIconScale>
+	<comps>
+	  <li Class="CompProperties_Flickable"/>
+	  <li Class="CompProperties_Power">
+        <compClass>CompPowerTrader</compClass>
+        <basePowerConsumption>1000</basePowerConsumption>
+      </li>
+	  <li Class="CompProperties_Refuelable">
+        <fuelConsumptionRate>0.0</fuelConsumptionRate>
+        <fuelCapacity>1.0</fuelCapacity>
+		<fuelLabel>Advanced components</fuelLabel>
+        <fuelFilter>
+          <thingDefs>
+            <li>ComponentSpacer</li>
+          </thingDefs>
+        </fuelFilter>
+        <showAllowAutoRefuelToggle>true</showAllowAutoRefuelToggle>
+		<autoRefuelPercent>1.0</autoRefuelPercent>
+		<drawOutOfFuelOverlay>false</drawOutOfFuelOverlay>
+		<!--<initialFuelPercent>1.0</initialFuelPercent>-->
+		<initialAllowAutoRefuel>false</initialAllowAutoRefuel>
+      </li>
+	</comps>
+	<canOverlapZones>false</canOverlapZones>
+	<tickerType>Normal</tickerType>
+  </ThingDef>
+  
+  <ThingDef ParentName="BuildingBase">
+    <defName>CM_PocketDimensionBox</defName>
+    <label>pocket dimension</label>
+	<thingClass>CM_PocketDimension.Building_PocketDimensionBox</thingClass>
+    <description>A containment field for a pocket dimension.</description>
+    <graphicData>	
+      <texPath>Things/Building/Temp/SpacerContainer/SpacerContainer</texPath>
+      <graphicClass>Graphic_Multi</graphicClass>
+	  <drawSize>(1,1)</drawSize>
+    </graphicData>
+    <defaultPlacingRot>South</defaultPlacingRot>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <fillPercent>0.2</fillPercent>
+    <statBases>
+      <MaxHitPoints>500</MaxHitPoints>
+      <WorkToBuild>500</WorkToBuild>
+      <Mass>5</Mass>
+      <Flammability>0</Flammability>
+    </statBases>
+	<building>
+	</building>
+    <size>(1,1)</size>
+	<minifiedDef>MinifiedThing</minifiedDef>
+	<thingCategories>
+		<li>BuildingsSpecial</li>
+	</thingCategories>
+	<hasInteractionCell>True</hasInteractionCell>
+	<interactionCellOffset>(0,0,1)</interactionCellOffset>
+	<stuffCategories>
+      <li>Metallic</li>
+      <li>Woody</li>
+      <li>Stony</li>
+    </stuffCategories>
+	<costStuffCount>100</costStuffCount>
+    <costList>
+      <ComponentSpacer>2</ComponentSpacer>
+    </costList>
+    <designationCategory>Misc</designationCategory>
+    <uiIconScale>1</uiIconScale>
+	<comps>
+		<!--<li Class="CompProperties_Flickable"/>-->
+		<li Class="CompProperties_Transporter">
+			<!--<compClass>CM_PocketDimension.CompTransporterPocketDimension</compClass>-->
+			<max1PerGroup>true</max1PerGroup>
+			<massCapacity>1000</massCapacity>
+			<restEffectiveness>0.8</restEffectiveness>
+		</li>
+		<li Class="CompProperties_Power">
+			<compClass>CM_PocketDimension.CompPowerShare</compClass>
+			<basePowerConsumption>0</basePowerConsumption>
+			<transmitsPower>true</transmitsPower>
+		</li>
+		<li Class="CompProperties_Battery">
+			<compClass>CompPowerBattery</compClass>
+			<storedEnergyMax>0</storedEnergyMax>
+			<efficiency>1.00</efficiency>
+			<transmitsPower>true</transmitsPower>
+		</li>
+		<li Class="CompProperties_Refuelable">
+			<fuelConsumptionRate>0.0</fuelConsumptionRate>
+			<fuelCapacity>1.0</fuelCapacity>
+			<fuelLabel>Advanced components</fuelLabel>
+			<fuelFilter>
+			  <thingDefs>
+				<li>ComponentSpacer</li>
+			  </thingDefs>
+			</fuelFilter>
+			<showAllowAutoRefuelToggle>false</showAllowAutoRefuelToggle>
+			<autoRefuelPercent>1.0</autoRefuelPercent>
+			<!--<initialFuelPercent>1.0</initialFuelPercent>-->
+			<!--<initialAllowAutoRefuel>false</initialAllowAutoRefuel>-->
+			<drawOutOfFuelOverlay>false</drawOutOfFuelOverlay>
+		  </li>
+		<!--<li Class="CM_PocketDimension.CompProperties_PocketDimensionContainer">
+			<dimensionSize>(31,1,31)</dimensionSize>
+		</li>-->
+	</comps>
+	<inspectorTabs>
+		<li>ITab_ContentsTransporter</li>
+	</inspectorTabs>
+	<canOverlapZones>false</canOverlapZones>
+	<tickerType>Normal</tickerType>
+	<tradeability>Sellable</tradeability>
+	<tradeTags>
+      <li>ExoticBuilding</li>
+    </tradeTags>
+  </ThingDef>
+  
+  <ThingDef ParentName="BuildingBase">
+    <defName>CM_PocketDimensionExit</defName>
+    <label>pocket dimension exit</label>
+	<thingClass>CM_PocketDimension.Building_PocketDimensionExit</thingClass>
+    <description>Exit from a pocket dimension.</description>
+    <graphicData>	
+      <texPath>Things/Building/Temp/SpacerContainer/SpacerContainer</texPath>
+      <graphicClass>Graphic_Multi</graphicClass>
+	  <drawSize>(1,1)</drawSize>
+    </graphicData>
+    <defaultPlacingRot>South</defaultPlacingRot>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <fillPercent>0.2</fillPercent>
+    <statBases>
+      <MaxHitPoints>500</MaxHitPoints>
+      <WorkToBuild>500</WorkToBuild>
+      <Mass>5</Mass>
+      <Flammability>0</Flammability>
+    </statBases>
+	<building>
+	</building>
+    <size>(1,1)</size>
+	<minifiedDef>MinifiedThing</minifiedDef>
+	<thingCategories>
+		<li>BuildingsSpecial</li>
+	</thingCategories>
+	<hasInteractionCell>True</hasInteractionCell>
+	<interactionCellOffset>(0,0,1)</interactionCellOffset>
+	<stuffCategories>
+      <li>Metallic</li>
+      <li>Woody</li>
+      <li>Stony</li>
+    </stuffCategories>
+	<!--<costStuffCount>100</costStuffCount>-->
+    <uiIconScale>1</uiIconScale>
+	<comps>
+		<li Class="CompProperties_Transporter">
+			<max1PerGroup>true</max1PerGroup>
+			<massCapacity>1000</massCapacity>
+			<restEffectiveness>0.8</restEffectiveness>
+		</li>
+		<li Class="CompProperties_Power">
+			<compClass>CM_PocketDimension.CompPowerShare</compClass>
+			<basePowerConsumption>0</basePowerConsumption>
+			<transmitsPower>true</transmitsPower>
+		</li>
+		<li Class="CompProperties_Battery">
+			<compClass>CompPowerBattery</compClass>
+			<storedEnergyMax>0</storedEnergyMax>
+			<efficiency>1.00</efficiency>
+			<transmitsPower>true</transmitsPower>
+		</li>
+	</comps>
+	<inspectorTabs>
+		<li>ITab_ContentsTransporter</li>
+	</inspectorTabs>
+	<placeWorkers>
+    </placeWorkers>
+	<canOverlapZones>false</canOverlapZones>
+	<tickerType>Normal</tickerType>
+	<tradeability>None</tradeability>
+  </ThingDef>
+  
+  <ThingDef ParentName="BuildingBase">
+    <defName>CM_PocketDimensionHopper</defName>
+    <label>dimensional transfer hopper</label>
+    <description>Automatically transfers item through pocket dimension entrance.</description>
+    <thingClass>Building_Storage</thingClass>
+    <graphicData>
+      <texPath>Things/Building/Production/Hopper</texPath>
+      <graphicClass>Graphic_Multi</graphicClass>
+      <damageData>
+        <rect>(0.05,0.1,0.9,0.9)</rect>
+        <cornerTL>Damage/Corner</cornerTL>
+        <cornerTR>Damage/Corner</cornerTR>
+      </damageData>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <fillPercent>0.5</fillPercent>
+    <pathCost>42</pathCost>
+    <canOverlapZones>false</canOverlapZones>
+    <building>
+      <defaultStorageSettings>
+        <priority>Important</priority>
+      </defaultStorageSettings>
+      <buildingTags>
+        <li>Production</li>
+      </buildingTags>
+    </building>
+    <inspectorTabs>
+      <li>ITab_Storage</li>
+    </inspectorTabs>
+    <castEdgeShadows>true</castEdgeShadows>
+    <statBases>
+      <WorkToBuild>300</WorkToBuild>
+      <MaxHitPoints>100</MaxHitPoints>
+      <Flammability>0.5</Flammability>
+	  <Mass>5</Mass>
+    </statBases>
+    <costList>
+      <Steel>15</Steel>
+    </costList>
+	<minifiedDef>MinifiedThing</minifiedDef>
+	<thingCategories>
+		<li>BuildingsMisc</li>
+	</thingCategories>
+    <tickerType>Never</tickerType>
+    <rotatable>true</rotatable>
+    <neverMultiSelect>true</neverMultiSelect>
+    <designationCategory>Misc</designationCategory>
+    <surfaceType>Item</surfaceType>
+    <placeWorkers>
+      <li>CM_PocketDimension.PlaceWorker_NextToDimensionalHopperAccepter</li>
+    </placeWorkers>
+    <constructEffect>ConstructMetal</constructEffect>
+    <uiIconPath>Things/Building/Production/Hopper_MenuIcon</uiIconPath>
+    <uiIconScale>0.85</uiIconScale>
+	<!--<tradeability>Sellable</tradeability>-->
+  </ThingDef>
+  
+  <ThingDef ParentName="BuildingBase" Name="Wall">
+    <defName>CM_PocketDimensionWall</defName>
+    <label>dimensional containment wall</label>
+    <description>An impassable wall.</description>
+    <thingClass>CM_PocketDimension.Building_PocketDimensionWall</thingClass>
+    <category>Building</category>
+    <graphicData>
+      <texPath>Things/Building/Linked/Wall</texPath>
+      <graphicClass>Graphic_Appearances</graphicClass>
+      <linkType>CornerFiller</linkType>
+      <linkFlags>
+        <li>Wall</li>
+        <li>Rock</li>
+      </linkFlags>
+      <damageData>
+        <cornerTL>Damage/Corner</cornerTL>
+        <cornerTR>Damage/Corner</cornerTR>
+        <cornerBL>Damage/Corner</cornerBL>
+        <cornerBR>Damage/Corner</cornerBR>
+        <edgeTop>Damage/Edge</edgeTop>
+        <edgeBot>Damage/Edge</edgeBot>
+        <edgeLeft>Damage/Edge</edgeLeft>
+        <edgeRight>Damage/Edge</edgeRight>
+      </damageData>
+    </graphicData>
+    <uiIconPath>Things/Building/Linked/RockSmooth_Atlas</uiIconPath>
+    <statBases>
+      <MaxHitPoints>300</MaxHitPoints>
+      <WorkToBuild>135</WorkToBuild>
+      <Flammability>1.0</Flammability>
+      <MeditationFocusStrength>0.22</MeditationFocusStrength>
+    </statBases>
+    <!--<costStuffCount>5</costStuffCount>-->
+    <leaveResourcesWhenKilled>false</leaveResourcesWhenKilled>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>Impassable</passability>
+    <blockWind>true</blockWind>
+    <castEdgeShadows>true</castEdgeShadows>
+    <fillPercent>1</fillPercent>
+    <coversFloor>true</coversFloor>
+    <placingDraggableDimensions>1</placingDraggableDimensions>
+    <tickerType>Never</tickerType>
+    <rotatable>false</rotatable>
+    <!--<selectable>true</selectable>-->
+    <neverMultiSelect>true</neverMultiSelect>
+    <useStuffTerrainAffordance>true</useStuffTerrainAffordance>
+    <terrainAffordanceNeeded>Heavy</terrainAffordanceNeeded> <!-- Best affordance needed for stone -->
+    <holdsRoof>true</holdsRoof>
+    <staticSunShadowHeight>1.0</staticSunShadowHeight>
+    <blockLight>true</blockLight>
+    <canOverlapZones>false</canOverlapZones>
+    <fertility>0</fertility>
+    <stuffCategories>
+      <li>Metallic</li>
+      <li>Woody</li>
+      <li>Stony</li>
+    </stuffCategories>
+    <building>
+	  <claimable>false</claimable>
+	  <deconstructible>false</deconstructible>
+      <isInert>true</isInert>
+      <ai_chillDestination>false</ai_chillDestination>
+      <blueprintGraphicData>
+        <texPath>Things/Building/Linked/Wall_Blueprint_Atlas</texPath>
+      </blueprintGraphicData>
+    </building>
+    <comps>
+      <li Class="CompProperties_MeditationFocus">
+        <statDef>MeditationFocusStrength</statDef>
+        <focusTypes>
+          <li>Minimal</li>
+        </focusTypes>
+      </li>
+    </comps>
+    <damageMultipliers>
+      <li>
+        <damageDef>Bomb</damageDef>
+        <multiplier>2</multiplier>
+      </li>
+    </damageMultipliers>
+	<tradeability>None</tradeability>
+  </ThingDef>
+  
+</Defs>

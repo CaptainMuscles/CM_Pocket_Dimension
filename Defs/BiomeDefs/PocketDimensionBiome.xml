@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+	<BiomeDef>
+		<defName>CM_PocketDimensionBiome</defName>
+		<label>Pocket Dimension</label>
+		<description>A small pocket of space tucked away in a box.</description>
+		<workerClass>CM_PocketDimension.BiomeWorker_NeverSpawn</workerClass>
+		<canAutoChoose>false</canAutoChoose>
+		<canBuildBase>false</canBuildBase>
+		<allowRoads>false</allowRoads>
+		<allowRivers>false</allowRivers>
+		<animalDensity>0</animalDensity>
+		<plantDensity>0</plantDensity>
+		<hasVirtualPlants>false</hasVirtualPlants>
+		<settlementSelectionWeight>0</settlementSelectionWeight>
+		<movementDifficulty>1</movementDifficulty>
+		<texture>World/Biomes/TemperateForest</texture>
+		<forageability>0</forageability>
+		<wildPlantRegrowDays>20</wildPlantRegrowDays>
+		<diseaseMtbDays>999999</diseaseMtbDays>
+		<diseases/>
+		<terrainsByFertility>
+			<li>
+				<terrain>CM_PocketDimensionFloorMetal</terrain>
+				<min>-999</min>
+				<max>999</max>
+			</li>
+		</terrainsByFertility>
+		<terrainPatchMakers/>
+		<baseWeatherCommonalities>
+			<Fog>99</Fog>
+		</baseWeatherCommonalities>
+		<wildPlants/>
+		<wildAnimals/>
+	</BiomeDef>
+</Defs>

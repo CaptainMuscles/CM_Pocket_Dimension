@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+	<CM_CreatePocketDimension>Create Pocket Dimension</CM_CreatePocketDimension>
+	<CM_EnterPocketDimension>Enter Pocket Dimension</CM_EnterPocketDimension>
+	<CM_ExitPocketDimension>Exit Pocket Dimension</CM_ExitPocketDimension>
+	<CM_EnterPocketDimensionUnavailable>Entrance unavailable</CM_EnterPocketDimensionUnavailable>
+	<CM_ExitPocketDimensionUnavailable>Exit unavailable</CM_ExitPocketDimensionUnavailable>
+	<CM_PocketDimension_ToggleSync_Label>Toggle Sync</CM_PocketDimension_ToggleSync_Label>
+	<CM_PocketDimension_ToggleSync_Description>Toggle syncing item storage filters between the box and its corresponding exit.</CM_PocketDimension_ToggleSync_Description>
+	<CM_CarryToPocketDimension>Carry {0} to {1}</CM_CarryToPocketDimension>
+	<CM_PocketDimension_Transport_Label>Put inside</CM_PocketDimension_Transport_Label>
+	<CM_PocketDimension_Transport_Description>Select specific items to carry inside.</CM_PocketDimension_Transport_Description>
+	<CM_MustPlaceNextToDimensionalHopperAccepter>Must be placed next to a pocket dimension entrance.</CM_MustPlaceNextToDimensionalHopperAccepter>
+	<CM_PocketDimensionDestroyedLetterLabel>Pocket dimension destroyed</CM_PocketDimensionDestroyedLetterLabel>
+	<CM_PocketDimensionDestroyedLetterText>A dimensional containment field has been breached. Its contents are lost.</CM_PocketDimensionDestroyedLetterText>
+	<CM_PocketDimensionLostLetterLabel>Pocket dimension lost</CM_PocketDimensionLostLetterLabel>
+	<CM_PocketDimensionLostLetterText>The entrance to a dimensional containment box has been lost along with its contents.</CM_PocketDimensionLostLetterText>
+	<CM_ViewExitLabel>View exit</CM_ViewExitLabel>
+	<CM_ViewEntranceLabel>View entrance</CM_ViewEntranceLabel>
+	<CM_ViewExitDescription>Go to the contained pocket dimension.</CM_ViewExitDescription>
+	<CM_ViewEntranceDescription>Go to the entrance to this pocket dimension.</CM_ViewEntranceDescription>
+	<CM_RenamePocketDimensionLabel>Rename</CM_RenamePocketDimensionLabel>
+	<CM_RenamePocketDimensionDescription>Rename this containment device</CM_RenamePocketDimensionDescription>
+	<CM_RenamePocketDimensionMessage>This pocket dimension is now called {0}.</CM_RenamePocketDimensionMessage>
+	<CM_DecreasePocketDimensionSizeLabel>Decrease Size</CM_DecreasePocketDimensionSizeLabel>
+	<CM_DecreasePocketDimensionSizeDescription>Decrease the size of the pocket dimension.</CM_DecreasePocketDimensionSizeDescription>
+	<CM_IncreasePocketDimensionSizeLabel>Increase Size</CM_IncreasePocketDimensionSizeLabel>
+	<CM_IncreasePocketDimensionSizeDescription>Increase the size of the pocket dimension.</CM_IncreasePocketDimensionSizeDescription>
+	<CM_PocketDimensionCreated>A pocket dimension has been successfully created!</CM_PocketDimensionCreated>
+	<CM_BatteryPowerNeeded>Battery power needed</CM_BatteryPowerNeeded>
+	<CM_PowerSharedRateStored>Shared grid excess/stored: {0} W / {1} Wd</CM_PowerSharedRateStored>
+</LanguageData>

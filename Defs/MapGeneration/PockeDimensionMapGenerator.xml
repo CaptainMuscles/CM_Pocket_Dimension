@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <MapGeneratorDef Name="CM_PocketDimensionMapGenerator">
+	<defName>CM_PocketDimensionMapGenerator</defName>
+	<genSteps>
+		<li>PocketDimensionTerrain</li>
+		<li>PocketDimensionPlayerStartSpot</li>
+		<li>PocketDimensionFog</li>
+	</genSteps>
+  </MapGeneratorDef>
+ 
+   <GenStepDef>
+    <defName>PocketDimensionTerrain</defName>
+    <order>10</order>
+    <genStep Class="CM_PocketDimension.GenStep_PocketDimension"/>
+  </GenStepDef>
+  
+  <GenStepDef>
+    <defName>PocketDimensionPlayerStartSpot</defName>
+    <order>600</order>
+    <genStep Class="CM_PocketDimension.GenStep_PocketDimensionStartSpot"/>
+  </GenStepDef>
+
+  <GenStepDef>
+    <defName>PocketDimensionFog</defName>
+    <order>1500</order>
+    <genStep Class="GenStep_Fog"/>
+  </GenStepDef>
+
+</Defs>

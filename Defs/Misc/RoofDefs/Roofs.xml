@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <RoofDef>
+    <defName>CM_PocketDimensionRoof</defName>
+    <label>dimensional containment field</label>
+    <isThickRoof>true</isThickRoof>
+    <isNatural>false</isNatural>
+    <!--<collapseLeavingThingDef>CollapsedRocks</collapseLeavingThingDef>-->
+    <!--<filthLeaving>Filth_RubbleRock</filthLeaving>-->
+  </RoofDef>
+
+</Defs>
