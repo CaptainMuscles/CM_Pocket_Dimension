@@ -1,10 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ModMetaData>
-  <name>Pocket Dimension</name>
-  <author>Nathan Harbour</author>
-  <packageId>CaptainMuscles.PocketDimension</packageId>
-  <supportedVersions>
-    <li>1.2</li>
-  </supportedVersions>
-  <description>This mod adds the ability to create a pocket dimension in a box. It leads to a small map that cannot be entered except by interacting with the box.</description>
+	<name>Pocket Dimension</name>
+	<author>Nathan Harbour</author>
+	<packageId>CaptainMuscles.PocketDimension</packageId>
+	<url>https://github.com/CaptainMuscles/CM_Pocket_Dimension</url>
+	<supportedVersions>
+		<li>1.2</li>
+	</supportedVersions>
+	<description>This mod adds the ability to create a pocket dimension in a box. It leads to a small map that cannot be entered except by interacting with the box.</description>
+	<modDependencies>
+		<li>
+			<packageId>brrainz.harmony</packageId>
+			<displayName>Harmony</displayName>
+			<steamWorkshopUrl>steam://url/CommunityFilePage/2009463077</steamWorkshopUrl>
+			<downloadUrl>https://github.com/pardeike/HarmonyRimWorld/releases/latest</downloadUrl>
+		</li>
+		<li> 
+			<packageId>VanillaExpanded.VFEPropsandDecor</packageId>
+			<displayName>Vanilla Furniture Expanded - Props and Decor</displayName>
+			<steamWorkshopUrl>steam://url/CommunityFilePage/2102143149</steamWorkshopUrl>
+		</li>
+	</modDependencies>
+
+	<loadAfter>
+		<li>Ludeon.RimWorld</li>
+		<li>Ludeon.RimWorld.Royalty</li>
+		<li>brrainz.harmony</li>
+	</loadAfter>
 </ModMetaData>
