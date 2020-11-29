@@ -1,5 +1,7 @@
 # Pocket Dimensions
-Pocket Dimensions is a mod for Rimworld 1.2 that allows you to create a map that is contained inside a box that you can carry around and place wherever you like.
+Ever wanted a secret place that was only for you? What if you could carry it around in your pocket to pull out and climb in whenever you want?
+
+Pocket Dimensions is a mod for Rimworld that allows you to create a map contained inside a box that you can carry around and place wherever you like.
 
 ## Features
   - Configurable size
