@@ -7,7 +7,9 @@
 	<supportedVersions>
 		<li>1.2</li>
 	</supportedVersions>
-	<description>This mod adds the ability to create a pocket dimension in a box. It leads to a small map that cannot be entered except by interacting with the box.</description>
+	<description>Ever wanted a secret place that was only for you? What if you could carry it around in your pocket to pull out and climb in whenever you want?
+
+Pocket Dimensions is a mod for Rimworld that allows you to create a map that is contained inside a box that you can carry around and place wherever you like.</description>
 	<modDependencies>
 		<li>
 			<packageId>brrainz.harmony</packageId>
