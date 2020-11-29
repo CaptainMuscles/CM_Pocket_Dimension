@@ -93,7 +93,7 @@ namespace CM_PocketDimension
                         {
                             __result =  GenTemperature.GetTemperatureForCell(box.Position, box.Map);
                         }
-                        if (box.ParentHolder != null)
+                        else if (box.ParentHolder != null)
                         {
                             for (IThingHolder parentHolder = box.ParentHolder; parentHolder != null; parentHolder = parentHolder.ParentHolder)
                             {
@@ -104,11 +104,11 @@ namespace CM_PocketDimension
                                 }
                             }
                         }
-                        if (box.SpawnedOrAnyParentSpawned)
+                        else if (box.SpawnedOrAnyParentSpawned)
                         {
                             __result = GenTemperature.GetTemperatureForCell(box.PositionHeld, box.MapHeld);
                         }
-                        if (box.Tile >= 0)
+                        else if (box.Tile >= 0)
                         {
                             __result = GenTemperature.GetTemperatureFromSeasonAtTile(GenTicks.TicksAbs, box.Tile);
                         }

@@ -6,7 +6,7 @@ namespace CM_PocketDimension
 {
     public static class Logger
     {
-        public static bool Enabled = true;
+        public static bool Enabled = false;
         public static void MessageFormat(object caller, string message, params object[] stuff)
         {
             if (Logger.Enabled)

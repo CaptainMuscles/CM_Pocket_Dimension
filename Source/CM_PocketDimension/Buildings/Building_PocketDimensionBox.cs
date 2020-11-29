@@ -11,7 +11,7 @@ namespace CM_PocketDimension
 {
     public class Building_PocketDimensionBox : Building_PocketDimensionEntranceBase
     {
-        private float temperatureEqualizeRate = 4.0f; // Put this in a comp prop? Number 14.0f pulled from Building_Vent hardcoding
+        private float temperatureEqualizeRate = 4.0f; // Put this in an xml configurable property? Number 14.0f pulled from Building_Vent hardcoding
         private int temperatureEqualizeInterval = 250; // Rare tick
 
         private bool ventOpen = true;
@@ -29,7 +29,7 @@ namespace CM_PocketDimension
 
         private CompRefuelable compRefuelable = null;
         //private CompFlickable compFlickable = null;
-        private CompPowerShare compPowerShare = null;
+        //private CompPowerShare compPowerShare = null;
         private CompTransporter compTransporter = null;
 
         private float desiredComponentCount = 1.0f;
@@ -51,7 +51,7 @@ namespace CM_PocketDimension
 
             compRefuelable = this.GetComp<CompRefuelable>();
             //compFlickable = this.GetComp<CompFlickable>();
-            compPowerShare = this.GetComp<CompPowerShare>();
+            //compPowerShare = this.GetComp<CompPowerShare>();
             compTransporter = this.GetComp<CompTransporter>();
 
             if (!respawningAfterLoad)
@@ -72,14 +72,11 @@ namespace CM_PocketDimension
 
                 MapParent_PocketDimension dimensionMapParent = PocketDimensionUtility.GetMapParent(this.dimensionSeed);
 
+                // Looks like we just got installed somewhere. Make sure map tile is the same as our current tile
                 if (this.Map != null && dimensionMapParent != null)
                 {
                     dimensionMapParent.Tile = this.Map.Parent.Tile;
                 }
-            }
-            else
-            {
-                
             }
         }
 
@@ -145,8 +142,8 @@ namespace CM_PocketDimension
                     },
                     defaultLabel = "CM_CreatePocketDimension".Translate(),
                     defaultDesc = "CM_CreatePocketDimension".Translate(),
-                    icon = ContentFinder<Texture2D>.Get("UI/Commands/DesirePower"),
-                    disabled = (compRefuelable.Fuel < compRefuelable.Props.fuelCapacity /*|| !compFlickable.SwitchIsOn*/ || compPowerShare.PowerNet == null || compPowerShare.PowerNet.CurrentStoredEnergy() < (this.desiredEnergyAmount - 1.0f)),
+                    icon = ContentFinder<Texture2D>.Get("Things/Mote/ShotHit_Spark"),
+                    disabled = (compRefuelable.Fuel < compRefuelable.Props.fuelCapacity /*|| !compFlickable.SwitchIsOn*/ || compPowerBattery.PowerNet == null || compPowerBattery.PowerNet.CurrentStoredEnergy() < (this.desiredEnergyAmount - 1.0f)),
                 };
             }
         }
@@ -188,32 +185,9 @@ namespace CM_PocketDimension
 
         }
 
-        public override void Tick()
-        {
-            base.Tick();
-
-            if (this.GetLost)
-                return;
-
-            if (!MapCreated)
-            {
-                if (compRefuelable.Fuel >= compRefuelable.Props.fuelCapacity)// && compFlickable.SwitchIsOn)// && compPowerTrader.PowerOn)
-                {
-                    
-                }
-            }
-            else
-            {
-                if (ventOpen && this.IsHashIntervalTick(temperatureEqualizeInterval))
-                {
-                    EqualizeTemperatures();
-                }
-            }
-        }
-
         private void InitializePocketDimension()
         {
-            if (compPowerShare.PowerNet == null || compPowerShare.PowerNet.CurrentStoredEnergy() < (this.desiredEnergyAmount - 1.0f))
+            if (compPowerBattery.PowerNet == null || compPowerBattery.PowerNet.CurrentStoredEnergy() < (this.desiredEnergyAmount - 1.0f))
                 return;
 
             // Consume advanced components
@@ -221,13 +195,86 @@ namespace CM_PocketDimension
             compRefuelable.Props.fuelCapacity = 0.0f;
 
             // Consume battery power
-            float percentLost = (this.desiredEnergyAmount - 1.0f) / compPowerShare.PowerNet.CurrentStoredEnergy();
+            float percentLost = (this.desiredEnergyAmount - 1.0f) / compPowerBattery.PowerNet.CurrentStoredEnergy();
             float percentRemaining = 1.0f - percentLost;
-            foreach (CompPowerBattery battery in compPowerShare.PowerNet.batteryComps)
+            foreach (CompPowerBattery battery in compPowerBattery.PowerNet.batteryComps)
                 battery.SetStoredEnergyPct(percentRemaining * battery.StoredEnergyPct);
 
             mapSize = desiredMapSize;
             CreateMap(this.MapDiameter);
+        }
+
+        private void CreateMap(int mapSize)
+        {
+            if (string.IsNullOrEmpty(dimensionSeed))
+            {
+                GeneratePocketMap(mapSize);
+            }
+        }
+
+        //Generates a map with a defined seed
+        private void GeneratePocketMap(int mapSize)
+        {
+            CompPocketDimensionContainer dimensionProperties = this.GetComp<CompPocketDimensionContainer>();
+
+            IntVec3 size = new IntVec3(mapSize, 1, mapSize);
+            this.dimensionSeed = Find.TickManager.TicksAbs.ToString();
+
+            // The new map must be connected to a parent on the world map
+            var mapParent = (MapParent_PocketDimension)WorldObjectMaker.MakeWorldObject(PocketDimensionDefOf.CM_WorldObject_PocketDimension);
+            mapParent.Tile = this.Map.Tile;
+            Find.WorldObjects.Add(mapParent);
+
+            // Generate the map and set the maps entrance to this box so the map knows what stuff it is made of
+            string cachedSeedString = Find.World.info.seedString;
+            Find.World.info.seedString = this.dimensionSeed;
+            PocketDimensionUtility.Boxes[this.dimensionSeed] = this;
+            mapParent.dimensionSeed = this.dimensionSeed;
+            Map generatedMap = MapGenerator.GenerateMap(size, mapParent, mapParent.MapGeneratorDef, mapParent.ExtraGenStepDefs, null);
+            Find.World.info.seedString = cachedSeedString;
+
+            // Permanent darkness - seems moot since adding roof and walls...
+            GameCondition_NoSunlight gameCondition_NoSunlight = (GameCondition_NoSunlight)GameConditionMaker.MakeCondition(PocketDimensionDefOf.CM_PocketDimensionCondition, -1);
+            gameCondition_NoSunlight.Permanent = true;
+            generatedMap.gameConditionManager.RegisterCondition(gameCondition_NoSunlight);
+
+            // Now make an exit in the map
+            var thingToMake = PocketDimensionDefOf.CM_PocketDimensionExit;
+            List<Thing> thingList = generatedMap.Center.GetThingList(generatedMap).Where(x => x.def == thingToMake).ToList();
+            if (thingList.Count() == 0)
+            {
+                var newExit = ThingMaker.MakeThing(thingToMake, this.Stuff);
+                newExit.SetFaction(this.Faction);
+                GenPlace.TryPlaceThing(newExit, generatedMap.Center, generatedMap, ThingPlaceMode.Direct);
+                thingList = generatedMap.Center.GetThingList(generatedMap).Where(x => x.def == thingToMake).ToList();
+            }
+
+            Logger.MessageFormat(this, this.dimensionSeed);
+
+            Building_PocketDimensionExit exit = thingList.First() as Building_PocketDimensionExit;
+            exit.dimensionSeed = this.dimensionSeed;
+
+            PocketDimensionUtility.MapParents[this.dimensionSeed] = mapParent;
+            
+            PocketDimensionUtility.Exits[this.dimensionSeed] = exit;
+
+            Messages.Message("CM_PocketDimensionCreated".Translate(), new TargetInfo(this), MessageTypeDefOf.PositiveEvent);
+        }
+
+        public override void Tick()
+        {
+            base.Tick();
+
+            if (this.GetLost)
+                return;
+
+            if (MapCreated)
+            {
+                if (ventOpen && this.IsHashIntervalTick(temperatureEqualizeInterval))
+                {
+                    EqualizeTemperatures();
+                }
+            }
         }
 
         private void EqualizeTemperatures()
@@ -282,60 +329,6 @@ namespace CM_PocketDimension
                 float temperatureChange = (averageTemperature - temperature) * temperatureEqualizeRate * temperatureChangeAmount / roomSize;
                 room.Temperature += temperatureChange;
             }
-        }
-
-        private void CreateMap(int mapSize)
-        {
-            if (string.IsNullOrEmpty(dimensionSeed))
-            {
-                GeneratePocketMap(mapSize);
-            }
-        }
-
-        //Generates a map with a defined seed
-        private void GeneratePocketMap(int mapSize)
-        {
-            CompPocketDimensionContainer dimensionProperties = this.GetComp<CompPocketDimensionContainer>();
-
-            IntVec3 size = new IntVec3(mapSize, 1, mapSize);
-            this.dimensionSeed = Find.TickManager.TicksAbs.ToString();
-
-            var mapParent = (MapParent_PocketDimension)WorldObjectMaker.MakeWorldObject(PocketDimensionDefOf.CM_WorldObject_PocketDimension);
-            mapParent.Tile = this.Map.Tile;
-            Find.WorldObjects.Add(mapParent);
-
-            string cachedSeedString = Find.World.info.seedString;
-            Find.World.info.seedString = this.dimensionSeed;
-            PocketDimensionUtility.Boxes[this.dimensionSeed] = this;
-            mapParent.dimensionSeed = this.dimensionSeed;
-            Map generatedMap = MapGenerator.GenerateMap(size, mapParent, mapParent.MapGeneratorDef, mapParent.ExtraGenStepDefs, null);
-            Find.World.info.seedString = cachedSeedString;
-
-            GameCondition_NoSunlight gameCondition_NoSunlight = (GameCondition_NoSunlight)GameConditionMaker.MakeCondition(PocketDimensionDefOf.CM_PocketDimensionCondition, -1);
-            gameCondition_NoSunlight.Permanent = true;
-            generatedMap.gameConditionManager.RegisterCondition(gameCondition_NoSunlight);
-
-            // Now make an exit in the map
-            var thingToMake = PocketDimensionDefOf.CM_PocketDimensionExit;
-            List<Thing> thingList = generatedMap.Center.GetThingList(generatedMap).Where(x => x.def == thingToMake).ToList();
-            if (thingList.Count() == 0)
-            {
-                var newExit = ThingMaker.MakeThing(thingToMake, this.Stuff);
-                newExit.SetFaction(this.Faction);
-                GenPlace.TryPlaceThing(newExit, generatedMap.Center, generatedMap, ThingPlaceMode.Direct);
-                thingList = generatedMap.Center.GetThingList(generatedMap).Where(x => x.def == thingToMake).ToList();
-            }
-
-            Logger.MessageFormat(this, this.dimensionSeed);
-
-            Building_PocketDimensionExit exit = thingList.First() as Building_PocketDimensionExit;
-            exit.dimensionSeed = this.dimensionSeed;
-
-            PocketDimensionUtility.MapParents[this.dimensionSeed] = mapParent;
-            
-            PocketDimensionUtility.Exits[this.dimensionSeed] = exit;
-
-            Messages.Message("CM_PocketDimensionCreated".Translate(), new TargetInfo(this), MessageTypeDefOf.PositiveEvent);
         }
 
         public override string GetInspectString()

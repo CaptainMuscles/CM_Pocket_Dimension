@@ -6,7 +6,7 @@ namespace CM_PocketDimension
 {
     public class MapParent_PocketDimension : MapParent
     {
-        public string dimensionSeed = null;
+        public string dimensionSeed = string.Empty;
 
         private bool shouldBeDeleted = false;
 

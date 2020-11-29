@@ -109,19 +109,16 @@
 	<comps>
 		<!--<li Class="CompProperties_Flickable"/>-->
 		<li Class="CompProperties_Transporter">
-			<!--<compClass>CM_PocketDimension.CompTransporterPocketDimension</compClass>-->
 			<max1PerGroup>true</max1PerGroup>
 			<massCapacity>1000</massCapacity>
 			<restEffectiveness>0.8</restEffectiveness>
 		</li>
-		<li Class="CompProperties_Power">
-			<compClass>CM_PocketDimension.CompPowerShare</compClass>
-			<basePowerConsumption>0</basePowerConsumption>
-			<transmitsPower>true</transmitsPower>
+		<li Class="CM_PocketDimension.CompProperties_PocketDimensionBatteryShare">
+			<compClass>CM_PocketDimension.CompPocketDimensionBatteryShare</compClass>
+			<storedEnergyMax>100.0</storedEnergyMax>
 		</li>
 		<li Class="CompProperties_Battery">
-			<compClass>CompPowerBattery</compClass>
-			<storedEnergyMax>0</storedEnergyMax>
+			<storedEnergyMax>100.0</storedEnergyMax>
 			<efficiency>1.00</efficiency>
 			<transmitsPower>true</transmitsPower>
 		</li>
@@ -140,9 +137,6 @@
 			<!--<initialAllowAutoRefuel>false</initialAllowAutoRefuel>-->
 			<drawOutOfFuelOverlay>false</drawOutOfFuelOverlay>
 		  </li>
-		<!--<li Class="CM_PocketDimension.CompProperties_PocketDimensionContainer">
-			<dimensionSize>(31,1,31)</dimensionSize>
-		</li>-->
 	</comps>
 	<inspectorTabs>
 		<li>ITab_ContentsTransporter</li>
@@ -200,14 +194,12 @@
 			<massCapacity>1000</massCapacity>
 			<restEffectiveness>0.8</restEffectiveness>
 		</li>
-		<li Class="CompProperties_Power">
-			<compClass>CM_PocketDimension.CompPowerShare</compClass>
-			<basePowerConsumption>0</basePowerConsumption>
-			<transmitsPower>true</transmitsPower>
+		<li Class="CM_PocketDimension.CompProperties_PocketDimensionBatteryShare">
+			<compClass>CM_PocketDimension.CompPocketDimensionBatteryShare</compClass>
+			<storedEnergyMax>100.0</storedEnergyMax>
 		</li>
 		<li Class="CompProperties_Battery">
-			<compClass>CompPowerBattery</compClass>
-			<storedEnergyMax>0</storedEnergyMax>
+			<storedEnergyMax>100.0</storedEnergyMax>
 			<efficiency>1.00</efficiency>
 			<transmitsPower>true</transmitsPower>
 		</li>

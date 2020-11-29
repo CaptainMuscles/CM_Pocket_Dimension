@@ -16,10 +16,10 @@ namespace CM_PocketDimension
         private ThingWithComps otherThing;
         private CompPowerShare otherSharer;
 
-        private float totalEnergy = 0.0f;
-        private float oldTotalEnergy = 0.0f;
-        private float myEnergy = 0.0f;
-        private float oldMyEnergy = 0.0f;
+        private float networkEnergy = 0.0f;
+        private float oldNetworkEnergy = 0.0f;
+        private float duplicateEnergy = 0.0f;
+        private float oldDuplicateEnergy = 0.0f;
         private bool reloadedEnergyCalculated = false;
 
         protected override float DesiredPowerOutput
@@ -87,8 +87,16 @@ namespace CM_PocketDimension
 
             if (thisBattery != null && otherSharer != null && otherSharer.parent.Map != null)
             {
-                thisBattery.Props.storedEnergyMax = otherSharer.GetEnergyStored(thisBattery.StoredEnergy);
-                thisBattery.SetStoredEnergyPct(1.0f);
+                float newEnergy = otherSharer.GetEnergyStored(thisBattery.StoredEnergy);
+                float maxEnergy = otherSharer.GetEnergyMax();
+
+                float energyPercent = 1.0f;
+
+                if (newEnergy != maxEnergy && maxEnergy > 0.0f)
+                    energyPercent = newEnergy / maxEnergy;
+
+                thisBattery.Props.storedEnergyMax = maxEnergy;
+                thisBattery.SetStoredEnergyPct(energyPercent);
             }
             else if (thisBattery != null)
             {
@@ -96,26 +104,28 @@ namespace CM_PocketDimension
                 thisBattery.SetStoredEnergyPct(1.0f);
             }
 
-            if (otherSharer != null && otherSharer.parent.Map != null)
-            {
-                this.PowerTransferAmount = otherSharer.GetExcessEnergy();
-            }
-            else
-            {
-                this.PowerTransferAmount = 0.0f;
-            }
+            //if (otherSharer != null && otherSharer.parent.Map != null)
+            //{
+            //    this.PowerTransferAmount = otherSharer.GetExcessEnergy();
+            //}
+            //else
+            //{
+            //    this.PowerTransferAmount = 0.0f;
+            //}
 
 
-            //this.UpdateDesiredPowerOutput();
-            // Using refuelable to add components breaks the normal UpdatedDesiredPowerOutput logic, reproduced and circumvented here
-            if ((breakdownableComp != null && breakdownableComp.BrokenDown) || /*(refuelableComp != null && !refuelableComp.HasFuel) ||*/ (flickableComp != null && !flickableComp.SwitchIsOn) || !base.PowerOn)
-            {
-                base.PowerOutput = 0.0f;
-            }
-            else
-            {
-                base.PowerOutput = DesiredPowerOutput;
-            }
+            ////this.UpdateDesiredPowerOutput();
+            //// Using refuelable to add components breaks the normal UpdatedDesiredPowerOutput logic, reproduced and circumvented here
+            //if ((breakdownableComp != null && breakdownableComp.BrokenDown) || /*(refuelableComp != null && !refuelableComp.HasFuel) ||*/ (flickableComp != null && !flickableComp.SwitchIsOn) || !base.PowerOn)
+            //{
+            //    base.PowerOutput = 0.0f;
+            //}
+            //else
+            //{
+            //    base.PowerOutput = DesiredPowerOutput;
+            //}
+
+            base.PowerOutput = 0.0f;
         }
 
         public float GetEnergyStored(float currentEnergyOtherSide)
@@ -125,57 +135,73 @@ namespace CM_PocketDimension
                 //Logger.MessageFormat(this, "No PowerNet found.");
                 reloadedEnergyCalculated = true;
 
-                oldTotalEnergy = oldMyEnergy = myEnergy = totalEnergy = 0.0f;
-                return totalEnergy;
+                oldNetworkEnergy = oldDuplicateEnergy = duplicateEnergy = networkEnergy = 0.0f;
+                return networkEnergy;
             }
 
-            oldTotalEnergy = totalEnergy;
-            oldMyEnergy = myEnergy;
+            List<CompPowerBattery> networkBatteries = this.PowerNet.batteryComps.Where(x => x != thisBattery).ToList();
 
-            totalEnergy = this.PowerNet.batteryComps.Where(x => x != thisBattery).Select(x => x.StoredEnergy).DefaultIfEmpty(0.0f).Sum();
-            myEnergy = currentEnergyOtherSide;
+            oldNetworkEnergy = networkEnergy;
+            oldDuplicateEnergy = duplicateEnergy;
 
-            float totalOldEnergy = (oldTotalEnergy + oldMyEnergy);
-            float totalCurrentEnergy = (totalEnergy + myEnergy);
+            networkEnergy = networkBatteries.Select(x => x.StoredEnergy).DefaultIfEmpty(0.0f).Sum();
+            duplicateEnergy = currentEnergyOtherSide;
 
-            if (totalEnergy > 0.0f && reloadedEnergyCalculated)
+            float totalOldEnergy = (oldNetworkEnergy + oldDuplicateEnergy);
+            float totalCurrentEnergy = (networkEnergy + duplicateEnergy);
+
+            float duplicateEnergyChange = duplicateEnergy - oldDuplicateEnergy;
+            float networkMaxEnergy = networkBatteries.Select(x => x.Props.storedEnergyMax).DefaultIfEmpty(0.0f).Sum();
+
+            if (reloadedEnergyCalculated && duplicateEnergyChange != 0.0f)
             {
-                // Double energy lost to counteract energy duplication
-                float energyLost = (totalOldEnergy - totalCurrentEnergy) * 2.0f;
-                if (energyLost > totalEnergy)
+                // If more energy lost in duplicate battery than available in duplicated network
+                if (duplicateEnergyChange < 0.0f && networkEnergy > 0.0f && networkEnergy + duplicateEnergyChange < 0.0f)
                 {
-                    //Logger.MessageFormat(this, "Removing all energy from batteries");
-                    foreach (CompPowerBattery battery in this.PowerNet.batteryComps)
-                    {
-                        if (battery != thisBattery)
-                            battery.SetStoredEnergyPct(0.0f);
-                    }
+                    // Drain the whole thing
+                    foreach (CompPowerBattery battery in networkBatteries)
+                        battery.SetStoredEnergyPct(0.0f);
 
-                    totalEnergy = 0.0f;
+                    networkEnergy = 0.0f;
+
+                    Logger.MessageFormat(this, "Network drained");
                 }
-                else if (energyLost > 0.0f && totalEnergy > 0.0f)
+                // If more energy gained in duplicate battery than the network can hold
+                else if (duplicateEnergyChange > 0.0f && networkEnergy + duplicateEnergyChange > networkMaxEnergy)
                 {
-                    float percentLost = energyLost / totalOldEnergy;
-                    //Logger.MessageFormat(this, "Removing {0} ({1}%) energy from batteries", energyLost, percentLost);
-                    float percentRemaining = 1.0f - percentLost;
-                    foreach (CompPowerBattery battery in this.PowerNet.batteryComps)
-                    {
-                        if (battery != thisBattery)
-                            battery.SetStoredEnergyPct(percentRemaining * battery.StoredEnergyPct);
-                    }
+                    // Max the whole thing
+                    foreach (CompPowerBattery battery in networkBatteries)
+                        battery.SetStoredEnergyPct(1.0f);
 
-                    totalEnergy = this.PowerNet.batteryComps.Where(x => x != thisBattery).Select(x => x.StoredEnergy).DefaultIfEmpty(0.0f).Sum();
+                    networkEnergy = networkMaxEnergy;
+
+                    Logger.MessageFormat(this, "Network filled");
                 }
                 else
                 {
-                    //Logger.MessageFormat(this, "Batteries gained {0} energy", -energyLost);
+                    float percentChange = duplicateEnergyChange / oldDuplicateEnergy;
+                    float percentOfExisting = 1.0f + percentChange;
+                    foreach (CompPowerBattery battery in networkBatteries)
+                        battery.SetStoredEnergyPct(percentOfExisting * battery.StoredEnergyPct);
+
+                    float previousNetworkEnergy = networkEnergy;
+                    networkEnergy = networkBatteries.Select(x => x.StoredEnergy).DefaultIfEmpty(0.0f).Sum();
+
+                    Logger.MessageFormat(this, "Duplicate energy change: {0}, energy returned to network: {1}", duplicateEnergyChange, (networkEnergy - previousNetworkEnergy));
                 }
             }
 
+
             reloadedEnergyCalculated = true;
 
-            myEnergy = totalEnergy;
-            return totalEnergy;
+            duplicateEnergy = networkEnergy;
+            return networkEnergy;
+        }
+
+        public float GetEnergyMax()
+        {
+            List<CompPowerBattery> networkBatteries = this.PowerNet.batteryComps.Where(x => x != thisBattery).ToList();
+            return networkBatteries.Select(x => x.Props.storedEnergyMax).DefaultIfEmpty(0.0f).Sum();
         }
 
         public float GetExcessEnergy()

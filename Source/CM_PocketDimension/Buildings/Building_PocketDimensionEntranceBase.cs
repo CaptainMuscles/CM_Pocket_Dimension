@@ -28,8 +28,8 @@ namespace CM_PocketDimension
 
         public bool GetLost = false;
 
-        private CompPowerShare compPowerShare = null;
-        private CompPowerBattery compPowerBattery = null;
+        protected CompPowerBattery compPowerBattery = null;
+        protected CompPocketDimensionBatteryShare compBatteryShare = null;
 
         public static readonly float WattsToWattDaysPerTick = 1.66666669E-05f;
 
@@ -64,8 +64,8 @@ namespace CM_PocketDimension
         {
             base.SpawnSetup(map, respawningAfterLoad);
 
-            compPowerShare = this.GetComp<CompPowerShare>();
             compPowerBattery = this.GetComp<CompPowerBattery>();
+            compBatteryShare = this.GetComp<CompPocketDimensionBatteryShare>();
         }
 
         public override void Destroy(DestroyMode mode = DestroyMode.Vanish)
@@ -166,20 +166,25 @@ namespace CM_PocketDimension
         {
             string inspectString = "";
 
-            if (this.Spawned && this.MapCreated && compPowerShare != null && compPowerShare.PowerNet != null && compPowerShare.PowerOn)
+            //if (this.Spawned && this.MapCreated && compPowerShare != null && compPowerShare.PowerNet != null && compPowerShare.PowerOn)
+            if (this.Spawned && this.MapCreated && compBatteryShare != null && compPowerBattery != null)
             {
-                string powerNetOutput = (compPowerShare.PowerNet.CurrentEnergyGainRate() / WattsToWattDaysPerTick).ToString("F0");
-                string powerNetStored = compPowerShare.PowerNet.CurrentStoredEnergy().ToString("F0");
-                inspectString += "PowerConnectedRateStored".Translate(powerNetOutput, powerNetStored);
+                //string powerNetOutput = (compPowerShare.PowerNet.CurrentEnergyGainRate() / WattsToWattDaysPerTick).ToString("F0");
+                //string powerNetStored = compPowerShare.PowerNet.CurrentStoredEnergy().ToString("F0");
+                //inspectString += "PowerConnectedRateStored".Translate(powerNetOutput, powerNetStored);
 
-                string powerOutput = compPowerShare.PowerOutput.ToString("#####0");
-                string powerStored = compPowerBattery.StoredEnergy.ToString("F0");
-                inspectString += "\n" + "CM_PowerSharedRateStored".Translate(powerOutput, powerStored);
+                //string powerOutput = compPowerShare.PowerOutput.ToString("#####0");
+                //string powerStored = compPowerBattery.StoredEnergy.ToString("F0");
+                //inspectString += "\n" + "CM_PowerSharedRateStored".Translate(powerOutput, powerStored);
 
-                if (compPowerBattery != null && compPowerBattery.StoredEnergy > 0.0f)
+                inspectString += "PowerBatteryStored".Translate() + ": " + compPowerBattery.StoredEnergy.ToString("F0") + " / " + compBatteryShare.StoredEnergyMax.ToString("F0") + " Wd";
+
+                if (compPowerBattery.StoredEnergy > 0.0f)
                 {
                     inspectString += "\n" + "SelfDischarging".Translate() + ": " + 5f.ToString("F0") + " W";
                 }
+
+                //inspectString += compPowerBattery.CompInspectStringExtra();
             }
 
             // Deliberately ignoring comp and quest related output from parent classes

@@ -60,7 +60,11 @@
     <Compile Include="Buildings\Building_PocketDimensionEmpty.cs" />
     <Compile Include="Buildings\Building_PocketDimensionWall.cs" />
     <Compile Include="Comps\CompPocketDimensionContainer.cs" />
+    <Compile Include="Comps\CompPowerBatteryShare.cs" />
+    <Compile Include="Comps\CompProperties_BatteryShare.cs" />
+    <Compile Include="Comps\CompProperties_PocketDimensionBatteryShare.cs" />
     <Compile Include="Comps\CompProperties_PocketDimensionContainer.cs" />
+    <Compile Include="Comps\CompPocketDimensionBatteryShare.cs" />
     <Compile Include="DefPatches.cs" />
     <Compile Include="Dialog_RenamePocketDimensionEntranceBase.cs" />
     <Compile Include="Map\GenStep_PocketDimensionStartSpot.cs" />

@@ -8,7 +8,7 @@
 	<ResearchProjectDef ParentName="CM_PocketDimension_ResearchBase">
 		<defName>CM_PocketDimension_Research_PocketDimension</defName>
 		<label>pocket dimensions</label>
-		<description>Build containment fields for pocket dimensions.</description>
+		<description>Construct a containment field capable of mantaining a stable, spacially tessellated void.</description>
 		<baseCost>4000</baseCost>
 		<techLevel>Ultra</techLevel>
 		<prerequisites>
