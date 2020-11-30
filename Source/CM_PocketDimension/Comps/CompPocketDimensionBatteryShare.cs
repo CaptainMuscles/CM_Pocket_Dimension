@@ -234,12 +234,14 @@ namespace CM_PocketDimension
 
         private List<CompPowerBattery> AvailableBatteries()
         {
+            if (thisBattery == null || thisBattery.PowerNet == null)
+                return new List<CompPowerBattery>();
             // This method would allow chains of pocket dimensions to all share one battery pool.
             // Unfortunately it could result in infinite power in a case where someone teleports (using farskip or another mod) a box entrance/exit so that it makes a circular loop
             //return thisBattery.PowerNet.batteryComps.Where(x => x != thisBattery).ToList();
 
             // Teleport safe version, get batteries that are not linked to outside sources
-            return thisBattery.PowerNet.batteryComps.Where(x => x != thisBattery && x.parent.GetComp<CompPocketDimensionBatteryShare>() == null).ToList();
+            return thisBattery.PowerNet.batteryComps.Where(x => x != thisBattery && x.parent != null && x.parent.GetComp<CompPocketDimensionBatteryShare>() == null).ToList();
         }
 
         public string GetDebugString()

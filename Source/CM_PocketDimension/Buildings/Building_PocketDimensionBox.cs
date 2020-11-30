@@ -286,6 +286,9 @@ namespace CM_PocketDimension
             RoomGroup thisRoomGroup = this.GetRoomGroup();
             RoomGroup otherRoomGroup = exit.GetRoomGroup();
 
+            if (thisRoomGroup == null || otherRoomGroup == null)
+                return;
+
             float totalTemperature = thisRoomGroup.Temperature + otherRoomGroup.Temperature;
             float averageTemperature = totalTemperature / 2.0f;
 
@@ -327,7 +330,15 @@ namespace CM_PocketDimension
                 float roomSize = (float)room.CellCount;
                 float temperature = room.Temperature;
                 float temperatureChange = (averageTemperature - temperature) * temperatureEqualizeRate * temperatureChangeAmount / roomSize;
-                room.Temperature += temperatureChange;
+
+                if (float.IsNaN(temperatureChange))
+                {
+                    Logger.ErrorFormat(this, "averageTemperature: {0}, temperature: {1}, temperatureEqualizeRate: {2}, temperatureChangeAmount: {3}, roomSize: {4}", averageTemperature, temperature, temperatureEqualizeRate, temperatureChangeAmount, roomSize);
+                }
+                else
+                {
+                    room.Temperature += temperatureChange;
+                }
             }
         }
 

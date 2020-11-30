@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <LanguageData>
 	<CM_CreatePocketDimension>Create Pocket Dimension</CM_CreatePocketDimension>
-	<CM_EnterPocketDimension>Enter Pocket Dimension</CM_EnterPocketDimension>
-	<CM_ExitPocketDimension>Exit Pocket Dimension</CM_ExitPocketDimension>
+	<CM_EnterPocketDimension>Enter {0}</CM_EnterPocketDimension>
+	<CM_ExitPocketDimension>Exit {0}</CM_ExitPocketDimension>
 	<CM_EnterPocketDimensionUnavailable>Entrance unavailable</CM_EnterPocketDimensionUnavailable>
 	<CM_ExitPocketDimensionUnavailable>Exit unavailable</CM_ExitPocketDimensionUnavailable>
 	<CM_PocketDimension_ToggleSync_Label>Toggle Sync</CM_PocketDimension_ToggleSync_Label>

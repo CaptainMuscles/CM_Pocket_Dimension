@@ -133,9 +133,9 @@ namespace CM_PocketDimension
             if (otherSideAvailable)
             {
                 if (isExit)
-                    menuItemText = "CM_ExitPocketDimension".Translate();
+                    menuItemText = "CM_ExitPocketDimension".Translate(this.Label);
                 else
-                    menuItemText = "CM_EnterPocketDimension".Translate();
+                    menuItemText = "CM_EnterPocketDimension".Translate(this.Label);
 
                 var opt2 = new FloatMenuOption(menuItemText, () =>
                 {
