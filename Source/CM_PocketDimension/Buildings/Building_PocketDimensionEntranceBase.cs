@@ -166,17 +166,8 @@ namespace CM_PocketDimension
         {
             string inspectString = "";
 
-            //if (this.Spawned && this.MapCreated && compPowerShare != null && compPowerShare.PowerNet != null && compPowerShare.PowerOn)
             if (this.Spawned && this.MapCreated && compBatteryShare != null && compPowerBattery != null)
             {
-                //string powerNetOutput = (compPowerShare.PowerNet.CurrentEnergyGainRate() / WattsToWattDaysPerTick).ToString("F0");
-                //string powerNetStored = compPowerShare.PowerNet.CurrentStoredEnergy().ToString("F0");
-                //inspectString += "PowerConnectedRateStored".Translate(powerNetOutput, powerNetStored);
-
-                //string powerOutput = compPowerShare.PowerOutput.ToString("#####0");
-                //string powerStored = compPowerBattery.StoredEnergy.ToString("F0");
-                //inspectString += "\n" + "CM_PowerSharedRateStored".Translate(powerOutput, powerStored);
-
                 inspectString += "PowerBatteryStored".Translate() + ": " + compPowerBattery.StoredEnergy.ToString("F0") + " / " + compBatteryShare.StoredEnergyMax.ToString("F0") + " Wd";
 
                 if (compPowerBattery.StoredEnergy > 0.0f)
@@ -184,7 +175,10 @@ namespace CM_PocketDimension
                     inspectString += "\n" + "SelfDischarging".Translate() + ": " + 5f.ToString("F0") + " W";
                 }
 
-                //inspectString += compPowerBattery.CompInspectStringExtra();
+                if (Prefs.DevMode)
+                {
+                    inspectString += "\n" + compBatteryShare.GetDebugString();
+                }
             }
 
             // Deliberately ignoring comp and quest related output from parent classes

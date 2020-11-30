@@ -18,6 +18,12 @@ namespace CM_PocketDimension
         private float duplicateEnergy = 0.0f;
         private float oldDuplicateEnergy = 0.0f;
 
+        private float networkEnergy = 0.0f;
+        private float oldNetworkEnergy = 0.0f;
+
+        private float energyReturned = 0.0f;
+        private float energyGained = 0.0f;
+
         private float storedEnergyMax = 100.0f;
 
         private bool reloadedEnergyCalculated = false;
@@ -25,6 +31,9 @@ namespace CM_PocketDimension
         public CompProperties_PocketDimensionBatteryShare Props => (CompProperties_PocketDimensionBatteryShare)props;
 
         public float StoredEnergyMax => storedEnergyMax;
+
+        public float EnergyReturned => energyReturned;
+        public float EnergyGained => energyGained;
 
         public override void PostExposeData()
         {
@@ -119,12 +128,16 @@ namespace CM_PocketDimension
 
             List<CompPowerBattery> networkBatteries = this.AvailableBatteries();
 
+            oldNetworkEnergy = networkEnergy;
             oldDuplicateEnergy = duplicateEnergy;
             duplicateEnergy = currentEnergyOtherSide;
             float duplicateEnergyChange = duplicateEnergy - oldDuplicateEnergy;
 
-            float networkEnergy = networkBatteries.Select(x => x.StoredEnergy).DefaultIfEmpty(0.0f).Sum();
+            networkEnergy = networkBatteries.Select(x => x.StoredEnergy).DefaultIfEmpty(0.0f).Sum();
             float networkMaxEnergy = networkBatteries.Select(x => x.Props.storedEnergyMax).DefaultIfEmpty(0.0f).Sum();
+
+            energyGained = networkEnergy - oldNetworkEnergy;
+            energyReturned = duplicateEnergyChange;
 
             //Logger.MessageFormat(this, "{0}, Old duplicate energy: {1}, new duplicate energy: {2}, Duplicate energy change: {3}, network: {4}/{5}", this.parent.GetType().ToString(), oldDuplicateEnergy, duplicateEnergy, duplicateEnergyChange, networkEnergy, networkMaxEnergy);
 
@@ -162,26 +175,46 @@ namespace CM_PocketDimension
                 }
                 else if (oldDuplicateEnergy > 0.0f)
                 {
-                    float percentChange = duplicateEnergyChange / oldDuplicateEnergy;
-                    float percentOfExisting = 1.0f + percentChange;
-                    float newNetworkEnergy = 0.0f;
-
-                    foreach (CompPowerBattery battery in networkBatteries)
+                    if (duplicateEnergyChange > 0.0f)
                     {
-                        float storedEnergyPercent = battery.StoredEnergyPct;
-                        if (!float.IsNaN(storedEnergyPercent))
+                        List<CompPowerBattery> shuffledBatteries = new List<CompPowerBattery>();
+                        shuffledBatteries.AddRange(networkBatteries);
+                        float totalEnergyToGive = duplicateEnergyChange;
+                        int i = 0;
+                        while (totalEnergyToGive > 0.0f && i < shuffledBatteries.Count)
                         {
-                            battery.SetStoredEnergyPct(storedEnergyPercent * percentOfExisting);
-                            newNetworkEnergy += battery.StoredEnergy;
+                            CompPowerBattery compPowerBattery = shuffledBatteries[i];
+                            float energyCanRecieve = (compPowerBattery.Props.storedEnergyMax - compPowerBattery.StoredEnergy);
+                            float energyToGive = Mathf.Min(totalEnergyToGive, energyCanRecieve);
+
+                            compPowerBattery.AddEnergy(energyToGive / compPowerBattery.Props.efficiency);
+
+                            totalEnergyToGive -= energyToGive;
+                            ++i;
+                        }
+                    }
+                    else if (duplicateEnergyChange < 0.0f)
+                    {
+                        List<CompPowerBattery> shuffledBatteries = new List<CompPowerBattery>();
+                        shuffledBatteries.AddRange(networkBatteries);
+                        float totalEnergyToGive = -duplicateEnergyChange;
+                        int i = 0;
+                        while (totalEnergyToGive > 0.0f && i < shuffledBatteries.Count)
+                        {
+                            CompPowerBattery compPowerBattery = shuffledBatteries[i];
+                            float energyCanRemove = compPowerBattery.StoredEnergy;
+                            float energyToRemove = Mathf.Min(totalEnergyToGive, energyCanRemove);
+
+                            compPowerBattery.DrawPower(energyToRemove);
+
+                            totalEnergyToGive -= energyToRemove;
+                            ++i;
                         }
                     }
 
-                    Logger.MessageFormat(this, "Duplicate energy change: {0}, energy returned to network: {1}", duplicateEnergyChange, (newNetworkEnergy - networkEnergy));
-
-                    networkEnergy = newNetworkEnergy;
+                    Logger.MessageFormat(this, "Duplicate energy change: {0}, energy returned to network: {1}", energyGained, energyReturned);
                 }
             }
-
 
             reloadedEnergyCalculated = true;
 
@@ -201,20 +234,31 @@ namespace CM_PocketDimension
 
         private List<CompPowerBattery> AvailableBatteries()
         {
-            //List<CompPowerBattery> batteries = new List<CompPowerBattery>();
-            //foreach (CompPowerBattery battery in thisBattery.PowerNet.batteryComps)
-            //{
-            //    if (battery != thisBattery && battery.parent.GetComp<CompPocketDimensionBatteryShare>() == null)
-            //        batteries.Add(battery);
-            //}
-            //return batteries;
-
             // This method would allow chains of pocket dimensions to all share one battery pool.
             // Unfortunately it could result in infinite power in a case where someone teleports (using farskip or another mod) a box entrance/exit so that it makes a circular loop
             //return thisBattery.PowerNet.batteryComps.Where(x => x != thisBattery).ToList();
 
             // Teleport safe version, get batteries that are not linked to outside sources
             return thisBattery.PowerNet.batteryComps.Where(x => x != thisBattery && x.parent.GetComp<CompPocketDimensionBatteryShare>() == null).ToList();
+        }
+
+        public string GetDebugString()
+        {
+            string debugString = "";
+
+            if (linkedBatteryShare != null)
+            {
+                debugString = String.Format("{0} gained ({1} W)", linkedBatteryShare.EnergyGained, linkedBatteryShare.EnergyGained * 60000.0f);
+                debugString += "\n" + String.Format("{0} returned ({1} W)", linkedBatteryShare.EnergyReturned, linkedBatteryShare.EnergyReturned * 60000.0f);
+            }
+            else
+            {
+                debugString = "Not sharing";
+            }
+
+            debugString += "\n" + "PowerBatteryEfficiency".Translate() + ": " + (thisBattery.Props.efficiency * 100f).ToString("F0") + "%";
+
+            return debugString;
         }
     }
 }
