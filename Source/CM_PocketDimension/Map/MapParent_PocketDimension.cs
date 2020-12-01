@@ -71,9 +71,15 @@ namespace CM_PocketDimension
                 if (box != null && !box.BeingDestroyed)
                 {
                     Thing thingHolder = box.SpawnedParentOrMe;
-                    LookTargets lookTarget = new LookTargets(thingHolder.Position, thingHolder.Map);
-
-                    Find.LetterStack.ReceiveLetter(label, text, PocketDimensionDefOf.CM_PocketDimensionBreachedLetter, lookTarget);
+                    if (thingHolder != null)
+                    {
+                        LookTargets lookTarget = new LookTargets(thingHolder.Position, thingHolder.Map);
+                        Find.LetterStack.ReceiveLetter(label, text, PocketDimensionDefOf.CM_PocketDimensionBreachedLetter, lookTarget);
+                    }
+                    else
+                    {
+                        Find.LetterStack.ReceiveLetter(label, text, PocketDimensionDefOf.CM_PocketDimensionBreachedLetter);
+                    }
                 }
                 else
                 {
