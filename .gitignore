@@ -9,6 +9,8 @@ ExportedObj/
 *.pidb
 *.booproj
 *.svd
-Source/.idea/
-Source/.vs/
-Source/packages/
+Source/CM_PocketDimension/.idea/
+Source/CM_PocketDimension/.vs/
+Source/CM_PocketDimension/bin/
+Source/CM_PocketDimension/obj/
+Source/CM_PocketDimension/packages/
