@@ -9,7 +9,7 @@ Pocket Dimensions is a mod for Rimworld that allows you to create a map containe
   - Minifiable
   > Uninstall and reinstall the box wherever you like. The map will remain available as long as the box is not stolen, traded away or abandoned.
   - Energy sharing
-  > Battery power inside the box is available to the connected network on the outside, and vice versa. Excess power output is also shared, but only if the batteries on the network are full.
+  > Battery power inside the box is available to the connected network on the outside, and vice versa.
   - Manual and automatic loading/unloading
   > The box can be loaded or unloaded with specific items or pawns using the same interface as transporters and caravans. Also, a dimensional containment hopper can be attached to the box. The hopper can be used like a shelf, with any item placed on it going directly into or out of the box.
   - Stuffable!
