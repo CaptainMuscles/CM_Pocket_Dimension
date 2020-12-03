@@ -14,5 +14,5 @@
 	<li>brrainz.harmony</li>
   </loadAfter>
   <showCrossPromotions>true</showCrossPromotions>
-  <downloadUri>https://github.com/CaptainMuscles/CM_Pocket_Dimension</downloadUri>
+  <downloadUri>https://github.com/CaptainMuscles/CM_Pocket_Dimension/releases</downloadUri>
 </Manifest>
