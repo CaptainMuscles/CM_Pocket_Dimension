@@ -1,5 +1,0 @@
-C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\CM_Pocket_Dimension\Assemblies\CM_PocketDimension.dll
-C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\CM_Pocket_Dimension\Source\CM_PocketDimension\obj\Debug\CM_PocketDimension.csproj.CoreCompileInputs.cache
-C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\CM_Pocket_Dimension\Source\CM_PocketDimension\obj\Debug\CM_PocketDimension.dll
-C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\CM_Pocket_Dimension\Source\CM_PocketDimension\obj\Debug\CM_PocketDimension.csproj.CopyComplete
-C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\CM_Pocket_Dimension\Source\CM_PocketDimension\obj\Debug\CM_PocketDimension.csprojAssemblyReference.cache
