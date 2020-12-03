@@ -170,11 +170,11 @@ namespace CM_PocketDimension
         public static class PockeDimensionAllowBuildNearEdge
         {
             [HarmonyPrefix]
-            public static bool Prefix(Map map, ref bool __result)
+            public static bool Prefix(IntVec3 c, Map map, ref bool __result)
             {
                 if (map.info.parent is MapParent_PocketDimension)
                 {
-                    __result = false;
+                    __result = c.OnEdge(map);
                     return false;
                 }
 
@@ -187,11 +187,11 @@ namespace CM_PocketDimension
         public static class PockeDimensionAllowZoneNearEdge
         {
             [HarmonyPrefix]
-            public static bool Prefix(Map map, ref bool __result)
+            public static bool Prefix(IntVec3 c, Map map, ref bool __result)
             {
                 if (map.info.parent is MapParent_PocketDimension)
                 {
-                    __result = false;
+                    __result = c.OnEdge(map);
                     return false;
                 }
 
