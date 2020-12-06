@@ -111,7 +111,7 @@ namespace CM_PocketDimension
 
                 thisBattery.SetStoredEnergyPct(energyPercent);
 
-                Logger.MessageFormat(this, "Updated battery, energy: {0} ({2}), max: {1} ({3}), {4} - {5}", newEnergy, maxEnergy, thisBattery.StoredEnergy, thisBattery.Props.storedEnergyMax, thisBattery.parent.Label, linkedBatteryShare.parent.Label);
+                //Logger.MessageFormat(this, "Updated battery, energy: {0} ({2}), max: {1} ({3}), {4} - {5}", newEnergy, maxEnergy, thisBattery.StoredEnergy, thisBattery.Props.storedEnergyMax, thisBattery.parent.Label, linkedBatteryShare.parent.Label);
             }
         }
 
@@ -156,7 +156,7 @@ namespace CM_PocketDimension
 
                         networkEnergy = 0.0f;
 
-                        Logger.MessageFormat(this, "Network drained");
+                        //Logger.MessageFormat(this, "Network drained");
                     }
                 }
                 // If more energy gained in duplicate battery than the network can hold
@@ -170,7 +170,7 @@ namespace CM_PocketDimension
 
                         networkEnergy = networkMaxEnergy;
 
-                        Logger.MessageFormat(this, "Network filled");
+                        //Logger.MessageFormat(this, "Network filled");
                     }
                 }
                 else if (oldDuplicateEnergy > 0.0f)
@@ -212,7 +212,7 @@ namespace CM_PocketDimension
                         }
                     }
 
-                    Logger.MessageFormat(this, "Duplicate energy change: {0}, energy returned to network: {1}", energyGained, energyReturned);
+                    //Logger.MessageFormat(this, "Duplicate energy change: {0}, energy returned to network: {1}", energyGained, energyReturned);
                 }
             }
 
