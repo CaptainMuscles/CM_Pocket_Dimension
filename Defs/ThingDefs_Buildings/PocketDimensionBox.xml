@@ -6,7 +6,7 @@
 	<thingClass>CM_PocketDimension.Building_PocketDimensionEmpty</thingClass>
     <description>An empty containment field for a pocket dimension.</description>
     <graphicData>	
-      <texPath>Things/Building/SpacerProps/SpacerContainer/SpacerContainer</texPath>	
+      <texPath>Things/Building/SpacerProps/SpacerContainer/SpacerContainer</texPath>
       <graphicClass>Graphic_Multi</graphicClass>
 	  <drawSize>(1,1)</drawSize>
     </graphicData>
@@ -71,8 +71,8 @@
     <label>pocket dimension</label>
 	<thingClass>CM_PocketDimension.Building_PocketDimensionBox</thingClass>
     <description>A containment field for a pocket dimension.</description>
-    <graphicData>
-	  <texPath>Things/Building/SpacerProps/SpacerContainer/SpacerContainer</texPath>	
+    <graphicData>	
+      <texPath>Things/Building/SpacerProps/SpacerContainer/SpacerContainer</texPath>
       <graphicClass>Graphic_Multi</graphicClass>
 	  <drawSize>(1,1)</drawSize>
     </graphicData>
@@ -81,6 +81,7 @@
     <passability>PassThroughOnly</passability>
     <fillPercent>0.2</fillPercent>
     <statBases>
+	  <MarketValue>500</MarketValue>
       <MaxHitPoints>500</MaxHitPoints>
       <WorkToBuild>500</WorkToBuild>
       <Mass>5</Mass>
@@ -158,7 +159,7 @@
 	<thingClass>CM_PocketDimension.Building_PocketDimensionExit</thingClass>
     <description>Exit from a pocket dimension.</description>
     <graphicData>	
-      <texPath>Things/Building/SpacerProps/SpacerContainer/SpacerContainer</texPath>	
+      <texPath>Things/Building/SpacerProps/SpacerContainer/SpacerContainer</texPath>
       <graphicClass>Graphic_Multi</graphicClass>
 	  <drawSize>(1,1)</drawSize>
     </graphicData>

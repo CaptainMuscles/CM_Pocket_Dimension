@@ -192,16 +192,33 @@ namespace CM_PocketDimension
                 return true;
             }
 
+            string parentage = this.Label;
+
             IThingHolder holder = this.ParentHolder;
             while (holder != null)
             {
+                parentage += " - " + holder.GetType().ToString();
+
+                // First check that there is a world object holding this
                 WorldObject worldObject = holder as WorldObject;
                 if (worldObject != null && worldObject.Tile >= 0)
                 {
+                    //Logger.MessageFormat(this, parentage);
                     return true;
                 }
+
+                // Could also be in a drop pod
+                ActiveDropPodInfo activeDropPodInfo = holder as ActiveDropPodInfo;
+                if (activeDropPodInfo != null)
+                {
+                    //Logger.MessageFormat(this, parentage);
+                    return true;
+                }
+
                 holder = holder.ParentHolder;
             }
+
+            //Logger.MessageFormat(this, parentage);
 
             return false;
         }

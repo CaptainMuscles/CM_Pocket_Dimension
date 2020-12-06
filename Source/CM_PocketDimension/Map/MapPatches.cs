@@ -174,7 +174,7 @@ namespace CM_PocketDimension
             {
                 if (map.info.parent is MapParent_PocketDimension)
                 {
-                    __result = c.OnEdge(map);
+                    __result = false;
                     return false;
                 }
 
@@ -191,7 +191,7 @@ namespace CM_PocketDimension
             {
                 if (map.info.parent is MapParent_PocketDimension)
                 {
-                    __result = c.OnEdge(map);
+                    __result = false;
                     return false;
                 }
 
@@ -206,25 +206,21 @@ namespace CM_PocketDimension
             [HarmonyPostfix]
             public static void addContentValue(Thing thing, StatDef stat, ref float __result)
             {
+                // We'll just get an error if not in the play state
+                if (Current.ProgramState != ProgramState.Playing)
+                    return;
+
                 if (stat.defName != "MarketValue" && stat.defName != "MarketValueIgnoreHp")
                     return;
 
                 //Logger.MessageFormat(thing, "Intercepting");
 
-                Building_PocketDimensionBox innerBox;
-                MinifiedThing minifiedThing = thing as MinifiedThing;
-                if (minifiedThing != null)
-                {
-                    innerBox = minifiedThing.InnerThing as Building_PocketDimensionBox;
-                }
-                else
-                {
-                    innerBox = thing as Building_PocketDimensionBox;
-                }
+                // Don't check for a minified thing! Minified objects will end up calling this function again
+                Building_PocketDimensionBox innerBox = thing as Building_PocketDimensionBox;
 
                 bool callOriginal = (innerBox == null);
 
-                if (!callOriginal)
+                if (!callOriginal && innerBox.MapCreated)
                 {
                     MapParent_PocketDimension innerMapParent = PocketDimensionUtility.GetMapParent(innerBox.dimensionSeed);
                     if (innerMapParent != null && innerMapParent.Map != null)
@@ -238,8 +234,27 @@ namespace CM_PocketDimension
                         innerBox.countingWealth = true;
                         float baseValue = __result;
                         float contentValue = innerMapParent.Map.wealthWatcher.WealthTotal;
-                        Logger.MessageFormat(innerBox, "Adding value to box: {0}, {1} + {2}", innerBox.Label, baseValue, contentValue);
-                        __result = baseValue + contentValue;
+
+                        CompRefuelable compRefuelable = innerBox.GetComp<CompRefuelable>();
+                        ThingDef fuelItemDef = null;
+
+                        if (compRefuelable != null)
+                            fuelItemDef = compRefuelable.Props.fuelFilter.AllowedThingDefs.FirstOrFallback();
+
+                        if (fuelItemDef != null)
+                        {
+                            float componentValue = fuelItemDef.BaseMarketValue * innerBox.MapSize * innerBox.MapSize;
+                            
+                            Logger.MessageFormat(innerBox, "Adding value to box: {0}, {1}, {2} + {3} + {4}", innerBox.Label, thing.GetType().ToString(), baseValue, contentValue, componentValue);
+                            __result = baseValue + contentValue + componentValue;
+                        }
+                        else
+                        {
+                            Logger.MessageFormat(innerBox, "Adding value to box: {0}, {1}, {2} + {3}", innerBox.Label, thing.GetType().ToString(), baseValue, contentValue);
+                            __result = baseValue + contentValue;
+                        }
+
+                        
                         innerBox.countingWealth = false;
                     }
                 }

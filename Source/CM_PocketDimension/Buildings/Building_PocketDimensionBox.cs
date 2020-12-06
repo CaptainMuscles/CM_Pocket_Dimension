@@ -21,6 +21,7 @@ namespace CM_PocketDimension
         private int minMapSize = 1;
         private int maxMapSize = 30;
 
+        public int MapSize => mapSize;
         private int MapDiameter => (mapSize * 6) + 1;
         private int DesiredMapDiameter => (desiredMapSize * 6) + 1;
 
