@@ -198,5 +198,52 @@ namespace CM_PocketDimension
                 return true;
             }
         }
+
+        [HarmonyPatch(typeof(StatExtension))]
+        [HarmonyPatch("GetStatValue", MethodType.Normal)]
+        public static class PocketDimensionBoxContentMarketValue
+        {
+            [HarmonyPostfix]
+            public static void addContentValue(Thing thing, StatDef stat, ref float __result)
+            {
+                if (stat.defName != "MarketValue" && stat.defName != "MarketValueIgnoreHp")
+                    return;
+
+                //Logger.MessageFormat(thing, "Intercepting");
+
+                Building_PocketDimensionBox innerBox;
+                MinifiedThing minifiedThing = thing as MinifiedThing;
+                if (minifiedThing != null)
+                {
+                    innerBox = minifiedThing.InnerThing as Building_PocketDimensionBox;
+                }
+                else
+                {
+                    innerBox = thing as Building_PocketDimensionBox;
+                }
+
+                bool callOriginal = (innerBox == null);
+
+                if (!callOriginal)
+                {
+                    MapParent_PocketDimension innerMapParent = PocketDimensionUtility.GetMapParent(innerBox.dimensionSeed);
+                    if (innerMapParent != null && innerMapParent.Map != null)
+                    {
+                        if (innerBox.countingWealth)
+                        {
+                            Logger.MessageFormat(innerBox, "Counting box wealth again recursively. Skipping...");
+                            return;
+                        }
+
+                        innerBox.countingWealth = true;
+                        float baseValue = __result;
+                        float contentValue = innerMapParent.Map.wealthWatcher.WealthTotal;
+                        Logger.MessageFormat(innerBox, "Adding value to box: {0}, {1} + {2}", innerBox.Label, baseValue, contentValue);
+                        __result = baseValue + contentValue;
+                        innerBox.countingWealth = false;
+                    }
+                }
+            }
+        }
     }
 }
