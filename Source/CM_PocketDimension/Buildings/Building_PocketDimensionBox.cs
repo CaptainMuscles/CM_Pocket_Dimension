@@ -35,12 +35,17 @@ namespace CM_PocketDimension
         private float desiredComponentCount = 1.0f;
         private float desiredEnergyAmount = 32000000f;
 
+        public bool countingWealth = false;
+
         public override void ExposeData()
         {
             base.ExposeData();
             Scribe_Values.Look<bool>(ref this.ventOpen, "ventOpen", true);
             Scribe_Values.Look<int>(ref this.mapSize, "mapSize", 1);
             Scribe_Values.Look<int>(ref this.desiredMapSize, "mapSize", 1);
+
+            if (!string.IsNullOrEmpty(dimensionSeed))
+                PocketDimensionUtility.Boxes[this.dimensionSeed] = this;
         }
 
         public override void SpawnSetup(Map map, bool respawningAfterLoad)
@@ -68,8 +73,6 @@ namespace CM_PocketDimension
 
             if (MapCreated)
             {
-                PocketDimensionUtility.Boxes[this.dimensionSeed] = this;
-
                 MapParent_PocketDimension dimensionMapParent = PocketDimensionUtility.GetMapParent(this.dimensionSeed);
 
                 // Looks like we just got installed somewhere. Make sure map tile is the same as our current tile
@@ -223,6 +226,7 @@ namespace CM_PocketDimension
             // The new map must be connected to a parent on the world map
             var mapParent = (MapParent_PocketDimension)WorldObjectMaker.MakeWorldObject(PocketDimensionDefOf.CM_WorldObject_PocketDimension);
             mapParent.Tile = this.Map.Tile;
+            mapParent.SetFaction(Faction.OfPlayer);
             Find.WorldObjects.Add(mapParent);
 
             // Generate the map and set the maps entrance to this box so the map knows what stuff it is made of
@@ -286,7 +290,7 @@ namespace CM_PocketDimension
             RoomGroup thisRoomGroup = this.GetRoomGroup();
             RoomGroup otherRoomGroup = exit.GetRoomGroup();
 
-            if (thisRoomGroup == null || otherRoomGroup == null)
+            if (thisRoomGroup == null || otherRoomGroup == null || thisRoomGroup == otherRoomGroup)
                 return;
 
             float totalTemperature = thisRoomGroup.Temperature + otherRoomGroup.Temperature;

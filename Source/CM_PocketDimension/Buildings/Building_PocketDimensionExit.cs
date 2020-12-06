@@ -7,14 +7,19 @@ namespace CM_PocketDimension
 {
     public class Building_PocketDimensionExit : Building_PocketDimensionEntranceBase
     {
+        public override void ExposeData()
+        {
+            base.ExposeData();
+
+            if (!string.IsNullOrEmpty(dimensionSeed))
+                PocketDimensionUtility.Exits[this.dimensionSeed] = this;
+        }
+
         public override void SpawnSetup(Map map, bool respawningAfterLoad)
         {
             base.SpawnSetup(map, respawningAfterLoad);
 
             Logger.MessageFormat(this, "Spawning");
-
-            if (!string.IsNullOrEmpty(dimensionSeed))
-                PocketDimensionUtility.Exits[this.dimensionSeed] = this;
         }
 
         public override void Destroy(DestroyMode mode = DestroyMode.Vanish)
@@ -34,7 +39,7 @@ namespace CM_PocketDimension
             if (this.IsHashIntervalTick(250))
             {
                 Building_PocketDimensionBox box = PocketDimensionUtility.GetBox(this.dimensionSeed);
-                if (box != null && !box.ExistsInWorld())
+                if (box == null || !box.ExistsInWorld())
                 {
                     this.GetLost = true;
                 }
