@@ -14,6 +14,12 @@ Pocket Dimensions is a mod for Rimworld that allows you to create a map containe
   > The box can be loaded or unloaded with specific items or pawns using the same interface as transporters and caravans. Also, a dimensional containment hopper can be attached to the box. The hopper can be used like a shelf, with any item placed on it going directly into or out of the box.
   - Stuffable!
   > Make the box out of earwax if you want!
+  - Other notable details
+  > The inside and outside of the box will slowly equalize temperatures, like a weak vent. Thus the box can be a freezer simply by putting it inside a frozen space.
+
+> If the box is installed in a temporary map, such as that of a mission or a camp from [SYR] Set Up Camp. The map will stay available as long as a non-downed colonist is in the box.
+
+> Renamable. In case you build too many and can't remember which is which.
 
 ## Uses
   - Mobile base
