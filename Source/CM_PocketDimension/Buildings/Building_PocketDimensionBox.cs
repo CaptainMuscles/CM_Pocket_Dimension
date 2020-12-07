@@ -6,6 +6,7 @@ using UnityEngine;
 using RimWorld;
 using RimWorld.Planet;
 using Verse;
+using Verse.Sound;
 
 namespace CM_PocketDimension
 {
@@ -208,20 +209,20 @@ namespace CM_PocketDimension
             CreateMap(this.MapDiameter);
         }
 
-        private void CreateMap(int mapSize)
+        private void CreateMap(int mapWidth)
         {
             if (string.IsNullOrEmpty(dimensionSeed))
             {
-                GeneratePocketMap(mapSize);
+                GeneratePocketMap(mapWidth);
             }
         }
 
         //Generates a map with a defined seed
-        private void GeneratePocketMap(int mapSize)
+        private void GeneratePocketMap(int mapWidth)
         {
             CompPocketDimensionContainer dimensionProperties = this.GetComp<CompPocketDimensionContainer>();
 
-            IntVec3 size = new IntVec3(mapSize, 1, mapSize);
+            IntVec3 size = new IntVec3(mapWidth, 1, mapWidth);
             this.dimensionSeed = Find.TickManager.TicksAbs.ToString();
 
             // The new map must be connected to a parent on the world map
@@ -264,6 +265,16 @@ namespace CM_PocketDimension
             PocketDimensionUtility.Exits[this.dimensionSeed] = exit;
 
             Messages.Message("CM_PocketDimensionCreated".Translate(), new TargetInfo(this), MessageTypeDefOf.PositiveEvent);
+
+            ThingDef moteDef = DefDatabase<ThingDef>.GetNamedSilentFail("Mote_PsycastPsychicEffect");
+            SoundDef soundDef = DefDatabase<SoundDef>.GetNamedSilentFail("Psycast_Skip_Exit");
+
+            //Find.CameraDriver.shaker.DoShake(0.25f);
+            if (moteDef != null)
+                MoteMaker.MakeAttachedOverlay(this, moteDef, Vector3.zero, mapSize);
+            
+            if (soundDef != null)
+                soundDef.PlayOneShot(new TargetInfo(this.Position, this.Map));
         }
 
         public override void Tick()
