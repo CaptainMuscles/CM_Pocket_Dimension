@@ -269,7 +269,6 @@ namespace CM_PocketDimension
             ThingDef moteDef = DefDatabase<ThingDef>.GetNamedSilentFail("Mote_PsycastPsychicEffect");
             SoundDef soundDef = DefDatabase<SoundDef>.GetNamedSilentFail("Psycast_Skip_Exit");
 
-            //Find.CameraDriver.shaker.DoShake(0.25f);
             if (moteDef != null)
                 MoteMaker.MakeAttachedOverlay(this, moteDef, Vector3.zero, mapSize);
             
