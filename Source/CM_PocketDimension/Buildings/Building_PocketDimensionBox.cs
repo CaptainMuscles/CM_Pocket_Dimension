@@ -83,6 +83,17 @@ namespace CM_PocketDimension
                     dimensionMapParent.Tile = this.Map.Parent.Tile;
                 }
             }
+            else
+            {
+                CompPocketDimensionPremade compPocketDimensionPremade = this.GetComp<CompPocketDimensionPremade>();
+
+                if (compPocketDimensionPremade != null)
+                {
+                    SetDesiredMapSize(compPocketDimensionPremade.Props.mapSize);
+                    mapSize = desiredMapSize;
+                    CreateMap(this.MapDiameter);
+                }
+            }
         }
 
         public override void Destroy(DestroyMode mode = DestroyMode.Vanish)
