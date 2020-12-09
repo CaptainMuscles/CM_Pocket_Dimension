@@ -155,7 +155,7 @@
   
   <ThingDef ParentName="BuildingBase">
     <defName>CM_PocketDimensionTeenyverse</defName>
-    <label>Teenyverse</label>
+    <label>teenyverse</label>
 	<thingClass>CM_PocketDimension.Building_PocketDimensionBox</thingClass>
 	    <description>A containment field for a pocket dimension.</description>
     <graphicData>	
@@ -168,7 +168,7 @@
     <passability>PassThroughOnly</passability>
     <fillPercent>0.2</fillPercent>
     <statBases>
-	  <MarketValue>500</MarketValue>
+	  <MarketValue>700</MarketValue>
       <MaxHitPoints>500</MaxHitPoints>
       <WorkToBuild>500</WorkToBuild>
       <Mass>5</Mass>
@@ -192,7 +192,6 @@
     <costList>
       <ComponentSpacer>2</ComponentSpacer>
     </costList>
-    <designationCategory>Misc</designationCategory>
     <uiIconScale>1</uiIconScale>
 	<comps>
 		<!--<li Class="CompProperties_Flickable"/>-->
@@ -239,9 +238,6 @@
 	<tradeTags>
       <li>ExoticBuilding</li>
     </tradeTags>
-	<researchPrerequisites>
-      <li>CM_PocketDimension_Research_PocketDimension</li>
-    </researchPrerequisites>
 	<thingSetMakerTags>
       <li>RewardStandardHighFreq</li>
     </thingSetMakerTags>
@@ -249,7 +245,7 @@
   
   <ThingDef ParentName="BuildingBase">
     <defName>CM_PocketDimensionMiniverse</defName>
-    <label>Miniverse</label>
+    <label>miniverse</label>
 	<thingClass>CM_PocketDimension.Building_PocketDimensionBox</thingClass>
 	    <description>A containment field for a pocket dimension.</description>
     <graphicData>	
@@ -262,7 +258,7 @@
     <passability>PassThroughOnly</passability>
     <fillPercent>0.2</fillPercent>
     <statBases>
-	  <MarketValue>500</MarketValue>
+	  <MarketValue>1300</MarketValue>
       <MaxHitPoints>500</MaxHitPoints>
       <WorkToBuild>500</WorkToBuild>
       <Mass>5</Mass>
@@ -286,7 +282,6 @@
     <costList>
       <ComponentSpacer>2</ComponentSpacer>
     </costList>
-    <designationCategory>Misc</designationCategory>
     <uiIconScale>1</uiIconScale>
 	<comps>
 		<!--<li Class="CompProperties_Flickable"/>-->
@@ -333,9 +328,6 @@
 	<tradeTags>
       <li>ExoticBuilding</li>
     </tradeTags>
-	<researchPrerequisites>
-      <li>CM_PocketDimension_Research_PocketDimension</li>
-    </researchPrerequisites>
 	<thingSetMakerTags>
       <li>RewardStandardHighFreq</li>
     </thingSetMakerTags>
@@ -343,7 +335,7 @@
   
   <ThingDef ParentName="BuildingBase">
     <defName>CM_PocketDimensionMicroverse</defName>
-    <label>Microverse</label>
+    <label>microverse</label>
 	<thingClass>CM_PocketDimension.Building_PocketDimensionBox</thingClass>
 	    <description>A containment field for a pocket dimension.</description>
     <graphicData>	
@@ -356,7 +348,7 @@
     <passability>PassThroughOnly</passability>
     <fillPercent>0.2</fillPercent>
     <statBases>
-	  <MarketValue>500</MarketValue>
+	  <MarketValue>2300</MarketValue>
       <MaxHitPoints>500</MaxHitPoints>
       <WorkToBuild>500</WorkToBuild>
       <Mass>5</Mass>
@@ -380,7 +372,6 @@
     <costList>
       <ComponentSpacer>2</ComponentSpacer>
     </costList>
-    <designationCategory>Misc</designationCategory>
     <uiIconScale>1</uiIconScale>
 	<comps>
 		<!--<li Class="CompProperties_Flickable"/>-->
@@ -427,9 +418,6 @@
 	<tradeTags>
       <li>ExoticBuilding</li>
     </tradeTags>
-	<researchPrerequisites>
-      <li>CM_PocketDimension_Research_PocketDimension</li>
-    </researchPrerequisites>
 	<thingSetMakerTags>
       <li>RewardStandardHighFreq</li>
     </thingSetMakerTags>

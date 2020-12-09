@@ -272,7 +272,7 @@ namespace CM_PocketDimension
             exit.dimensionSeed = this.dimensionSeed;
 
             PocketDimensionUtility.MapParents[this.dimensionSeed] = mapParent;
-            
+
             PocketDimensionUtility.Exits[this.dimensionSeed] = exit;
 
             Messages.Message("CM_PocketDimensionCreated".Translate(), new TargetInfo(this), MessageTypeDefOf.PositiveEvent);
@@ -282,7 +282,7 @@ namespace CM_PocketDimension
 
             if (moteDef != null)
                 MoteMaker.MakeAttachedOverlay(this, moteDef, Vector3.zero, mapSize);
-            
+
             if (soundDef != null)
                 soundDef.PlayOneShot(new TargetInfo(this.Position, this.Map));
         }
@@ -418,6 +418,62 @@ namespace CM_PocketDimension
             GenDraw.DrawLineBetween(vector2, vector3, color);
             GenDraw.DrawLineBetween(vector3, vector4, color);
             GenDraw.DrawLineBetween(vector4, vector, color);
+        }
+
+        public float CalculateAdditionalMarketValue(float baseValue)
+        {
+            if (this.countingWealth)
+            {
+                Logger.MessageFormat(this, "Counting box wealth again recursively. Skipping...");
+                return 0.0f;
+            }
+
+            float componentValue = CalculateUsedComponentValue();
+            float contentValue = 0.0f;
+
+            MapParent_PocketDimension innerMapParent = PocketDimensionUtility.GetMapParent(this.dimensionSeed);
+            if (innerMapParent != null && innerMapParent.Map != null)
+            {
+                this.countingWealth = true;
+                contentValue = innerMapParent.Map.wealthWatcher.WealthTotal;
+                this.countingWealth = false;
+            }
+
+            Logger.MessageFormat(this, "Adding value to box: {0}, {1} + {2} + {3} = {4}", this.Label, baseValue, contentValue, componentValue, (baseValue + contentValue + componentValue));
+
+            return contentValue + componentValue;
+        }
+
+        private float CalculateUsedComponentValue()
+        {
+            float result = 0.0f;
+
+            if (MapCreated)
+            {
+                int componentsUsed = 0;
+
+                // If this is a pre-made box, only calculate cost of extra components (i.e. if we upgraded the box)
+                CompPocketDimensionPremade compPocketDimensionPremade = this.GetComp<CompPocketDimensionPremade>();
+                if (compPocketDimensionPremade != null)
+                {
+                    componentsUsed = -(compPocketDimensionPremade.Props.mapSize * compPocketDimensionPremade.Props.mapSize);
+                }
+
+                ThingDef fuelItemDef = null;
+
+                compRefuelable = this.GetComp<CompRefuelable>();
+                if (compRefuelable != null)
+                    fuelItemDef = compRefuelable.Props.fuelFilter.AllowedThingDefs.FirstOrFallback();
+
+                if (fuelItemDef != null)
+                {
+                    componentsUsed += this.MapSize * this.MapSize;
+
+                    result = fuelItemDef.BaseMarketValue * componentsUsed;
+                }
+            }
+
+            return result;
         }
     }
 }
