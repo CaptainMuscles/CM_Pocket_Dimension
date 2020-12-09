@@ -168,96 +168,6 @@
     <passability>PassThroughOnly</passability>
     <fillPercent>0.2</fillPercent>
     <statBases>
-	  <MarketValue>700</MarketValue>
-      <MaxHitPoints>500</MaxHitPoints>
-      <WorkToBuild>500</WorkToBuild>
-      <Mass>5</Mass>
-      <Flammability>0</Flammability>
-    </statBases>
-	<building>
-	</building>
-    <size>(1,1)</size>
-	<minifiedDef>MinifiedThing</minifiedDef>
-	<thingCategories>
-		<li>BuildingsSpecial</li>
-	</thingCategories>
-	<hasInteractionCell>True</hasInteractionCell>
-	<interactionCellOffset>(0,0,1)</interactionCellOffset>
-	<stuffCategories>
-      <li>Metallic</li>
-      <li>Woody</li>
-      <li>Stony</li>
-    </stuffCategories>
-	<costStuffCount>100</costStuffCount>
-    <costList>
-      <ComponentSpacer>2</ComponentSpacer>
-    </costList>
-    <uiIconScale>1</uiIconScale>
-	<comps>
-		<!--<li Class="CompProperties_Flickable"/>-->
-		<li Class="CompProperties_Transporter">
-			<max1PerGroup>true</max1PerGroup>
-			<massCapacity>1000</massCapacity>
-			<restEffectiveness>0.8</restEffectiveness>
-		</li>
-		<li Class="CM_PocketDimension.CompProperties_PocketDimensionBatteryShare">
-			<compClass>CM_PocketDimension.CompPocketDimensionBatteryShare</compClass>
-			<storedEnergyMax>100.0</storedEnergyMax>
-		</li>
-		<li Class="CompProperties_Battery">
-			<storedEnergyMax>100.0</storedEnergyMax>
-			<efficiency>1.00</efficiency>
-			<transmitsPower>true</transmitsPower>
-		</li>
-		<li Class="CompProperties_Refuelable">
-			<fuelConsumptionRate>0.0</fuelConsumptionRate>
-			<fuelCapacity>1.0</fuelCapacity>
-			<fuelLabel>Advanced components</fuelLabel>
-			<fuelFilter>
-			  <thingDefs>
-				<li>ComponentSpacer</li>
-			  </thingDefs>
-			</fuelFilter>
-			<showAllowAutoRefuelToggle>false</showAllowAutoRefuelToggle>
-			<autoRefuelPercent>1.0</autoRefuelPercent>
-			<!--<initialFuelPercent>1.0</initialFuelPercent>-->
-			<!--<initialAllowAutoRefuel>false</initialAllowAutoRefuel>-->
-			<drawOutOfFuelOverlay>false</drawOutOfFuelOverlay>
-		</li>
-		<li Class="CM_PocketDimension.CompProperties_PocketDimensionPremade">
-			<compClass>CM_PocketDimension.CompPocketDimensionPremade</compClass>
-			<mapSize>1</mapSize>
-		</li>
-	</comps>
-	<inspectorTabs>
-		<li>ITab_ContentsTransporter</li>
-	</inspectorTabs>
-	<canOverlapZones>false</canOverlapZones>
-	<tickerType>Normal</tickerType>
-	<tradeability>Sellable</tradeability>
-	<tradeTags>
-      <li>ExoticBuilding</li>
-    </tradeTags>
-	<thingSetMakerTags>
-      <li>RewardStandardHighFreq</li>
-    </thingSetMakerTags>
-  </ThingDef>
-  
-  <ThingDef ParentName="BuildingBase">
-    <defName>CM_PocketDimensionMiniverse</defName>
-    <label>miniverse</label>
-	<thingClass>CM_PocketDimension.Building_PocketDimensionBox</thingClass>
-	    <description>A containment field for a pocket dimension.</description>
-    <graphicData>	
-      <texPath>Things/Building/SpacerProps/SpacerContainer/SpacerContainer</texPath>
-      <graphicClass>Graphic_Multi</graphicClass>
-	  <drawSize>(1,1)</drawSize>
-    </graphicData>
-    <defaultPlacingRot>South</defaultPlacingRot>
-    <altitudeLayer>Building</altitudeLayer>
-    <passability>PassThroughOnly</passability>
-    <fillPercent>0.2</fillPercent>
-    <statBases>
 	  <MarketValue>1300</MarketValue>
       <MaxHitPoints>500</MaxHitPoints>
       <WorkToBuild>500</WorkToBuild>
@@ -334,8 +244,8 @@
   </ThingDef>
   
   <ThingDef ParentName="BuildingBase">
-    <defName>CM_PocketDimensionMicroverse</defName>
-    <label>microverse</label>
+    <defName>CM_PocketDimensionMiniverse</defName>
+    <label>miniverse</label>
 	<thingClass>CM_PocketDimension.Building_PocketDimensionBox</thingClass>
 	    <description>A containment field for a pocket dimension.</description>
     <graphicData>	
@@ -348,7 +258,7 @@
     <passability>PassThroughOnly</passability>
     <fillPercent>0.2</fillPercent>
     <statBases>
-	  <MarketValue>2300</MarketValue>
+	  <MarketValue>3200</MarketValue>
       <MaxHitPoints>500</MaxHitPoints>
       <WorkToBuild>500</WorkToBuild>
       <Mass>5</Mass>
@@ -406,7 +316,97 @@
 		</li>
 		<li Class="CM_PocketDimension.CompProperties_PocketDimensionPremade">
 			<compClass>CM_PocketDimension.CompPocketDimensionPremade</compClass>
-			<mapSize>3</mapSize>
+			<mapSize>4</mapSize>
+		</li>
+	</comps>
+	<inspectorTabs>
+		<li>ITab_ContentsTransporter</li>
+	</inspectorTabs>
+	<canOverlapZones>false</canOverlapZones>
+	<tickerType>Normal</tickerType>
+	<tradeability>Sellable</tradeability>
+	<tradeTags>
+      <li>ExoticBuilding</li>
+    </tradeTags>
+	<thingSetMakerTags>
+      <li>RewardStandardHighFreq</li>
+    </thingSetMakerTags>
+  </ThingDef>
+  
+  <ThingDef ParentName="BuildingBase">
+    <defName>CM_PocketDimensionMicroverse</defName>
+    <label>microverse</label>
+	<thingClass>CM_PocketDimension.Building_PocketDimensionBox</thingClass>
+	    <description>A containment field for a pocket dimension.</description>
+    <graphicData>	
+      <texPath>Things/Building/SpacerProps/SpacerContainer/SpacerContainer</texPath>
+      <graphicClass>Graphic_Multi</graphicClass>
+	  <drawSize>(1,1)</drawSize>
+    </graphicData>
+    <defaultPlacingRot>South</defaultPlacingRot>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <fillPercent>0.2</fillPercent>
+    <statBases>
+	  <MarketValue>5400</MarketValue>
+      <MaxHitPoints>500</MaxHitPoints>
+      <WorkToBuild>500</WorkToBuild>
+      <Mass>5</Mass>
+      <Flammability>0</Flammability>
+    </statBases>
+	<building>
+	</building>
+    <size>(1,1)</size>
+	<minifiedDef>MinifiedThing</minifiedDef>
+	<thingCategories>
+		<li>BuildingsSpecial</li>
+	</thingCategories>
+	<hasInteractionCell>True</hasInteractionCell>
+	<interactionCellOffset>(0,0,1)</interactionCellOffset>
+	<stuffCategories>
+      <li>Metallic</li>
+      <li>Woody</li>
+      <li>Stony</li>
+    </stuffCategories>
+	<costStuffCount>100</costStuffCount>
+    <costList>
+      <ComponentSpacer>2</ComponentSpacer>
+    </costList>
+    <uiIconScale>1</uiIconScale>
+	<comps>
+		<!--<li Class="CompProperties_Flickable"/>-->
+		<li Class="CompProperties_Transporter">
+			<max1PerGroup>true</max1PerGroup>
+			<massCapacity>1000</massCapacity>
+			<restEffectiveness>0.8</restEffectiveness>
+		</li>
+		<li Class="CM_PocketDimension.CompProperties_PocketDimensionBatteryShare">
+			<compClass>CM_PocketDimension.CompPocketDimensionBatteryShare</compClass>
+			<storedEnergyMax>100.0</storedEnergyMax>
+		</li>
+		<li Class="CompProperties_Battery">
+			<storedEnergyMax>100.0</storedEnergyMax>
+			<efficiency>1.00</efficiency>
+			<transmitsPower>true</transmitsPower>
+		</li>
+		<li Class="CompProperties_Refuelable">
+			<fuelConsumptionRate>0.0</fuelConsumptionRate>
+			<fuelCapacity>1.0</fuelCapacity>
+			<fuelLabel>Advanced components</fuelLabel>
+			<fuelFilter>
+			  <thingDefs>
+				<li>ComponentSpacer</li>
+			  </thingDefs>
+			</fuelFilter>
+			<showAllowAutoRefuelToggle>false</showAllowAutoRefuelToggle>
+			<autoRefuelPercent>1.0</autoRefuelPercent>
+			<!--<initialFuelPercent>1.0</initialFuelPercent>-->
+			<!--<initialAllowAutoRefuel>false</initialAllowAutoRefuel>-->
+			<drawOutOfFuelOverlay>false</drawOutOfFuelOverlay>
+		</li>
+		<li Class="CM_PocketDimension.CompProperties_PocketDimensionPremade">
+			<compClass>CM_PocketDimension.CompPocketDimensionPremade</compClass>
+			<mapSize>6</mapSize>
 		</li>
 	</comps>
 	<inspectorTabs>
