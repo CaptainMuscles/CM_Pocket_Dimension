@@ -20,7 +20,7 @@ namespace CM_PocketDimension
             if (box != null)
                 box.uniqueName = curName;
             if (exit != null)
-                exit.uniqueName = curName;
+                exit.uniqueName = "CM_PocketDimension_ExitName".Translate(curName);
 
             Messages.Message("CM_RenamePocketDimensionMessage".Translate(curName), MessageTypeDefOf.TaskCompletion);
         }
