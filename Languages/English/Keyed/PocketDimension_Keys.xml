@@ -29,4 +29,6 @@
 	<CM_PocketDimensionCreated>A pocket dimension has been successfully created!</CM_PocketDimensionCreated>
 	<CM_BatteryPowerNeeded>Battery power needed</CM_BatteryPowerNeeded>
 	<CM_PowerSharedRateStored>Shared grid excess/stored: {0} W / {1} Wd</CM_PowerSharedRateStored>
+	<CM_PocketDimension_ExitName>{0} exit</CM_PocketDimension_ExitName>
+	<CM_PocketDimension_MapSize>Map size: {0}</CM_PocketDimension_MapSize>
 </LanguageData>

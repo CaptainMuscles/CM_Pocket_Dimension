@@ -16,7 +16,7 @@ namespace CM_PocketDimension
         private int temperatureEqualizeInterval = 250; // Rare tick
 
         private bool ventOpen = true;
-        private int mapSize = 1;
+        private int mapSize = 0;
         private int desiredMapSize = 1;
 
         private int minMapSize = 1;
@@ -43,11 +43,15 @@ namespace CM_PocketDimension
         {
             base.ExposeData();
             Scribe_Values.Look<bool>(ref this.ventOpen, "ventOpen", true);
-            Scribe_Values.Look<int>(ref this.mapSize, "mapSize", 1);
+            Scribe_Values.Look<int>(ref this.mapSize, "mapSize", 0);
             Scribe_Values.Look<int>(ref this.desiredMapSize, "mapSize", 1);
 
-            if (!string.IsNullOrEmpty(dimensionSeed))
-                PocketDimensionUtility.Boxes[this.dimensionSeed] = this;
+            if (Scribe.mode == LoadSaveMode.PostLoadInit)
+            {
+                if (!string.IsNullOrEmpty(dimensionSeed))
+                    PocketDimensionUtility.Boxes[this.dimensionSeed] = this;
+            }
+
         }
 
         public override void SpawnSetup(Map map, bool respawningAfterLoad)
@@ -69,6 +73,9 @@ namespace CM_PocketDimension
                 //var prop = compFlickable.GetType().GetField("wantSwitchOn", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
                 //prop.SetValue(compFlickable, false);
             }
+
+            if (mapSize == 0)
+                mapSize = 1;
 
             // Reconfigure runtime-set comp property values
             SetDesiredMapSize(desiredMapSize);
@@ -270,6 +277,10 @@ namespace CM_PocketDimension
 
             Building_PocketDimensionExit exit = thingList.First() as Building_PocketDimensionExit;
             exit.dimensionSeed = this.dimensionSeed;
+            if (!string.IsNullOrEmpty(this.uniqueName))
+                exit.uniqueName = "CM_PocketDimension_ExitName".Translate(this.uniqueName);
+            else
+                exit.uniqueName = "CM_PocketDimension_ExitName".Translate(this.LabelCap);
 
             PocketDimensionUtility.MapParents[this.dimensionSeed] = mapParent;
 
@@ -370,18 +381,33 @@ namespace CM_PocketDimension
 
         public override string GetInspectString()
         {
-            if (!this.Spawned)
-                return base.GetInspectString();
-
             string inspectString = "";
+
+            if (!this.Spawned)
+            {
+                inspectString = base.GetInspectString();
+
+                if (mapSize > 0)
+                {
+                    if (string.IsNullOrEmpty(inspectString))
+                        inspectString += "CM_PocketDimension_MapSize".Translate(mapSize);
+                    else
+                        inspectString += "\n" + "CM_PocketDimension_MapSize".Translate(mapSize);
+                }
+
+                return inspectString;
+            }
+
+            if (mapSize > 0)
+                inspectString = "CM_PocketDimension_MapSize".Translate(mapSize) + "\n";
 
             if (!MapCreated)
             {
-                inspectString = (((string)("CM_BatteryPowerNeeded".Translate() + ": " + (desiredEnergyAmount).ToString("#####0") + " Wd")));
+                inspectString += (((string)("CM_BatteryPowerNeeded".Translate() + ": " + (desiredEnergyAmount).ToString("#####0") + " Wd")));
             }
             else
             {
-                inspectString = base.GetInspectString();
+                inspectString += base.GetInspectString();
             }
 
             if (desiredMapSize > mapSize || !MapCreated)
