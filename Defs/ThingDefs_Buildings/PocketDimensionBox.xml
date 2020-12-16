@@ -111,7 +111,7 @@
 		<!--<li Class="CompProperties_Flickable"/>-->
 		<li Class="CompProperties_Transporter">
 			<max1PerGroup>true</max1PerGroup>
-			<massCapacity>1000</massCapacity>
+			<massCapacity>999999</massCapacity>
 			<restEffectiveness>0.8</restEffectiveness>
 		</li>
 		<li Class="CM_PocketDimension.CompProperties_PocketDimensionBatteryShare">
@@ -201,7 +201,7 @@
 		<!--<li Class="CompProperties_Flickable"/>-->
 		<li Class="CompProperties_Transporter">
 			<max1PerGroup>true</max1PerGroup>
-			<massCapacity>1000</massCapacity>
+			<massCapacity>999999</massCapacity>
 			<restEffectiveness>0.8</restEffectiveness>
 		</li>
 		<li Class="CM_PocketDimension.CompProperties_PocketDimensionBatteryShare">
@@ -276,7 +276,7 @@
 		<!--<li Class="CompProperties_Flickable"/>-->
 		<li Class="CompProperties_Transporter">
 			<max1PerGroup>true</max1PerGroup>
-			<massCapacity>1000</massCapacity>
+			<massCapacity>999999</massCapacity>
 			<restEffectiveness>0.8</restEffectiveness>
 		</li>
 		<li Class="CM_PocketDimension.CompProperties_PocketDimensionBatteryShare">
@@ -351,7 +351,7 @@
 		<!--<li Class="CompProperties_Flickable"/>-->
 		<li Class="CompProperties_Transporter">
 			<max1PerGroup>true</max1PerGroup>
-			<massCapacity>1000</massCapacity>
+			<massCapacity>999999</massCapacity>
 			<restEffectiveness>0.8</restEffectiveness>
 		</li>
 		<li Class="CM_PocketDimension.CompProperties_PocketDimensionBatteryShare">
@@ -421,7 +421,7 @@
 	<comps>
 		<li Class="CompProperties_Transporter">
 			<max1PerGroup>true</max1PerGroup>
-			<massCapacity>1000</massCapacity>
+			<massCapacity>999999</massCapacity>
 			<restEffectiveness>0.8</restEffectiveness>
 		</li>
 		<li Class="CM_PocketDimension.CompProperties_PocketDimensionBatteryShare">
@@ -502,7 +502,7 @@
 	<!--<tradeability>Sellable</tradeability>-->
   </ThingDef>
   
-  <ThingDef ParentName="BuildingBase" Name="Wall">
+  <ThingDef ParentName="BuildingBase">
     <defName>CM_PocketDimensionWall</defName>
     <label>dimensional containment wall</label>
     <description>An impassable wall.</description>
