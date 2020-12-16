@@ -67,8 +67,12 @@
     <Compile Include="Comps\CompProperties_PocketDimensionContainer.cs" />
     <Compile Include="Comps\CompPocketDimensionBatteryShare.cs" />
     <Compile Include="Comps\CompProperties_PocketDimensionPremade.cs" />
+    <Compile Include="Comps\CompProperties_Suppliable.cs" />
+    <Compile Include="Comps\CompSuppliable.cs" />
     <Compile Include="DefPatches.cs" />
     <Compile Include="Dialog_RenamePocketDimensionEntranceBase.cs" />
+    <Compile Include="Jobs\JobDriver_SupplyBoxComponents.cs" />
+    <Compile Include="Jobs\WorkGiver_SupplyBoxComponents.cs" />
     <Compile Include="Map\GenStep_PocketDimensionStartSpot.cs" />
     <Compile Include="PocketDimensionMod.cs" />
     <Compile Include="PocketDimensionUtility.cs" />

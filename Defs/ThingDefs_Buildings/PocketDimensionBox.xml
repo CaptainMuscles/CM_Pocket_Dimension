@@ -123,7 +123,13 @@
 			<efficiency>1.00</efficiency>
 			<transmitsPower>true</transmitsPower>
 		</li>
-		<li Class="CompProperties_Refuelable">
+		<li Class="CM_PocketDimension.CompProperties_Suppliable">
+			<componentDef>ComponentSpacer</componentDef>
+			<componentMultiplier>1</componentMultiplier>
+			<componentLabel>Advanced components</componentLabel>
+			<powerMultiplier>600.0</powerMultiplier>
+		  </li>
+		<!--<li Class="CompProperties_Refuelable">
 			<fuelConsumptionRate>0.0</fuelConsumptionRate>
 			<fuelCapacity>1.0</fuelCapacity>
 			<fuelLabel>Advanced components</fuelLabel>
@@ -134,10 +140,8 @@
 			</fuelFilter>
 			<showAllowAutoRefuelToggle>false</showAllowAutoRefuelToggle>
 			<autoRefuelPercent>1.0</autoRefuelPercent>
-			<!--<initialFuelPercent>1.0</initialFuelPercent>-->
-			<!--<initialAllowAutoRefuel>false</initialAllowAutoRefuel>-->
 			<drawOutOfFuelOverlay>false</drawOutOfFuelOverlay>
-		  </li>
+		  </li>-->
 	</comps>
 	<inspectorTabs>
 		<li>ITab_ContentsTransporter</li>
@@ -208,21 +212,6 @@
 			<storedEnergyMax>100.0</storedEnergyMax>
 			<efficiency>1.00</efficiency>
 			<transmitsPower>true</transmitsPower>
-		</li>
-		<li Class="CompProperties_Refuelable">
-			<fuelConsumptionRate>0.0</fuelConsumptionRate>
-			<fuelCapacity>1.0</fuelCapacity>
-			<fuelLabel>Advanced components</fuelLabel>
-			<fuelFilter>
-			  <thingDefs>
-				<li>ComponentSpacer</li>
-			  </thingDefs>
-			</fuelFilter>
-			<showAllowAutoRefuelToggle>false</showAllowAutoRefuelToggle>
-			<autoRefuelPercent>1.0</autoRefuelPercent>
-			<!--<initialFuelPercent>1.0</initialFuelPercent>-->
-			<!--<initialAllowAutoRefuel>false</initialAllowAutoRefuel>-->
-			<drawOutOfFuelOverlay>false</drawOutOfFuelOverlay>
 		</li>
 		<li Class="CM_PocketDimension.CompProperties_PocketDimensionPremade">
 			<compClass>CM_PocketDimension.CompPocketDimensionPremade</compClass>
@@ -299,21 +288,6 @@
 			<efficiency>1.00</efficiency>
 			<transmitsPower>true</transmitsPower>
 		</li>
-		<li Class="CompProperties_Refuelable">
-			<fuelConsumptionRate>0.0</fuelConsumptionRate>
-			<fuelCapacity>1.0</fuelCapacity>
-			<fuelLabel>Advanced components</fuelLabel>
-			<fuelFilter>
-			  <thingDefs>
-				<li>ComponentSpacer</li>
-			  </thingDefs>
-			</fuelFilter>
-			<showAllowAutoRefuelToggle>false</showAllowAutoRefuelToggle>
-			<autoRefuelPercent>1.0</autoRefuelPercent>
-			<!--<initialFuelPercent>1.0</initialFuelPercent>-->
-			<!--<initialAllowAutoRefuel>false</initialAllowAutoRefuel>-->
-			<drawOutOfFuelOverlay>false</drawOutOfFuelOverlay>
-		</li>
 		<li Class="CM_PocketDimension.CompProperties_PocketDimensionPremade">
 			<compClass>CM_PocketDimension.CompPocketDimensionPremade</compClass>
 			<mapSize>4</mapSize>
@@ -388,21 +362,6 @@
 			<storedEnergyMax>100.0</storedEnergyMax>
 			<efficiency>1.00</efficiency>
 			<transmitsPower>true</transmitsPower>
-		</li>
-		<li Class="CompProperties_Refuelable">
-			<fuelConsumptionRate>0.0</fuelConsumptionRate>
-			<fuelCapacity>1.0</fuelCapacity>
-			<fuelLabel>Advanced components</fuelLabel>
-			<fuelFilter>
-			  <thingDefs>
-				<li>ComponentSpacer</li>
-			  </thingDefs>
-			</fuelFilter>
-			<showAllowAutoRefuelToggle>false</showAllowAutoRefuelToggle>
-			<autoRefuelPercent>1.0</autoRefuelPercent>
-			<!--<initialFuelPercent>1.0</initialFuelPercent>-->
-			<!--<initialAllowAutoRefuel>false</initialAllowAutoRefuel>-->
-			<drawOutOfFuelOverlay>false</drawOutOfFuelOverlay>
 		</li>
 		<li Class="CM_PocketDimension.CompProperties_PocketDimensionPremade">
 			<compClass>CM_PocketDimension.CompPocketDimensionPremade</compClass>

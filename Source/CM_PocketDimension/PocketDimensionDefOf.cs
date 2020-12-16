@@ -26,6 +26,10 @@ namespace CM_PocketDimension
 
         public static JobDef CM_CarryToPocket;
 
+        public static JobDef CM_PocketDimension_Job_SupplyBoxComponents;
+
+        public static WorkGiverDef CM_PocketDimension_WorkGiver_SupplyBoxComponents;
+
         public static GameConditionDef CM_PocketDimensionCondition;
 
         public static BiomeDef CM_PocketDimensionBiome;

@@ -12,6 +12,9 @@ namespace CM_PocketDimension
 {
     public class Building_PocketDimensionBox : Building_PocketDimensionEntranceBase
     {
+        // For backwards compatibility from when CompRefuelable was being used
+        private float fuel = 0.0f;
+
         private float temperatureEqualizeRate = 4.0f; // Put this in an xml configurable property? Number 14.0f pulled from Building_Vent hardcoding
         private int temperatureEqualizeInterval = 250; // Rare tick
 
@@ -26,32 +29,50 @@ namespace CM_PocketDimension
         private int MapDiameter => (mapSize * 6) + 1;
         private int DesiredMapDiameter => (desiredMapSize * 6) + 1;
 
-        //private float wattsPerFullVanillaBattery = 32000000f;
-        private float wattDaysPerFullVanillaBattery = 600f;
-
-        private CompRefuelable compRefuelable = null;
-        //private CompFlickable compFlickable = null;
-        //private CompPowerShare compPowerShare = null;
+        CompSuppliable compSuppliable = null;
         private CompTransporter compTransporter = null;
 
-        private float desiredComponentCount = 1.0f;
+        private int desiredComponentCount = 1;
         private float desiredEnergyAmount = 32000000f;
 
         public bool countingWealth = false;
+
+        public int ComponentsNeeded => (compSuppliable != null) ? desiredComponentCount - compSuppliable.SupplyCount : 0;
+        public bool NeedsComponents => ComponentsNeeded > 0;
+
+        public void AddComponents(List<Thing> componentsList)
+        {
+            if (compSuppliable == null)
+                return;
+
+            while (ComponentsNeeded > 0 && componentsList.Count > 0)
+            {
+                Thing component = componentsList.Pop();
+                int componentsGiven = Mathf.Min(ComponentsNeeded, component.stackCount);
+                if (compSuppliable.AddComponents(componentsGiven))
+                    component.SplitOff(componentsGiven).Destroy();
+                else
+                    break;
+            }
+        }
 
         public override void ExposeData()
         {
             base.ExposeData();
             Scribe_Values.Look<bool>(ref this.ventOpen, "ventOpen", true);
             Scribe_Values.Look<int>(ref this.mapSize, "mapSize", 0);
-            Scribe_Values.Look<int>(ref this.desiredMapSize, "mapSize", 1);
+            Scribe_Values.Look<int>(ref this.desiredMapSize, "desiredMapSize", 1);
+            Scribe_Values.Look<int>(ref this.desiredComponentCount, "desiredComponentCount", 1);
+            Scribe_Values.Look<float>(ref this.desiredEnergyAmount, "desiredEnergyAmount", 1);
+            Scribe_Values.Look<float>(ref this.fuel, "fuel", 0.0f);
 
             if (Scribe.mode == LoadSaveMode.PostLoadInit)
             {
                 if (!string.IsNullOrEmpty(dimensionSeed))
                     PocketDimensionUtility.Boxes[this.dimensionSeed] = this;
-            }
 
+
+            }
         }
 
         public override void SpawnSetup(Map map, bool respawningAfterLoad)
@@ -60,22 +81,40 @@ namespace CM_PocketDimension
 
             Logger.MessageFormat(this, "Spawning");
 
-            compRefuelable = this.GetComp<CompRefuelable>();
-            //compFlickable = this.GetComp<CompFlickable>();
-            //compPowerShare = this.GetComp<CompPowerShare>();
+            compSuppliable = this.GetComp<CompSuppliable>();
             compTransporter = this.GetComp<CompTransporter>();
-
-            if (!respawningAfterLoad)
-            {
-                compRefuelable.Refuel(1.0f);
-                //compFlickable.SwitchIsOn = false;
-                // wantSwitchOn defaults to true and can only be changed by flicking *grumble grumble*
-                //var prop = compFlickable.GetType().GetField("wantSwitchOn", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
-                //prop.SetValue(compFlickable, false);
-            }
 
             if (mapSize == 0)
                 mapSize = 1;
+
+            if (fuel >= 1.0f)
+            {
+                if (compSuppliable != null)
+                {
+                    compSuppliable.AddComponents((int)Mathf.Round(fuel));
+                    fuel = 0.0f;
+
+                    if (compSuppliable.SupplyCount > desiredComponentCount)
+                    {
+                        int amountToRefund = compSuppliable.SupplyCount - desiredComponentCount;
+                        if (compSuppliable.ConsumeComponents(amountToRefund))
+                        {
+                            ThingDef thingToRefundDef = compSuppliable.Props.componentDef;
+
+                            RefundComponents(thingToRefundDef, amountToRefund);
+                        }
+                    }
+                }
+                else
+                {
+                    ThingDef thingToRefundDef = ThingDefOf.ComponentSpacer;
+
+                    int amountToRefund = (int)Mathf.Round(fuel);
+                    fuel = 0.0f;
+
+                    RefundComponents(thingToRefundDef, amountToRefund);
+                }
+            }
 
             // Reconfigure runtime-set comp property values
             SetDesiredMapSize(desiredMapSize);
@@ -128,7 +167,7 @@ namespace CM_PocketDimension
                 yield return c;
             }
 
-            if (!MapCreated)
+            if (compSuppliable != null && !MapCreated)
             {
                 // Decrease pocket dimension size
                 yield return new Command_Action
@@ -166,7 +205,7 @@ namespace CM_PocketDimension
                     defaultLabel = "CM_CreatePocketDimension".Translate(),
                     defaultDesc = "CM_CreatePocketDimension".Translate(),
                     icon = ContentFinder<Texture2D>.Get("Things/Mote/ShotHit_Spark"),
-                    disabled = (compRefuelable.Fuel < compRefuelable.Props.fuelCapacity /*|| !compFlickable.SwitchIsOn*/ || compPowerBattery.PowerNet == null || compPowerBattery.PowerNet.CurrentStoredEnergy() < (this.desiredEnergyAmount - 1.0f)),
+                    disabled = (compSuppliable == null || compSuppliable.SupplyCount < desiredComponentCount || compPowerBattery.PowerNet == null || compPowerBattery.PowerNet.CurrentStoredEnergy() < (this.desiredEnergyAmount - 1.0f)),
                 };
             }
         }
@@ -180,48 +219,56 @@ namespace CM_PocketDimension
 
             if (!MapCreated)
             {
-                desiredComponentCount = desiredMapSize * desiredMapSize;
-                desiredEnergyAmount = desiredMapSize * wattDaysPerFullVanillaBattery;
+                desiredComponentCount = (desiredMapSize * desiredMapSize) * compSuppliable.Props.componentMultiplier;
+                desiredEnergyAmount = desiredMapSize * compSuppliable.Props.powerMultiplier;
             }
             else
             {
-                desiredComponentCount = (desiredMapSize * desiredMapSize) - (mapSize * mapSize);
-                desiredEnergyAmount = (desiredMapSize - mapSize) * wattDaysPerFullVanillaBattery;
+                desiredComponentCount = ((desiredMapSize * desiredMapSize) - (mapSize * mapSize)) * compSuppliable.Props.componentMultiplier;
+                desiredEnergyAmount = (desiredMapSize - mapSize) * compSuppliable.Props.powerMultiplier;
             }
 
-            compRefuelable.Props.fuelCapacity = desiredComponentCount;
-
-            if (compRefuelable.Fuel > compRefuelable.Props.fuelCapacity && this.Spawned)
+            if (compSuppliable.SupplyCount > desiredComponentCount && this.SpawnedOrAnyParentSpawned)
             {
-                float amountToRefund = compRefuelable.Fuel - compRefuelable.Props.fuelCapacity;
-                compRefuelable.ConsumeFuel(amountToRefund);
-
-                ThingDef thingToRefundDef = compRefuelable.Props.fuelFilter.AnyAllowedDef;
-
-                if (thingToRefundDef != null)
+                int amountToRefund = compSuppliable.SupplyCount - desiredComponentCount;
+                if (compSuppliable.ConsumeComponents(amountToRefund))
                 {
-                    Thing refundedFuel = ThingMaker.MakeThing(thingToRefundDef);
-                    refundedFuel.stackCount = (int)Mathf.Round(amountToRefund);
-                    GenPlace.TryPlaceThing(refundedFuel, this.PositionHeld, this.MapHeld, ThingPlaceMode.Direct);
+                    ThingDef thingToRefundDef = compSuppliable.Props.componentDef;
+
+                    RefundComponents(thingToRefundDef, amountToRefund);
                 }
             }
+        }
 
+        private void RefundComponents(ThingDef thingToRefundDef, int amountToRefund)
+        {
+            if (thingToRefundDef != null)
+            {
+                Logger.MessageFormat(this, "Refunding {0} {1}(s)", amountToRefund, thingToRefundDef.defName);
+
+                Thing refundedFuel = ThingMaker.MakeThing(thingToRefundDef);
+                refundedFuel.stackCount = amountToRefund;
+                GenPlace.TryPlaceThing(refundedFuel, this.PositionHeld, this.MapHeld, ThingPlaceMode.Direct);
+            }
         }
 
         private void InitializePocketDimension()
         {
-            if (compPowerBattery.PowerNet == null || compPowerBattery.PowerNet.CurrentStoredEnergy() < (this.desiredEnergyAmount - 1.0f))
+            if (compSuppliable == null || compPowerBattery.PowerNet == null || compPowerBattery.PowerNet.CurrentStoredEnergy() < (this.desiredEnergyAmount - 1.0f))
                 return;
 
             // Consume advanced components
-            compRefuelable.ConsumeFuel(compRefuelable.Props.fuelCapacity);
-            compRefuelable.Props.fuelCapacity = 0.0f;
+            if (!compSuppliable.ConsumeComponents(desiredComponentCount))
+                return;
 
             // Consume battery power
             float percentLost = (this.desiredEnergyAmount - 1.0f) / compPowerBattery.PowerNet.CurrentStoredEnergy();
             float percentRemaining = 1.0f - percentLost;
             foreach (CompPowerBattery battery in compPowerBattery.PowerNet.batteryComps)
                 battery.SetStoredEnergyPct(percentRemaining * battery.StoredEnergyPct);
+
+            desiredComponentCount = 0;
+            desiredEnergyAmount = 0.0f;
 
             mapSize = desiredMapSize;
             CreateMap(this.MapDiameter);
@@ -382,24 +429,27 @@ namespace CM_PocketDimension
         public override string GetInspectString()
         {
             string inspectString = "";
+            int mapSizeToDisplay = mapSize;
+            if (compSuppliable != null && (desiredMapSize > mapSize || !MapCreated))
+                mapSizeToDisplay = desiredMapSize;
 
             if (!this.Spawned)
             {
                 inspectString = base.GetInspectString();
 
-                if (mapSize > 0)
+                if (mapSizeToDisplay > 0)
                 {
                     if (string.IsNullOrEmpty(inspectString))
-                        inspectString += "CM_PocketDimension_MapSize".Translate(mapSize);
+                        inspectString += "CM_PocketDimension_MapSize".Translate(mapSizeToDisplay);
                     else
-                        inspectString += "\n" + "CM_PocketDimension_MapSize".Translate(mapSize);
+                        inspectString += "\n" + "CM_PocketDimension_MapSize".Translate(mapSizeToDisplay);
                 }
 
                 return inspectString;
             }
 
-            if (mapSize > 0)
-                inspectString = "CM_PocketDimension_MapSize".Translate(mapSize) + "\n";
+            if (mapSizeToDisplay > 0)
+                inspectString = "CM_PocketDimension_MapSize".Translate(mapSizeToDisplay) + "\n";
 
             if (!MapCreated)
             {
@@ -410,9 +460,9 @@ namespace CM_PocketDimension
                 inspectString += base.GetInspectString();
             }
 
-            if (desiredMapSize > mapSize || !MapCreated)
+            if (compSuppliable != null && (desiredMapSize > mapSize || !MapCreated))
             {
-                inspectString += "\n" + compRefuelable.Props.FuelLabel + ": " + compRefuelable.Fuel.ToStringDecimalIfSmall() + " / " + compRefuelable.Props.fuelCapacity.ToStringDecimalIfSmall();
+                inspectString += "\n" + compSuppliable.Props.ComponentLabel + ": " + compSuppliable.SupplyCount.ToString() + " / " + desiredComponentCount.ToString();
             }
 
             return inspectString;
@@ -487,13 +537,13 @@ namespace CM_PocketDimension
 
                 ThingDef fuelItemDef = null;
 
-                compRefuelable = this.GetComp<CompRefuelable>();
-                if (compRefuelable != null)
-                    fuelItemDef = compRefuelable.Props.fuelFilter.AllowedThingDefs.FirstOrFallback();
+                compSuppliable = this.GetComp<CompSuppliable>();
+                if (compSuppliable != null)
+                    fuelItemDef = compSuppliable.Props.componentDef;
 
                 if (fuelItemDef != null)
                 {
-                    componentsUsed += this.MapSize * this.MapSize;
+                    componentsUsed += (this.MapSize * this.MapSize) * compSuppliable.Props.componentMultiplier;
 
                     result = fuelItemDef.BaseMarketValue * componentsUsed;
                 }

@@ -16,5 +16,13 @@
 		<driverClass>CM_PocketDimension.JobDriver_CarryToPocketDimension</driverClass>
 		<reportString>Carrying TargetA to TargetB.</reportString>
 	</JobDef>
+	
+	<JobDef>
+		<defName>CM_PocketDimension_Job_SupplyBoxComponents</defName>
+		<driverClass>CM_PocketDimension.JobDriver_SupplyBoxComponents</driverClass>
+		<reportString>supplying TargetA.</reportString>
+		<suspendable>false</suspendable>
+		<allowOpportunisticPrefix>true</allowOpportunisticPrefix>
+	</JobDef>
 
 </Defs>

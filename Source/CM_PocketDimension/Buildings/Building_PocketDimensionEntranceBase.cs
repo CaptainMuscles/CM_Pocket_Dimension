@@ -140,6 +140,7 @@ namespace CM_PocketDimension
                 var opt2 = new FloatMenuOption(menuItemText, () =>
                 {
                     Job job = JobMaker.MakeJob(PocketDimensionDefOf.CM_EnterPocket, this);
+                    job.playerForced = true;
                     selPawn.jobs.StartJob(job, JobCondition.InterruptForced);
                 }, MenuOptionPriority.Default, null, this);
                 yield return opt2;
