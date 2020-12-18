@@ -44,7 +44,7 @@ namespace CM_PocketDimension
                 if (current.OnEdge(map))
                 {
                     Thing wall = ThingMaker.MakeThing(PocketDimensionDefOf.CM_PocketDimensionWall, boxStuffDef);
-                    //wall.SetFaction(Faction.OfPlayer);
+                    wall.SetFaction(Faction.OfPlayer);
                     GenSpawn.Spawn(wall, current, map);
                 }
 

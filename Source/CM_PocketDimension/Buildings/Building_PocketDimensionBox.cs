@@ -35,7 +35,7 @@ namespace CM_PocketDimension
         private int desiredComponentCount = 1;
         private float desiredEnergyAmount = 32000000f;
 
-        public bool countingWealth = false;
+        public bool doingRecursiveThing = false;
 
         public int ComponentsNeeded => (compSuppliable != null) ? desiredComponentCount - compSuppliable.SupplyCount : 0;
         public bool NeedsComponents => ComponentsNeeded > 0;
@@ -70,8 +70,6 @@ namespace CM_PocketDimension
             {
                 if (!string.IsNullOrEmpty(dimensionSeed))
                     PocketDimensionUtility.Boxes[this.dimensionSeed] = this;
-
-
             }
         }
 
@@ -148,7 +146,7 @@ namespace CM_PocketDimension
 
             MapParent_PocketDimension dimensionMapParent = null;
 
-            if (PocketDimensionUtility.MapParents.TryGetValue(dimensionSeed, out dimensionMapParent))
+            if (!string.IsNullOrEmpty(dimensionSeed) && PocketDimensionUtility.MapParents.TryGetValue(dimensionSeed, out dimensionMapParent))
             {
                 dimensionMapParent.Abandon(GetLost);
             }
@@ -207,6 +205,19 @@ namespace CM_PocketDimension
                     icon = ContentFinder<Texture2D>.Get("Things/Mote/ShotHit_Spark"),
                     disabled = (compSuppliable == null || compSuppliable.SupplyCount < desiredComponentCount || compPowerBattery.PowerNet == null || compPowerBattery.PowerNet.CurrentStoredEnergy() < (this.desiredEnergyAmount - 1.0f)),
                 };
+
+                if (Prefs.DevMode)
+                {
+                    // Create the pocket dimension
+                    yield return new Command_Action
+                    {
+                        action = delegate
+                        {
+                            InitializePocketDimension(true);
+                        },
+                        defaultLabel = "DEBUG: Initialize",
+                    };
+                }
             }
         }
 
@@ -216,6 +227,9 @@ namespace CM_PocketDimension
             newMapSize = Math.Max(minMapSize, newMapSize);
 
             desiredMapSize = newMapSize;
+
+            if (compSuppliable == null)
+                return;
 
             if (!MapCreated)
             {
@@ -252,20 +266,26 @@ namespace CM_PocketDimension
             }
         }
 
-        private void InitializePocketDimension()
+        private void InitializePocketDimension(bool devCheat = false)
         {
-            if (compSuppliable == null || compPowerBattery.PowerNet == null || compPowerBattery.PowerNet.CurrentStoredEnergy() < (this.desiredEnergyAmount - 1.0f))
+            if (MapCreated)
                 return;
 
-            // Consume advanced components
-            if (!compSuppliable.ConsumeComponents(desiredComponentCount))
-                return;
+            if (!devCheat)
+            {
+                if (compSuppliable == null || compPowerBattery.PowerNet == null || compPowerBattery.PowerNet.CurrentStoredEnergy() < (this.desiredEnergyAmount - 1.0f))
+                    return;
 
-            // Consume battery power
-            float percentLost = (this.desiredEnergyAmount - 1.0f) / compPowerBattery.PowerNet.CurrentStoredEnergy();
-            float percentRemaining = 1.0f - percentLost;
-            foreach (CompPowerBattery battery in compPowerBattery.PowerNet.batteryComps)
-                battery.SetStoredEnergyPct(percentRemaining * battery.StoredEnergyPct);
+                // Consume advanced components
+                if (!compSuppliable.ConsumeComponents(desiredComponentCount))
+                    return;
+
+                // Consume battery power
+                float percentLost = (this.desiredEnergyAmount - 1.0f) / compPowerBattery.PowerNet.CurrentStoredEnergy();
+                float percentRemaining = 1.0f - percentLost;
+                foreach (CompPowerBattery battery in compPowerBattery.PowerNet.batteryComps)
+                    battery.SetStoredEnergyPct(percentRemaining * battery.StoredEnergyPct);
+            }
 
             desiredComponentCount = 0;
             desiredEnergyAmount = 0.0f;
@@ -498,7 +518,7 @@ namespace CM_PocketDimension
 
         public float CalculateAdditionalMarketValue(float baseValue)
         {
-            if (this.countingWealth)
+            if (this.doingRecursiveThing)
             {
                 Logger.MessageFormat(this, "Counting box wealth again recursively. Skipping...");
                 return 0.0f;
@@ -510,9 +530,15 @@ namespace CM_PocketDimension
             MapParent_PocketDimension innerMapParent = PocketDimensionUtility.GetMapParent(this.dimensionSeed);
             if (innerMapParent != null && innerMapParent.Map != null)
             {
-                this.countingWealth = true;
-                contentValue = innerMapParent.Map.wealthWatcher.WealthTotal;
-                this.countingWealth = false;
+                this.doingRecursiveThing = true;
+                try
+                {
+                    contentValue = innerMapParent.Map.wealthWatcher.WealthTotal;
+                }
+                finally
+                {
+                    this.doingRecursiveThing = false;
+                }
             }
 
             Logger.MessageFormat(this, "Adding value to box: {0}, {1} + {2} + {3} = {4}", this.Label, baseValue, contentValue, componentValue, (baseValue + contentValue + componentValue));

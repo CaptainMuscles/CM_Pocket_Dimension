@@ -13,19 +13,10 @@ namespace CM_PocketDimension
         [HarmonyPatch("Biome", MethodType.Getter)]
         public static class PocketDimensionBiomeGetter
         {
-            static bool testResult;
-
-            [HarmonyPrefix]
-            public static bool interceptBiome(Map __instance)
-            {
-                testResult = (__instance.info?.parent != null && __instance.info.parent is MapParent_PocketDimension);
-                return !testResult;
-            }
-
             [HarmonyPostfix]
             public static void getPocketDimensionBiome(Map __instance, ref BiomeDef __result)
             {
-                if (testResult)
+                if (__instance.info?.parent != null && __instance.info.parent is MapParent_PocketDimension)
                     __result = PocketDimensionDefOf.CM_PocketDimensionBiome;
             }
         }
@@ -78,8 +69,8 @@ namespace CM_PocketDimension
         [HarmonyPatch("OutdoorTemp", MethodType.Getter)]
         public static class FixOutdoorTemp
         {
-            [HarmonyPrefix]
-            public static bool GetOutdoorTemp(ref float __result, Map ___map)
+            [HarmonyPostfix]
+            public static void GetOutdoorTemp(ref float __result, Map ___map)
             {
                 MapParent_PocketDimension mapParent = ___map.info.parent as MapParent_PocketDimension;
                 if (mapParent != null)
@@ -100,7 +91,7 @@ namespace CM_PocketDimension
                                 
                                 if (ThingOwnerUtility.TryGetFixedTemperature(parentHolder, box, out __result))
                                 {
-                                    return false;
+                                    return;// false;
                                 }
                             }
                         }
@@ -115,11 +106,11 @@ namespace CM_PocketDimension
 
                         // Above logic derived from the following function call. Can't call it here due to an edge case which results in infinite loop
                         //__result = box.AmbientTemperature;
-                        return false;
+                        return;// false;
                     }
                 }
 
-                return true;
+                //return true;
             }
         }
 

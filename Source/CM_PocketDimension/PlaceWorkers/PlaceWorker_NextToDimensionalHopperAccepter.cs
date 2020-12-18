@@ -21,14 +21,19 @@ namespace CM_PocketDimension
                     continue;
                 }
                 List<Thing> thingList = c.GetThingList(map);
-                for (int j = 0; j < thingList.Count; j++)
+
+                foreach (Thing thingNearby in thingList)
                 {
-                    ThingDef thingDef = GenConstruct.BuiltDefOf(thingList[j].def) as ThingDef;
+                    // Check for an already-built pocket dimension building
+                    if (thingNearby as Building_PocketDimensionEntranceBase != null)
+                        return true;
+
+                    // Might be a blueprint, this won't work with the premade boxes (unless we name them all here... and I'm not doing that because I'll never remember if I add more so :P)
+                    ThingDef thingDef = GenConstruct.BuiltDefOf(thingNearby.def) as ThingDef;
                     if (thingDef != null && thingDef == PocketDimensionDefOf.CM_PocketDimensionBox || thingDef == PocketDimensionDefOf.CM_PocketDimensionExit)
                     {
                         return true;
                     }
-
                 }
             }
             return "CM_MustPlaceNextToDimensionalHopperAccepter".Translate();

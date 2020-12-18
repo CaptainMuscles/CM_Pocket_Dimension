@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 using UnityEngine;
@@ -111,20 +112,36 @@ namespace CM_PocketDimension
                     icon = ContentFinder<Texture2D>.Get("UI/Commands/ViewQuest"),
                 };
             }
+
+            if (Prefs.DevMode && MapCreated)
+            {
+                // Fix walls not being owned by player
+                yield return new Command_Action
+                {
+                    action = () => PocketDimensionUtility.ClaimWalls(PocketDimensionUtility.GetMapParent(this.dimensionSeed).Map, Faction.OfPlayer),
+                    defaultLabel = "DEBUG: Claim walls",
+                };
+            }
         }
 
         public override IEnumerable<FloatMenuOption> GetFloatMenuOptions(Pawn selPawn)
         {
-            string menuItemText = "";
-
-            Building_PocketDimensionEntranceBase otherSide = PocketDimensionUtility.GetOtherSide(this);
-
             bool isExit = ((this as Building_PocketDimensionBox) == null);
+            Building_PocketDimensionEntranceBase otherSide = PocketDimensionUtility.GetOtherSide(this);
             bool otherSideAvailable = (otherSide != null && otherSide.Map != null);
+
+            string goThroughMenuItemText = "";
+
+            if (isExit)
+                goThroughMenuItemText = "CM_ExitPocketDimension".Translate(this.Label);
+            else
+                goThroughMenuItemText = "CM_EnterPocketDimension".Translate(this.Label);
+
+            
 
             foreach (var opt in base.GetFloatMenuOptions(selPawn))
             {
-                if (opt.Label != menuItemText)
+                if (opt.Label != goThroughMenuItemText)
                 {
                     yield return opt;
                 }
@@ -132,18 +149,14 @@ namespace CM_PocketDimension
 
             if (otherSideAvailable)
             {
-                if (isExit)
-                    menuItemText = "CM_ExitPocketDimension".Translate(this.Label);
-                else
-                    menuItemText = "CM_EnterPocketDimension".Translate(this.Label);
-
-                var opt2 = new FloatMenuOption(menuItemText, () =>
+                Action goThroughAction = delegate
                 {
-                    Job job = JobMaker.MakeJob(PocketDimensionDefOf.CM_EnterPocket, this);
-                    job.playerForced = true;
-                    selPawn.jobs.StartJob(job, JobCondition.InterruptForced);
-                }, MenuOptionPriority.Default, null, this);
-                yield return opt2;
+                    Job goThroughJob = JobMaker.MakeJob(PocketDimensionDefOf.CM_EnterPocket, this);
+                    selPawn.jobs.TryTakeOrderedJob(goThroughJob);
+                };
+
+                FloatMenuOption goThroughOption = new FloatMenuOption(goThroughMenuItemText, goThroughAction, MenuOptionPriority.Default, null, this);
+                yield return goThroughOption;
             }
         }
 
