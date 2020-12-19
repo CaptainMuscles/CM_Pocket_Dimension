@@ -10,7 +10,6 @@
 ### Fixed
 - Showing correct (desired) map size on uninitialized pocket dimension.
 - Dimensional hoppers can now be built next to Microverse, Miniverse and Teenyverse boxes.
-- Visual and audio effect played when pocket dimension created.
 - Job to enter/exit pocket dimension is now properly queueable.
 - Pocket dimension boxes no longer sometimes accept more fuel after being initialized.
 - No more flickering in pocket dimension map built on a SOS2 ship.
