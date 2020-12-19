@@ -1,0 +1,31 @@
+## [1.0.5] - 2020-12-18
+
+### Added
+- Drop pods from trades made inside pocket dimension will now drop outside if possible. If not possible, they will be put directly in the pocket dimension.
+- Debug mode button for initializing pocket dimension without components or energy.
+- Debug mode button for claiming walls inside pocket dimension. Fixes walls not repairable on existing saves.
+- Debug menu action for adding a random trade ship to the current map.
+- Maximum loading mass for pocket dimension greatly increased.
+
+### Fixed
+- Showing correct (desired) map size on uninitialized pocket dimension.
+- Dimensional hoppers can now be built next to Microverse, Miniverse and Teenyverse boxes.
+- Visual and audio effect played when pocket dimension created.
+- Job to enter/exit pocket dimension is now properly queueable.
+- Pocket dimension boxes no longer sometimes accept more fuel after being initialized.
+- No more flickering in pocket dimension map built on a SOS2 ship.
+- No more vacuuum biome inside pocket dimension map built on a SOS2 ship.
+- Inner walls of pocket dimension are now repairable (for existing saves, enter debug mode and look for "Claim walls" button on pocket dimension box or exit).
+
+## [1.0.4] - 2020-12-09
+
+### Added
+- Pre-made pocket dimension boxes added as quest rewards. Three sizes available - Microverse, Miniverse and Teenyverse. Just - install to initialize map.
+- Map size shown on info when pocket dimension box is selected.
+- Visual and audio effect played when pocket dimension created.
+
+## [1.0.3] - 2020-12-06
+
+### Fixed
+- Market value of box now includes the value of its contents and the advanced components used to initialize it.
+- Fixed an issue where the box would be destroyed when taken aboard a pod or shuttle.

@@ -27,5 +27,6 @@ Pocket Dimensions is a mod for Rimworld that allows you to create a map that is 
 	<loadAfter>
 		<li>Ludeon.RimWorld</li>
 		<li>brrainz.harmony</li>
+		<li>VanillaExpanded.VFEPropsandDecor</li>
 	</loadAfter>
 </ModMetaData>

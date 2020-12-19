@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Manifest>
   <identifier>CaptainMuscles.PocketDimension</identifier>
-  <version>1.0.4</version>
+  <version>1.0.5</version>
   <dependencies>
 	<li>Ludeon.RimWorld</li>
 	<li>brrainz.harmony</li>
@@ -10,6 +10,7 @@
   <loadAfter>
     <li>Ludeon.RimWorld</li>
 	<li>brrainz.harmony</li>
+	<li>VanillaExpanded.VFEPropsandDecor</li>
   </loadAfter>
   <showCrossPromotions>true</showCrossPromotions>
   <downloadUri>https://github.com/CaptainMuscles/CM_Pocket_Dimension/releases</downloadUri>
