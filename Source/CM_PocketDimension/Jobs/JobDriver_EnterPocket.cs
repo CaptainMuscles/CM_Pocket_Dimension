@@ -46,6 +46,7 @@ namespace CM_PocketDimension
 
                             if (position != null && map != null)
                             {
+                                pawn.ClearAllReservations();
                                 pawn.DeSpawn(DestroyMode.Vanish);
                                 GenSpawn.Spawn(pawn, position, map, WipeMode.Vanish);
                             }
