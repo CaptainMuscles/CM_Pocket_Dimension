@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-
+using System.Linq;
 using HarmonyLib;
 using RimWorld;
 using Verse;
@@ -45,7 +45,7 @@ namespace CM_PocketDimension
             public static bool Prefix(MapPawns __instance, Map ___map, ref bool __result)
             {
                 // Check all pocket dimensions accessible to this map and allow their contents to block this maps removal
-                List<Thing> pocketDimensionBoxes = ___map.listerThings.ThingsOfDef(PocketDimensionDefOf.CM_PocketDimensionBox);
+                List<Thing> pocketDimensionBoxes = ___map.listerThings.AllThings.Where(thing => thing as Building_PocketDimensionBox != null).ToList();
 
                 foreach (Thing thing in pocketDimensionBoxes)
                 {
