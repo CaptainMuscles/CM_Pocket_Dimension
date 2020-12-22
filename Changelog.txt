@@ -1,3 +1,12 @@
+## [1.0.8] - 2020-12-22
+
+### Added
+- If Rimworld of Magic is present, a magic version of the pocket dimension will be available. "Ye olde pocket dimension"  requires magicyte instead of advanced components to build and initialize, requires no electricity and does not provide battery power sharing, and it requires Rimworld of Magic "Portal" research to build.
+
+### Fixed
+- Leaving an installed Microverse, Miniverse or Teenyverse on a temporary quest or camp map now properly keeps the temporary map open.
+
+
 ## [1.0.7] - 2020-12-21
 
 ### Added
