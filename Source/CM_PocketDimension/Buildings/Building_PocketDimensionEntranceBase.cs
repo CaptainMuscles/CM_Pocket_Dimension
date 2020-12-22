@@ -246,10 +246,13 @@ namespace CM_PocketDimension
                 Thing first = transporter.innerContainer.FirstOrFallback();
 
                 if (first != null)
+                {
                     GenSpawn.Spawn(first, otherSide.InteractionCell, otherSide.Map, WipeMode.Vanish);
-
-                if (transporter.leftToLoad != null && transporter.innerContainer != null && transporter.leftToLoad.Count == 0 && transporter.innerContainer.Count == 0)
+                }
+                else if (transporter.LoadingInProgressOrReadyToLaunch && !transporter.AnyInGroupHasAnythingLeftToLoad)
+                {
                     transporter.CancelLoad();
+                }
             }
         }
 
