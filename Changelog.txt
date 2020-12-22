@@ -1,3 +1,11 @@
+## [1.0.6] - 2020-12-21
+
+### Fixed
+- Pawns no longer wander on the other side of the box if an item in the load list was cancelled.
+- Reservation manager no longer throws an error after pawn goes in/out of box.
+- No more error messages about equalizing temperature after box is placed.
+
+
 ## [1.0.5] - 2020-12-18
 
 ### Added
@@ -16,6 +24,7 @@
 - No more vacuuum biome inside pocket dimension map built on a SOS2 ship.
 - Inner walls of pocket dimension are now repairable (for existing saves, enter debug mode and look for "Claim walls" button on pocket dimension box or exit).
 
+
 ## [1.0.4] - 2020-12-09
 
 ### Added
@@ -23,8 +32,11 @@
 - Map size shown on info when pocket dimension box is selected.
 - Visual and audio effect played when pocket dimension created.
 
+
 ## [1.0.3] - 2020-12-06
 
-### Fixed
+### Added
 - Market value of box now includes the value of its contents and the advanced components used to initialize it.
+
+### Fixed
 - Fixed an issue where the box would be destroyed when taken aboard a pod or shuttle.
