@@ -5,13 +5,13 @@ using Verse;
 namespace CM_PocketDimension
 {
     [StaticConstructorOnStartup]
-    public class CompSuppliable : ThingComp
+    public class CompPocketDimensionCreator : ThingComp
     {
         private int supplyCount = 0;
 
         public int SupplyCount => supplyCount;
 
-        public CompProperties_Suppliable Props => (CompProperties_Suppliable)props;
+        public CompProperties_PocketDimensionCreator Props => (CompProperties_PocketDimensionCreator)props;
 
         public override void PostExposeData()
         {

@@ -7,6 +7,7 @@ using RimWorld;
 using RimWorld.Planet;
 using Verse;
 using Verse.Sound;
+using System.Text;
 
 namespace CM_PocketDimension
 {
@@ -29,7 +30,7 @@ namespace CM_PocketDimension
         private int MapDiameter => (mapSize * 6) + 1;
         private int DesiredMapDiameter => (desiredMapSize * 6) + 1;
 
-        CompSuppliable compSuppliable = null;
+        CompPocketDimensionCreator compCreator = null;
         private CompTransporter compTransporter = null;
 
         private int desiredComponentCount = 1;
@@ -37,19 +38,19 @@ namespace CM_PocketDimension
 
         public bool doingRecursiveThing = false;
 
-        public int ComponentsNeeded => (compSuppliable != null) ? desiredComponentCount - compSuppliable.SupplyCount : 0;
+        public int ComponentsNeeded => (compCreator != null) ? desiredComponentCount - compCreator.SupplyCount : 0;
         public bool NeedsComponents => ComponentsNeeded > 0;
 
         public void AddComponents(List<Thing> componentsList)
         {
-            if (compSuppliable == null)
+            if (compCreator == null)
                 return;
 
             while (ComponentsNeeded > 0 && componentsList.Count > 0)
             {
                 Thing component = componentsList.Pop();
                 int componentsGiven = Mathf.Min(ComponentsNeeded, component.stackCount);
-                if (compSuppliable.AddComponents(componentsGiven))
+                if (compCreator.AddComponents(componentsGiven))
                     component.SplitOff(componentsGiven).Destroy();
                 else
                     break;
@@ -79,7 +80,7 @@ namespace CM_PocketDimension
 
             Logger.MessageFormat(this, "Spawning");
 
-            compSuppliable = this.GetComp<CompSuppliable>();
+            compCreator = this.GetComp<CompPocketDimensionCreator>();
             compTransporter = this.GetComp<CompTransporter>();
 
             if (mapSize == 0)
@@ -87,17 +88,17 @@ namespace CM_PocketDimension
 
             if (fuel >= 1.0f)
             {
-                if (compSuppliable != null)
+                if (compCreator != null)
                 {
-                    compSuppliable.AddComponents((int)Mathf.Round(fuel));
+                    compCreator.AddComponents((int)Mathf.Round(fuel));
                     fuel = 0.0f;
 
-                    if (compSuppliable.SupplyCount > desiredComponentCount)
+                    if (compCreator.SupplyCount > desiredComponentCount)
                     {
-                        int amountToRefund = compSuppliable.SupplyCount - desiredComponentCount;
-                        if (compSuppliable.ConsumeComponents(amountToRefund))
+                        int amountToRefund = compCreator.SupplyCount - desiredComponentCount;
+                        if (compCreator.ConsumeComponents(amountToRefund))
                         {
-                            ThingDef thingToRefundDef = compSuppliable.Props.componentDef;
+                            ThingDef thingToRefundDef = compCreator.Props.componentDef;
 
                             RefundComponents(thingToRefundDef, amountToRefund);
                         }
@@ -129,11 +130,9 @@ namespace CM_PocketDimension
             }
             else
             {
-                CompPocketDimensionPremade compPocketDimensionPremade = this.GetComp<CompPocketDimensionPremade>();
-
-                if (compPocketDimensionPremade != null)
+                if (compCreator != null && compCreator.Props.preMadeMapSize > 0)
                 {
-                    SetDesiredMapSize(compPocketDimensionPremade.Props.mapSize);
+                    SetDesiredMapSize(compCreator.Props.preMadeMapSize);
                     mapSize = desiredMapSize;
                     CreateMap(this.MapDiameter);
                 }
@@ -165,7 +164,7 @@ namespace CM_PocketDimension
                 yield return c;
             }
 
-            if (compSuppliable != null && !MapCreated)
+            if (compCreator != null && !MapCreated)
             {
                 // Decrease pocket dimension size
                 yield return new Command_Action
@@ -203,7 +202,10 @@ namespace CM_PocketDimension
                     defaultLabel = "CM_CreatePocketDimension".Translate(),
                     defaultDesc = "CM_CreatePocketDimension".Translate(),
                     icon = ContentFinder<Texture2D>.Get("Things/Mote/ShotHit_Spark"),
-                    disabled = (compSuppliable == null || compSuppliable.SupplyCount < desiredComponentCount || compPowerBattery.PowerNet == null || compPowerBattery.PowerNet.CurrentStoredEnergy() < (this.desiredEnergyAmount - 1.0f)),
+                    disabled = (compCreator == null || 
+                                compCreator.SupplyCount < desiredComponentCount || 
+                                (compPowerBattery == null && this.desiredEnergyAmount >= 1.0f) || 
+                                (compPowerBattery != null && (compPowerBattery.PowerNet == null || compPowerBattery.PowerNet.CurrentStoredEnergy() < (this.desiredEnergyAmount - 1.0f)))),
                 };
 
                 if (Prefs.DevMode)
@@ -228,26 +230,26 @@ namespace CM_PocketDimension
 
             desiredMapSize = newMapSize;
 
-            if (compSuppliable == null)
+            if (compCreator == null)
                 return;
 
             if (!MapCreated)
             {
-                desiredComponentCount = (desiredMapSize * desiredMapSize) * compSuppliable.Props.componentMultiplier;
-                desiredEnergyAmount = desiredMapSize * compSuppliable.Props.powerMultiplier;
+                desiredComponentCount = (desiredMapSize * desiredMapSize) * compCreator.Props.componentMultiplier;
+                desiredEnergyAmount = desiredMapSize * compCreator.Props.powerMultiplier;
             }
             else
             {
-                desiredComponentCount = ((desiredMapSize * desiredMapSize) - (mapSize * mapSize)) * compSuppliable.Props.componentMultiplier;
-                desiredEnergyAmount = (desiredMapSize - mapSize) * compSuppliable.Props.powerMultiplier;
+                desiredComponentCount = ((desiredMapSize * desiredMapSize) - (mapSize * mapSize)) * compCreator.Props.componentMultiplier;
+                desiredEnergyAmount = (desiredMapSize - mapSize) * compCreator.Props.powerMultiplier;
             }
 
-            if (compSuppliable.SupplyCount > desiredComponentCount && this.SpawnedOrAnyParentSpawned)
+            if (compCreator.SupplyCount > desiredComponentCount && this.SpawnedOrAnyParentSpawned)
             {
-                int amountToRefund = compSuppliable.SupplyCount - desiredComponentCount;
-                if (compSuppliable.ConsumeComponents(amountToRefund))
+                int amountToRefund = compCreator.SupplyCount - desiredComponentCount;
+                if (compCreator.ConsumeComponents(amountToRefund))
                 {
-                    ThingDef thingToRefundDef = compSuppliable.Props.componentDef;
+                    ThingDef thingToRefundDef = compCreator.Props.componentDef;
 
                     RefundComponents(thingToRefundDef, amountToRefund);
                 }
@@ -273,18 +275,21 @@ namespace CM_PocketDimension
 
             if (!devCheat)
             {
-                if (compSuppliable == null || compPowerBattery.PowerNet == null || compPowerBattery.PowerNet.CurrentStoredEnergy() < (this.desiredEnergyAmount - 1.0f))
+                if (compCreator == null || (compPowerBattery != null && (compPowerBattery.PowerNet == null || compPowerBattery.PowerNet.CurrentStoredEnergy() < (this.desiredEnergyAmount - 1.0f))))
                     return;
 
-                // Consume advanced components
-                if (!compSuppliable.ConsumeComponents(desiredComponentCount))
+                // Consume advanced components or whatever
+                if (!compCreator.ConsumeComponents(desiredComponentCount))
                     return;
 
                 // Consume battery power
-                float percentLost = (this.desiredEnergyAmount - 1.0f) / compPowerBattery.PowerNet.CurrentStoredEnergy();
-                float percentRemaining = 1.0f - percentLost;
-                foreach (CompPowerBattery battery in compPowerBattery.PowerNet.batteryComps)
-                    battery.SetStoredEnergyPct(percentRemaining * battery.StoredEnergyPct);
+                if (compPowerBattery != null)
+                {
+                    float percentLost = (this.desiredEnergyAmount - 1.0f) / compPowerBattery.PowerNet.CurrentStoredEnergy();
+                    float percentRemaining = 1.0f - percentLost;
+                    foreach (CompPowerBattery battery in compPowerBattery.PowerNet.batteryComps)
+                        battery.SetStoredEnergyPct(percentRemaining * battery.StoredEnergyPct);
+                }
             }
 
             desiredComponentCount = 0;
@@ -296,7 +301,7 @@ namespace CM_PocketDimension
 
         private void CreateMap(int mapWidth)
         {
-            if (string.IsNullOrEmpty(dimensionSeed))
+            if (string.IsNullOrEmpty(dimensionSeed) && compCreator != null)
             {
                 GeneratePocketMap(mapWidth);
             }
@@ -305,8 +310,6 @@ namespace CM_PocketDimension
         //Generates a map with a defined seed
         private void GeneratePocketMap(int mapWidth)
         {
-            CompPocketDimensionContainer dimensionProperties = this.GetComp<CompPocketDimensionContainer>();
-
             IntVec3 size = new IntVec3(mapWidth, 1, mapWidth);
             this.dimensionSeed = Find.TickManager.TicksAbs.ToString();
 
@@ -330,7 +333,7 @@ namespace CM_PocketDimension
             generatedMap.gameConditionManager.RegisterCondition(gameCondition_NoSunlight);
 
             // Now make an exit in the map
-            var thingToMake = PocketDimensionDefOf.CM_PocketDimensionExit;
+            ThingDef thingToMake = compCreator.Props.exitDef;
             List<Thing> thingList = generatedMap.Center.GetThingList(generatedMap).Where(x => x.def == thingToMake).ToList();
             if (thingList.Count() == 0)
             {
@@ -450,40 +453,51 @@ namespace CM_PocketDimension
         {
             string inspectString = "";
             int mapSizeToDisplay = mapSize;
-            if (compSuppliable != null && (desiredMapSize > mapSize || !MapCreated))
-                mapSizeToDisplay = desiredMapSize;
+            if (compCreator != null)
+            {
+                if (compCreator.Props.preMadeMapSize > 0)
+                    mapSizeToDisplay = compCreator.Props.preMadeMapSize;
+                else if (desiredMapSize > mapSize || !MapCreated)
+                    mapSizeToDisplay = desiredMapSize;
+            }
 
             if (!this.Spawned)
             {
                 inspectString = base.GetInspectString();
 
                 if (mapSizeToDisplay > 0)
-                {
-                    if (string.IsNullOrEmpty(inspectString))
-                        inspectString += "CM_PocketDimension_MapSize".Translate(mapSizeToDisplay);
-                    else
-                        inspectString += "\n" + "CM_PocketDimension_MapSize".Translate(mapSizeToDisplay);
-                }
+                    inspectString = AddInspectStringLine(inspectString, "CM_PocketDimension_MapSize".Translate(mapSizeToDisplay));
 
                 return inspectString;
             }
 
             if (mapSizeToDisplay > 0)
-                inspectString = "CM_PocketDimension_MapSize".Translate(mapSizeToDisplay) + "\n";
+                inspectString = AddInspectStringLine(inspectString, "CM_PocketDimension_MapSize".Translate(mapSizeToDisplay));
 
             if (!MapCreated)
             {
-                inspectString += (((string)("CM_BatteryPowerNeeded".Translate() + ": " + (desiredEnergyAmount).ToString("#####0") + " Wd")));
+                if (desiredEnergyAmount >= 1.0f)
+                    inspectString = AddInspectStringLine(inspectString, (((string)("CM_BatteryPowerNeeded".Translate() + ": " + (desiredEnergyAmount).ToString("#####0") + " Wd"))));
             }
             else
             {
-                inspectString += base.GetInspectString();
+                inspectString = AddInspectStringLine(inspectString, base.GetInspectString());
             }
 
-            if (compSuppliable != null && (desiredMapSize > mapSize || !MapCreated))
+            if (compCreator != null && (desiredMapSize > mapSize || !MapCreated))
             {
-                inspectString += "\n" + compSuppliable.Props.ComponentLabel + ": " + compSuppliable.SupplyCount.ToString() + " / " + desiredComponentCount.ToString();
+                inspectString = AddInspectStringLine(inspectString, compCreator.Props.ComponentLabel + ": " + compCreator.SupplyCount.ToString() + " / " + desiredComponentCount.ToString());
             }
+
+            return inspectString;
+        }
+
+        private string AddInspectStringLine(string inspectString, string line)
+        {
+            if (string.IsNullOrEmpty(inspectString))
+                inspectString = line;
+            else if (!string.IsNullOrEmpty(line))
+                inspectString = inspectString + "\n" + line;
 
             return inspectString;
         }
@@ -554,22 +568,21 @@ namespace CM_PocketDimension
             {
                 int componentsUsed = 0;
 
-                // If this is a pre-made box, only calculate cost of extra components (i.e. if we upgraded the box)
-                CompPocketDimensionPremade compPocketDimensionPremade = this.GetComp<CompPocketDimensionPremade>();
-                if (compPocketDimensionPremade != null)
-                {
-                    componentsUsed = -(compPocketDimensionPremade.Props.mapSize * compPocketDimensionPremade.Props.mapSize);
-                }
-
                 ThingDef fuelItemDef = null;
 
-                compSuppliable = this.GetComp<CompSuppliable>();
-                if (compSuppliable != null)
-                    fuelItemDef = compSuppliable.Props.componentDef;
+                compCreator = this.GetComp<CompPocketDimensionCreator>();
+                if (compCreator != null)
+                {
+                    if (compCreator.Props.preMadeMapSize > 0)
+                        componentsUsed = -(compCreator.Props.preMadeMapSize * compCreator.Props.preMadeMapSize);
+
+                    fuelItemDef = compCreator.Props.componentDef;
+                }
+                    
 
                 if (fuelItemDef != null)
                 {
-                    componentsUsed += (this.MapSize * this.MapSize) * compSuppliable.Props.componentMultiplier;
+                    componentsUsed += (this.MapSize * this.MapSize) * compCreator.Props.componentMultiplier;
 
                     result = fuelItemDef.BaseMarketValue * componentsUsed;
                 }

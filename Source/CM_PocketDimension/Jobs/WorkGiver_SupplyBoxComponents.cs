@@ -12,13 +12,13 @@ namespace CM_PocketDimension
 {
     public class WorkGiver_SupplyBoxComponents : WorkGiver_Scanner
     {
-        public override ThingRequest PotentialWorkThingRequest => ThingRequest.ForDef(PocketDimensionDefOf.CM_PocketDimensionBox);
+        public override ThingRequest PotentialWorkThingRequest => ThingRequest.ForGroup(ThingRequestGroup.BuildingArtificial);
 
         public override PathEndMode PathEndMode => PathEndMode.Touch;
 
         public override bool ShouldSkip(Pawn pawn, bool forced = false)
         {
-            List<Thing> list = pawn.Map.listerThings.ThingsOfDef(PocketDimensionDefOf.CM_PocketDimensionBox);
+            List<Thing> list = pawn.Map.listerThings.AllThings.Where(thing => thing as Building_PocketDimensionBox != null).ToList();
             for (int i = 0; i < list.Count; i++)
             {
                 if (((Building_PocketDimensionBox)list[i]).NeedsComponents)
@@ -50,7 +50,7 @@ namespace CM_PocketDimension
             }
             if (FindBestComponents(pawn, pocketDimensionBox) == null)
             {
-                JobFailReason.Is("CM_PocketDimension_NoComponentsToSupply".Translate(pocketDimensionBox.TryGetComp<CompSuppliable>().Props.componentLabel));
+                JobFailReason.Is("CM_PocketDimension_NoComponentsToSupply".Translate(pocketDimensionBox.TryGetComp<CompPocketDimensionCreator>().Props.componentLabel));
                 return false;
             }
             return true;
@@ -66,11 +66,11 @@ namespace CM_PocketDimension
 
         private Thing FindBestComponents(Pawn pawn, Building_PocketDimensionBox pocketDimensionBox)
         {
-            CompSuppliable compSuppliable = pocketDimensionBox.GetComp<CompSuppliable>();
+            CompPocketDimensionCreator compCreator = pocketDimensionBox.GetComp<CompPocketDimensionCreator>();
 
-            if (compSuppliable != null)
+            if (compCreator != null)
             {
-                ThingRequest componentRequest = ThingRequest.ForDef(compSuppliable.Props.componentDef);
+                ThingRequest componentRequest = ThingRequest.ForDef(compCreator.Props.componentDef);
 
                 Predicate<Thing> validator = delegate (Thing x) { return (!x.IsForbidden(pawn) && pawn.CanReserve(x)); };
                 return GenClosest.ClosestThingReachable(pawn.Position, pawn.Map, componentRequest, PathEndMode.ClosestTouch, TraverseParms.For(pawn), 9999f, validator);

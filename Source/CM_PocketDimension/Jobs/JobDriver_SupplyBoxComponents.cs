@@ -10,8 +10,6 @@ namespace CM_PocketDimension
     {
         protected Building_PocketDimensionBox Box => job.GetTarget(TargetIndex.A).Thing as Building_PocketDimensionBox;
 
-        protected CompSuppliable SuppliableComp => Box.TryGetComp<CompSuppliable>();
-
         protected Thing Components => job.GetTarget(TargetIndex.B).Thing;
 
         private const int SupplyingDuration = 240;
