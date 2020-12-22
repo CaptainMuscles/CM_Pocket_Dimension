@@ -1,3 +1,9 @@
+## [1.0.7] - 2020-12-21
+
+### Added
+- The electricity disabled status (from solar flare events) of a pocket dimension map is now inherited from the containing map. This should allow magnetic shield from RT Solar Flare Shield mod to protect the pocket dimensions contained on the map.
+
+
 ## [1.0.6] - 2020-12-21
 
 ### Fixed
