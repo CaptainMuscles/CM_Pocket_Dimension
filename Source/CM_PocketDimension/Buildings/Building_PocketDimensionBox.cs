@@ -424,7 +424,7 @@ namespace CM_PocketDimension
                 return Mathf.Abs((resultingTemperature - temperature) * roomSize / temperatureDifferenceTimesRate);
             }
 
-            return 1.0f;
+            return 0.0f;
         }
 
         private void EqualizeTemperatureForRoom(RoomGroup room, float averageTemperature, float temperatureChangeAmount)
@@ -437,7 +437,7 @@ namespace CM_PocketDimension
 
                 if (float.IsNaN(temperatureChange))
                 {
-                    Logger.ErrorFormat(this, "averageTemperature: {0}, temperature: {1}, temperatureEqualizeRate: {2}, temperatureChangeAmount: {3}, roomSize: {4}", averageTemperature, temperature, temperatureEqualizeRate, temperatureChangeAmount, roomSize);
+                    //Logger.ErrorFormat(this, "averageTemperature: {0}, temperature: {1}, temperatureEqualizeRate: {2}, temperatureChangeAmount: {3}, roomSize: {4}", averageTemperature, temperature, temperatureEqualizeRate, temperatureChangeAmount, roomSize);
                 }
                 else
                 {
