@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Patch>
+
+	<Operation Class="PatchOperationFindMod">
+		<mods>
+			<li>A RimWorld of Magic</li>
+		</mods>
+		<match Class="PatchOperationSequence">
+		  <success>Always</success>
+		  <operations>
+		
+			<li Class="PatchOperationAdd">
+			  <xpath>/Defs</xpath>
+				<value>
+					  <ThingDef ParentName="BuildingBase">
+						<defName>CM_PocketDimensionBox_Magic</defName>
+						<label>ye olde pocket dimension</label>
+						<thingClass>CM_PocketDimension.Building_PocketDimensionBox</thingClass>
+						<description>A magical container for a pocket dimension.</description>
+						<graphicData>	
+						  <texPath>Things/Building/SpacerProps/SpacerContainer/SpacerContainer</texPath>
+						  <graphicClass>Graphic_Multi</graphicClass>
+						  <drawSize>(1,1)</drawSize>
+						</graphicData>
+						<defaultPlacingRot>South</defaultPlacingRot>
+						<altitudeLayer>Building</altitudeLayer>
+						<passability>PassThroughOnly</passability>
+						<fillPercent>0.2</fillPercent>
+						<statBases>
+						  <MarketValue>500</MarketValue>
+						  <MaxHitPoints>500</MaxHitPoints>
+						  <WorkToBuild>500</WorkToBuild>
+						  <Mass>5</Mass>
+						  <Flammability>0</Flammability>
+						</statBases>
+						<building>
+						</building>
+						<size>(1,1)</size>
+						<minifiedDef>MinifiedThing</minifiedDef>
+						<thingCategories>
+							<li>BuildingsSpecial</li>
+						</thingCategories>
+						<hasInteractionCell>True</hasInteractionCell>
+						<interactionCellOffset>(0,0,1)</interactionCellOffset>
+						<stuffCategories>
+						  <li>Metallic</li>
+						  <li>Woody</li>
+						  <li>Stony</li>
+						</stuffCategories>
+						<costStuffCount>100</costStuffCount>
+						<costList>
+						  <RawMagicyte>80</RawMagicyte>
+						</costList>
+						<designationCategory>Misc</designationCategory>
+						<uiIconScale>1</uiIconScale>
+						<comps>
+							<!--<li Class="CompProperties_Flickable"/>-->
+							<li Class="CompProperties_Transporter">
+								<max1PerGroup>true</max1PerGroup>
+								<massCapacity>999999</massCapacity>
+								<restEffectiveness>0.8</restEffectiveness>
+							</li>
+							<li Class="CM_PocketDimension.CompProperties_PocketDimensionCreator">
+								<exitDef>CM_PocketDimensionExit_Magic</exitDef>
+								<componentDef>RawMagicyte</componentDef>
+								<componentMultiplier>40</componentMultiplier>
+								<componentLabel>Raw magicyte</componentLabel>
+								<powerMultiplier>0.0</powerMultiplier>
+							  </li>
+						</comps>
+						<inspectorTabs>
+							<li>ITab_ContentsTransporter</li>
+						</inspectorTabs>
+						<canOverlapZones>false</canOverlapZones>
+						<tickerType>Normal</tickerType>
+						<tradeability>Sellable</tradeability>
+						<tradeTags>
+						  <li>ExoticBuilding</li>
+						</tradeTags>
+						<researchPrerequisites>
+						  <li>TM_Portals</li>
+						</researchPrerequisites>
+					  </ThingDef>
+				</value>
+			</li>
+			
+			<li Class="PatchOperationAdd">
+			  <xpath>/Defs</xpath>
+				<value>
+					    <ThingDef ParentName="BuildingBase">
+							<defName>CM_PocketDimensionExit_Magic</defName>
+							<label>ye olde pocket dimension exit</label>
+							<thingClass>CM_PocketDimension.Building_PocketDimensionExit</thingClass>
+							<description>Exit from a pocket dimension.</description>
+							<graphicData>	
+							  <texPath>Things/Building/SpacerProps/SpacerContainer/SpacerContainer</texPath>
+							  <graphicClass>Graphic_Multi</graphicClass>
+							  <drawSize>(1,1)</drawSize>
+							</graphicData>
+							<defaultPlacingRot>South</defaultPlacingRot>
+							<altitudeLayer>Building</altitudeLayer>
+							<passability>PassThroughOnly</passability>
+							<fillPercent>0.2</fillPercent>
+							<statBases>
+							  <MaxHitPoints>500</MaxHitPoints>
+							  <WorkToBuild>500</WorkToBuild>
+							  <Mass>5</Mass>
+							  <Flammability>0</Flammability>
+							</statBases>
+							<building>
+							</building>
+							<size>(1,1)</size>
+							<minifiedDef>MinifiedThing</minifiedDef>
+							<thingCategories>
+								<li>BuildingsSpecial</li>
+							</thingCategories>
+							<hasInteractionCell>True</hasInteractionCell>
+							<interactionCellOffset>(0,0,1)</interactionCellOffset>
+							<stuffCategories>
+							  <li>Metallic</li>
+							  <li>Woody</li>
+							  <li>Stony</li>
+							</stuffCategories>
+							<!--<costStuffCount>100</costStuffCount>-->
+							<uiIconScale>1</uiIconScale>
+							<comps>
+								<li Class="CompProperties_Transporter">
+									<max1PerGroup>true</max1PerGroup>
+									<massCapacity>999999</massCapacity>
+									<restEffectiveness>0.8</restEffectiveness>
+								</li>
+							</comps>
+							<inspectorTabs>
+								<li>ITab_ContentsTransporter</li>
+							</inspectorTabs>
+							<placeWorkers>
+							</placeWorkers>
+							<canOverlapZones>false</canOverlapZones>
+							<tickerType>Normal</tickerType>
+							<tradeability>None</tradeability>
+						  </ThingDef>
+				</value>
+			</li>
+			
+		  </operations>
+		</match>
+	</Operation>
+
+</Patch>
+
