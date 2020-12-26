@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Defs>
+<Defs> 
+
+  <!-- Empty box no longer in use, keeping for backward compatibility -->
   <ThingDef ParentName="BuildingBase">
     <defName>CM_PocketDimensionEmpty</defName>
     <label>dimensional containment box</label>
@@ -65,14 +67,16 @@
 	<canOverlapZones>false</canOverlapZones>
 	<tickerType>Normal</tickerType>
   </ThingDef>
-  
+
   <ThingDef ParentName="BuildingBase">
     <defName>CM_PocketDimensionBox</defName>
     <label>pocket dimension</label>
 	<thingClass>CM_PocketDimension.Building_PocketDimensionBox</thingClass>
     <description>A containment field for a pocket dimension.</description>
     <graphicData>	
-      <texPath>Things/Building/SpacerProps/SpacerContainer/SpacerContainer</texPath>
+      <texPath>Things/Building/PocketDimensionBox/Dim_Enter</texPath>
+	  <shaderType>CutoutComplex</shaderType>
+	  <drawRotated>false</drawRotated>
       <graphicClass>Graphic_Multi</graphicClass>
 	  <drawSize>(1,1)</drawSize>
     </graphicData>
@@ -130,6 +134,10 @@
 			<componentLabel>Advanced components</componentLabel>
 			<powerMultiplier>600.0</powerMultiplier>
 		  </li>
+		  <li Class="CompProperties_Glower">
+			<glowRadius>3</glowRadius>
+			<glowColor>(192,192,192,0)</glowColor>
+		  </li>
 		<!--<li Class="CompProperties_Refuelable">
 			<fuelConsumptionRate>0.0</fuelConsumptionRate>
 			<fuelCapacity>1.0</fuelCapacity>
@@ -164,7 +172,9 @@
 	<thingClass>CM_PocketDimension.Building_PocketDimensionBox</thingClass>
 	    <description>A containment field for a pocket dimension.</description>
     <graphicData>	
-      <texPath>Things/Building/SpacerProps/SpacerContainer/SpacerContainer</texPath>
+      <texPath>Things/Building/PocketDimensionBox/Dim_Enter</texPath>
+	  <shaderType>CutoutComplex</shaderType>
+	  <drawRotated>false</drawRotated>
       <graphicClass>Graphic_Multi</graphicClass>
 	  <drawSize>(1,1)</drawSize>
     </graphicData>
@@ -221,6 +231,10 @@
 			<componentLabel>Advanced components</componentLabel>
 			<powerMultiplier>600.0</powerMultiplier>
 		</li>
+		<li Class="CompProperties_Glower">
+			<glowRadius>3</glowRadius>
+			<glowColor>(192,192,192,0)</glowColor>
+		</li>
 	</comps>
 	<inspectorTabs>
 		<li>ITab_ContentsTransporter</li>
@@ -242,7 +256,9 @@
 	<thingClass>CM_PocketDimension.Building_PocketDimensionBox</thingClass>
 	    <description>A containment field for a pocket dimension.</description>
     <graphicData>	
-      <texPath>Things/Building/SpacerProps/SpacerContainer/SpacerContainer</texPath>
+      <texPath>Things/Building/PocketDimensionBox/Dim_Enter</texPath>
+	  <shaderType>CutoutComplex</shaderType>
+	  <drawRotated>false</drawRotated>
       <graphicClass>Graphic_Multi</graphicClass>
 	  <drawSize>(1,1)</drawSize>
     </graphicData>
@@ -300,6 +316,10 @@
 			<componentLabel>Advanced components</componentLabel>
 			<powerMultiplier>600.0</powerMultiplier>
 		</li>
+		<li Class="CompProperties_Glower">
+			<glowRadius>3</glowRadius>
+			<glowColor>(192,192,192,0)</glowColor>
+		</li>
 	</comps>
 	<inspectorTabs>
 		<li>ITab_ContentsTransporter</li>
@@ -321,7 +341,9 @@
 	<thingClass>CM_PocketDimension.Building_PocketDimensionBox</thingClass>
 	    <description>A containment field for a pocket dimension.</description>
     <graphicData>	
-      <texPath>Things/Building/SpacerProps/SpacerContainer/SpacerContainer</texPath>
+      <texPath>Things/Building/PocketDimensionBox/Dim_Enter</texPath>
+	  <shaderType>CutoutComplex</shaderType>
+	  <drawRotated>false</drawRotated>
       <graphicClass>Graphic_Multi</graphicClass>
 	  <drawSize>(1,1)</drawSize>
     </graphicData>
@@ -379,6 +401,10 @@
 			<componentLabel>Advanced components</componentLabel>
 			<powerMultiplier>600.0</powerMultiplier>
 		</li>
+		<li Class="CompProperties_Glower">
+			<glowRadius>3</glowRadius>
+			<glowColor>(192,192,192,0)</glowColor>
+		</li>
 	</comps>
 	<inspectorTabs>
 		<li>ITab_ContentsTransporter</li>
@@ -400,7 +426,9 @@
 	<thingClass>CM_PocketDimension.Building_PocketDimensionExit</thingClass>
     <description>Exit from a pocket dimension.</description>
     <graphicData>	
-      <texPath>Things/Building/SpacerProps/SpacerContainer/SpacerContainer</texPath>
+      <texPath>Things/Building/PocketDimensionBox/Dim_Exit</texPath>
+	  <shaderType>CutoutComplex</shaderType>
+	  <drawRotated>false</drawRotated>
       <graphicClass>Graphic_Multi</graphicClass>
 	  <drawSize>(1,1)</drawSize>
     </graphicData>
@@ -445,6 +473,10 @@
 			<efficiency>1.00</efficiency>
 			<transmitsPower>true</transmitsPower>
 		</li>
+		<li Class="CompProperties_Glower">
+			<glowRadius>3</glowRadius>
+			<glowColor>(192,192,192,0)</glowColor>
+		</li>
 	</comps>
 	<inspectorTabs>
 		<li>ITab_ContentsTransporter</li>
@@ -462,7 +494,9 @@
     <description>Automatically transfers item through pocket dimension entrance.</description>
     <thingClass>Building_Storage</thingClass>
     <graphicData>
-      <texPath>Things/Building/Production/Hopper</texPath>
+      <texPath>Things/Building/PocketDimensionBox/Dim_Hopper</texPath>
+	  <shaderType>CutoutComplex</shaderType>
+	  <drawSize>(1,1.25)</drawSize>
       <graphicClass>Graphic_Multi</graphicClass>
       <damageData>
         <rect>(0.05,0.1,0.9,0.9)</rect>
@@ -493,9 +527,12 @@
       <Flammability>0.5</Flammability>
 	  <Mass>5</Mass>
     </statBases>
-    <costList>
-      <Steel>15</Steel>
-    </costList>
+    <stuffCategories>
+      <li>Metallic</li>
+      <li>Woody</li>
+      <li>Stony</li>
+    </stuffCategories>
+	<costStuffCount>15</costStuffCount>
 	<minifiedDef>MinifiedThing</minifiedDef>
 	<thingCategories>
 		<li>BuildingsMisc</li>
@@ -508,7 +545,6 @@
     <placeWorkers>
       <li>CM_PocketDimension.PlaceWorker_NextToDimensionalHopperAccepter</li>
     </placeWorkers>
-    <constructEffect>ConstructMetal</constructEffect>
     <uiIconPath>Things/Building/Production/Hopper_MenuIcon</uiIconPath>
     <uiIconScale>0.85</uiIconScale>
 	<!--<tradeability>Sellable</tradeability>-->
@@ -563,7 +599,7 @@
     <terrainAffordanceNeeded>Heavy</terrainAffordanceNeeded> <!-- Best affordance needed for stone -->
     <holdsRoof>true</holdsRoof>
     <staticSunShadowHeight>1.0</staticSunShadowHeight>
-    <blockLight>true</blockLight>
+    <blockLight>false</blockLight>
     <canOverlapZones>false</canOverlapZones>
     <fertility>0</fertility>
     <stuffCategories>

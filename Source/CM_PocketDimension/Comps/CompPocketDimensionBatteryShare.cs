@@ -25,12 +25,14 @@ namespace CM_PocketDimension
         private float energyGained = 0.0f;
 
         private float storedEnergyMax = 100.0f;
+        private float energyPercent = 0.0f;
 
         private bool reloadedEnergyCalculated = false;
 
         public CompProperties_PocketDimensionBatteryShare Props => (CompProperties_PocketDimensionBatteryShare)props;
 
         public float StoredEnergyMax => storedEnergyMax;
+        public float EnergyPercent => energyPercent;
 
         public float EnergyReturned => energyReturned;
         public float EnergyGained => energyGained;
@@ -93,23 +95,32 @@ namespace CM_PocketDimension
 
             if (thisBattery != null && linkedBatteryShare != null && linkedBatteryShare.parent.Map != null)
             {
-                float newEnergy = linkedBatteryShare.GetEnergyStored(thisBattery.StoredEnergy);
-                float maxEnergy = linkedBatteryShare.GetEnergyMax() + Props.storedEnergyMax;
-                float energyPercent = 1.0f;
+                float newEnergyOtherSide = linkedBatteryShare.GetEnergyStored(thisBattery.StoredEnergy);
+                float maxEnergyOtherSide = linkedBatteryShare.GetEnergyMax();
 
-                if (newEnergy > maxEnergy)
-                    newEnergy = maxEnergy;
+                // Calculate actual energy percent first
+                if (maxEnergyOtherSide > 0.0f)
+                    energyPercent = newEnergyOtherSide / maxEnergyOtherSide;
+                else
+                    energyPercent = 0.0f;
 
-                storedEnergyMax = maxEnergy;
+                float maxEnergyTotal = maxEnergyOtherSide + Props.storedEnergyMax;
+                
+
+                if (newEnergyOtherSide > maxEnergyTotal)
+                    newEnergyOtherSide = maxEnergyTotal;
+
+                storedEnergyMax = maxEnergyTotal;
 
                 // The props is a single instance shared across all instances of the comp. Just need to make sure it can always hold enough.
-                if (thisBattery.Props.storedEnergyMax < maxEnergy)
-                    thisBattery.Props.storedEnergyMax = maxEnergy;
+                if (thisBattery.Props.storedEnergyMax < maxEnergyTotal)
+                    thisBattery.Props.storedEnergyMax = maxEnergyTotal;
 
-                if (newEnergy != thisBattery.Props.storedEnergyMax && thisBattery.Props.storedEnergyMax > 0.0f)
-                    energyPercent = newEnergy / thisBattery.Props.storedEnergyMax;
+                float showEnergyPercent = 1.0f;
+                if (thisBattery.Props.storedEnergyMax > 0.0f)
+                    showEnergyPercent = newEnergyOtherSide / thisBattery.Props.storedEnergyMax;
 
-                thisBattery.SetStoredEnergyPct(energyPercent);
+                thisBattery.SetStoredEnergyPct(showEnergyPercent);
 
                 //Logger.MessageFormat(this, "Updated battery, energy: {0} ({2}), max: {1} ({3}), {4} - {5}", newEnergy, maxEnergy, thisBattery.StoredEnergy, thisBattery.Props.storedEnergyMax, thisBattery.parent.Label, linkedBatteryShare.parent.Label);
             }

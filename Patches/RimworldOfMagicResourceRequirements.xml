@@ -18,9 +18,11 @@
 						<thingClass>CM_PocketDimension.Building_PocketDimensionBox</thingClass>
 						<description>A magical container for a pocket dimension.</description>
 						<graphicData>	
-						  <texPath>Things/Building/SpacerProps/SpacerContainer/SpacerContainer</texPath>
-						  <graphicClass>Graphic_Multi</graphicClass>
-						  <drawSize>(1,1)</drawSize>
+							<texPath>Things/Building/PocketDimensionBox/Magic_Dim_Enter</texPath>
+							<shaderType>CutoutComplex</shaderType>
+							<drawRotated>false</drawRotated>
+							<graphicClass>Graphic_Multi</graphicClass>
+							<drawSize>(1,1)</drawSize>
 						</graphicData>
 						<defaultPlacingRot>South</defaultPlacingRot>
 						<altitudeLayer>Building</altitudeLayer>
@@ -67,6 +69,10 @@
 								<componentLabel>Raw magicyte</componentLabel>
 								<powerMultiplier>0.0</powerMultiplier>
 							  </li>
+							  <li Class="CompProperties_Glower">
+								<glowRadius>3</glowRadius>
+								<glowColor>(128,128,128,0)</glowColor>
+							  </li>
 						</comps>
 						<inspectorTabs>
 							<li>ITab_ContentsTransporter</li>
@@ -87,58 +93,64 @@
 			<li Class="PatchOperationAdd">
 			  <xpath>/Defs</xpath>
 				<value>
-					    <ThingDef ParentName="BuildingBase">
-							<defName>CM_PocketDimensionExit_Magic</defName>
-							<label>ye olde pocket dimension exit</label>
-							<thingClass>CM_PocketDimension.Building_PocketDimensionExit</thingClass>
-							<description>Exit from a pocket dimension.</description>
-							<graphicData>	
-							  <texPath>Things/Building/SpacerProps/SpacerContainer/SpacerContainer</texPath>
-							  <graphicClass>Graphic_Multi</graphicClass>
-							  <drawSize>(1,1)</drawSize>
-							</graphicData>
-							<defaultPlacingRot>South</defaultPlacingRot>
-							<altitudeLayer>Building</altitudeLayer>
-							<passability>PassThroughOnly</passability>
-							<fillPercent>0.2</fillPercent>
-							<statBases>
-							  <MaxHitPoints>500</MaxHitPoints>
-							  <WorkToBuild>500</WorkToBuild>
-							  <Mass>5</Mass>
-							  <Flammability>0</Flammability>
-							</statBases>
-							<building>
-							</building>
-							<size>(1,1)</size>
-							<minifiedDef>MinifiedThing</minifiedDef>
-							<thingCategories>
-								<li>BuildingsSpecial</li>
-							</thingCategories>
-							<hasInteractionCell>True</hasInteractionCell>
-							<interactionCellOffset>(0,0,1)</interactionCellOffset>
-							<stuffCategories>
-							  <li>Metallic</li>
-							  <li>Woody</li>
-							  <li>Stony</li>
-							</stuffCategories>
-							<!--<costStuffCount>100</costStuffCount>-->
-							<uiIconScale>1</uiIconScale>
-							<comps>
-								<li Class="CompProperties_Transporter">
-									<max1PerGroup>true</max1PerGroup>
-									<massCapacity>999999</massCapacity>
-									<restEffectiveness>0.8</restEffectiveness>
-								</li>
-							</comps>
-							<inspectorTabs>
-								<li>ITab_ContentsTransporter</li>
-							</inspectorTabs>
-							<placeWorkers>
-							</placeWorkers>
-							<canOverlapZones>false</canOverlapZones>
-							<tickerType>Normal</tickerType>
-							<tradeability>None</tradeability>
-						  </ThingDef>
+					<ThingDef ParentName="BuildingBase">
+						<defName>CM_PocketDimensionExit_Magic</defName>
+						<label>ye olde pocket dimension exit</label>
+						<thingClass>CM_PocketDimension.Building_PocketDimensionExit</thingClass>
+						<description>Exit from a pocket dimension.</description>
+						<graphicData>	
+						  <texPath>Things/Building/PocketDimensionBox/Magic_Dim_Exit</texPath>
+						  <shaderType>CutoutComplex</shaderType>
+						  <drawRotated>false</drawRotated>
+						  <graphicClass>Graphic_Multi</graphicClass>
+						  <drawSize>(1,1)</drawSize>
+						</graphicData>
+						<defaultPlacingRot>South</defaultPlacingRot>
+						<altitudeLayer>Building</altitudeLayer>
+						<passability>PassThroughOnly</passability>
+						<fillPercent>0.2</fillPercent>
+						<statBases>
+						  <MaxHitPoints>500</MaxHitPoints>
+						  <WorkToBuild>500</WorkToBuild>
+						  <Mass>5</Mass>
+						  <Flammability>0</Flammability>
+						</statBases>
+						<building>
+						</building>
+						<size>(1,1)</size>
+						<minifiedDef>MinifiedThing</minifiedDef>
+						<thingCategories>
+							<li>BuildingsSpecial</li>
+						</thingCategories>
+						<hasInteractionCell>True</hasInteractionCell>
+						<interactionCellOffset>(0,0,1)</interactionCellOffset>
+						<stuffCategories>
+						  <li>Metallic</li>
+						  <li>Woody</li>
+						  <li>Stony</li>
+						</stuffCategories>
+						<!--<costStuffCount>100</costStuffCount>-->
+						<uiIconScale>1</uiIconScale>
+						<comps>
+							<li Class="CompProperties_Transporter">
+								<max1PerGroup>true</max1PerGroup>
+								<massCapacity>999999</massCapacity>
+								<restEffectiveness>0.8</restEffectiveness>
+							</li>
+							<li Class="CompProperties_Glower">
+								<glowRadius>3</glowRadius>
+								<glowColor>(128,128,128,0)</glowColor>
+							</li>
+						</comps>
+						<inspectorTabs>
+							<li>ITab_ContentsTransporter</li>
+						</inspectorTabs>
+						<placeWorkers>
+						</placeWorkers>
+						<canOverlapZones>false</canOverlapZones>
+						<tickerType>Normal</tickerType>
+						<tradeability>None</tradeability>
+					  </ThingDef>
 				</value>
 			</li>
 			

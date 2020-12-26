@@ -11,6 +11,7 @@ using Verse.AI;
 
 namespace CM_PocketDimension
 {
+    [StaticConstructorOnStartup]
     public class Building_PocketDimensionEntranceBase : Building
     {
         public string uniqueName;
@@ -36,6 +37,11 @@ namespace CM_PocketDimension
 
         public bool MapCreated => !string.IsNullOrEmpty(dimensionSeed);
 
+        private static Graphic glowGraphic = GraphicDatabase.Get(typeof(Graphic_Multi), "Things/Building/PocketDimensionBox/Dim_Glow", ShaderDatabase.Cutout, new Vector2(1, 1), Color.white, Color.white);
+
+        private static float temperatureColorScale = 0.5f;
+        private static float energyCapacityColorScale = 0.1f;
+
         public List<IntVec3> AdjCellsCardinalInBounds
         {
             get
@@ -50,6 +56,56 @@ namespace CM_PocketDimension
                 }
                 return cachedAdjCellsCardinal;
             }
+        }
+
+        public override void Draw()
+        {
+            base.Draw();
+
+            float relativeHeat = 0.0f;
+            float relativeCapacity = 0.0f;
+            float energyPercent = 0.0f;
+
+            Building_PocketDimensionEntranceBase otherSide = PocketDimensionUtility.GetOtherSide(this);
+
+            if (otherSide != null)
+            {
+                float myTemp = this.PositionHeld.GetTemperature(this.MapHeld);
+                float otherTemp = otherSide.PositionHeld.GetTemperature(otherSide.MapHeld);
+                if (myTemp == 0.0f)
+                {
+                    relativeHeat = 0.5f;
+                }
+                else
+                {
+                    relativeHeat = (((otherTemp - myTemp) / myTemp) * temperatureColorScale) + 0.5f;
+                    relativeHeat = Mathf.Clamp(relativeHeat, 0.0f, 1.0f);
+                }
+
+
+                CompPocketDimensionBatteryShare myBatteryShare = this.GetComp<CompPocketDimensionBatteryShare>();
+                CompPocketDimensionBatteryShare otherBatteryShare = otherSide.GetComp<CompPocketDimensionBatteryShare>();
+
+                if (myBatteryShare != null && otherBatteryShare != null)
+                {
+                    float otherEnergyCapacity = myBatteryShare.StoredEnergyMax;
+                    float myEnergyCapacity = otherBatteryShare.StoredEnergyMax;
+                    if (myEnergyCapacity == 0.0f)
+                    {
+                        relativeCapacity = 0.5f;
+                    }
+                    else
+                    {
+                        relativeCapacity = (((otherEnergyCapacity - myEnergyCapacity) / myEnergyCapacity) * energyCapacityColorScale) + 0.5f;
+                        relativeCapacity = Mathf.Clamp(relativeCapacity, 0.0f, 1.0f);
+
+                        energyPercent = myBatteryShare.EnergyPercent;
+                    }
+                }
+            }
+
+            Color glowColor = new Color(relativeHeat, energyPercent, relativeCapacity);
+            glowGraphic.GetColoredVersion(ShaderDatabase.Cutout, glowColor, glowColor).Draw(new Vector3(this.DrawPos.x, this.DrawPos.y + 1f, this.DrawPos.z), Rot4.North, this);
         }
 
         public override void ExposeData()
