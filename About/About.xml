@@ -17,16 +17,10 @@ Pocket Dimensions is a mod for Rimworld that allows you to create a map that is 
 			<steamWorkshopUrl>steam://url/CommunityFilePage/2009463077</steamWorkshopUrl>
 			<downloadUrl>https://github.com/pardeike/HarmonyRimWorld/releases/latest</downloadUrl>
 		</li>
-		<li> 
-			<packageId>VanillaExpanded.VFEPropsandDecor</packageId>
-			<displayName>Vanilla Furniture Expanded - Props and Decor</displayName>
-			<steamWorkshopUrl>steam://url/CommunityFilePage/2102143149</steamWorkshopUrl>
-		</li>
 	</modDependencies>
 
 	<loadAfter>
 		<li>Ludeon.RimWorld</li>
 		<li>brrainz.harmony</li>
-		<li>VanillaExpanded.VFEPropsandDecor</li>
 	</loadAfter>
 </ModMetaData>
