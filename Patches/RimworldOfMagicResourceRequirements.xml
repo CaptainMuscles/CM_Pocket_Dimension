@@ -69,9 +69,14 @@
 								<componentLabel>Raw magicyte</componentLabel>
 								<powerMultiplier>0.0</powerMultiplier>
 							  </li>
+							  <li Class="CM_PocketDimension.CompProperties_HasButton">
+							    <commandTexture>UI/Commands/Vent</commandTexture>
+							    <commandLabelKey>CommandDesignateOpenCloseVentLabel</commandLabelKey>
+							    <commandDescKey>CommandDesignateOpenCloseVentDesc</commandDescKey>
+							  </li>
 							  <li Class="CompProperties_Glower">
-								<glowRadius>3</glowRadius>
-								<glowColor>(128,128,128,0)</glowColor>
+								  <glowRadius>3</glowRadius>
+								  <glowColor>(192,192,192,0)</glowColor>
 							  </li>
 						</comps>
 						<inspectorTabs>
@@ -137,9 +142,14 @@
 								<massCapacity>999999</massCapacity>
 								<restEffectiveness>0.8</restEffectiveness>
 							</li>
+							<li Class="CM_PocketDimension.CompProperties_HasButton">
+							  <commandTexture>UI/Commands/Vent</commandTexture>
+							  <commandLabelKey>CommandDesignateOpenCloseVentLabel</commandLabelKey>
+							  <commandDescKey>CommandDesignateOpenCloseVentDesc</commandDescKey>
+							</li>
 							<li Class="CompProperties_Glower">
 								<glowRadius>3</glowRadius>
-								<glowColor>(128,128,128,0)</glowColor>
+								<glowColor>(192,192,192,0)</glowColor>
 							</li>
 						</comps>
 						<inspectorTabs>
