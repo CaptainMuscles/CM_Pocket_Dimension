@@ -380,6 +380,7 @@ namespace CM_PocketDimension
             {
                 if (ventOpen && this.IsHashIntervalTick(temperatureEqualizeInterval))
                 {
+
                     EqualizeTemperatures();
                 }
             }
@@ -389,9 +390,18 @@ namespace CM_PocketDimension
         {
             Building_PocketDimensionExit exit = PocketDimensionUtility.GetExit(this.dimensionSeed);
             if (exit == null)
+            {
                 return;
+            }
+            // If the exits vent is not open it means we are loading an old save from before the vents were on both side and synced, so just close the vent to fix
+            else if (!exit.VentOpen)
+            {
+                SetVentOpen(false);
+                return;
+            }
 
-            RoomGroup thisRoomGroup = this.GetRoomGroup();
+
+                RoomGroup thisRoomGroup = this.GetRoomGroup();
             RoomGroup otherRoomGroup = exit.GetRoomGroup();
 
             if (thisRoomGroup == null || otherRoomGroup == null || thisRoomGroup == otherRoomGroup)

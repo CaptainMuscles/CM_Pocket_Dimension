@@ -15,9 +15,9 @@ namespace CM_PocketDimension
         public CompProperties_HasButton Props => (CompProperties_HasButton)props;
 
         private bool isActive = true;
-
         private bool wantBeOn = true;
 
+        public bool Active => isActive;
         public bool WantsPress => (wantBeOn != isActive);
 
         private Texture2D cachedCommandTex;

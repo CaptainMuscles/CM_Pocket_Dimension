@@ -44,7 +44,9 @@ namespace CM_PocketDimension
 
         private static float energyCapacityColorScale = 0.1f;
 
-        protected bool ventOpen = true;
+        protected bool ventOpen = false;
+
+        public bool VentOpen => ventOpen;
 
         public List<IntVec3> AdjCellsCardinalInBounds
         {
@@ -124,7 +126,7 @@ namespace CM_PocketDimension
             Scribe_Values.Look<bool>(ref this.GetLost, "getLost", false);
             Scribe_Values.Look<string>(ref this.uniqueName, "uniqueName", null);
             Scribe_Values.Look<string>(ref this.dimensionSeed, "dimensionSeed", string.Empty);
-            Scribe_Values.Look<bool>(ref this.ventOpen, "ventOpen", true);
+            Scribe_Values.Look<bool>(ref this.ventOpen, "ventOpen", false);
         }
 
         public override void SpawnSetup(Map map, bool respawningAfterLoad)
@@ -133,6 +135,11 @@ namespace CM_PocketDimension
 
             compPowerBattery = this.GetComp<CompPowerBattery>();
             compBatteryShare = this.GetComp<CompPocketDimensionBatteryShare>();
+
+            CompHasButton compHasButton = this.GetComp<CompHasButton>();
+
+            if (compHasButton.Active != ventOpen)
+                compHasButton.SetActiveState(ventOpen);
         }
 
         public override void Destroy(DestroyMode mode = DestroyMode.Vanish)
