@@ -59,9 +59,11 @@
   <ItemGroup>
     <Compile Include="Buildings\Building_PocketDimensionEmpty.cs" />
     <Compile Include="Buildings\Building_PocketDimensionWall.cs" />
+    <Compile Include="Comps\CompHasButton.cs" />
     <Compile Include="Comps\CompPocketDimensionCreator.cs" />
     <Compile Include="Comps\CompPowerBatteryShare.cs" />
     <Compile Include="Comps\CompProperties_BatteryShare.cs" />
+    <Compile Include="Comps\CompProperties_HasButton.cs" />
     <Compile Include="Comps\CompProperties_PocketDimensionBatteryShare.cs" />
     <Compile Include="Comps\CompPocketDimensionBatteryShare.cs" />
     <Compile Include="Comps\CompProperties_PocketDimensionCreator.cs" />
@@ -70,7 +72,9 @@
     <Compile Include="Dialog_RenamePocketDimensionEntranceBase.cs" />
     <Compile Include="GameConditionManagerPatches.cs" />
     <Compile Include="HitPointEqualizer.cs" />
+    <Compile Include="Jobs\JobDriver_PressButton.cs" />
     <Compile Include="Jobs\JobDriver_SupplyBoxComponents.cs" />
+    <Compile Include="Jobs\WorkGiver_PressButton.cs" />
     <Compile Include="Jobs\WorkGiver_SupplyBoxComponents.cs" />
     <Compile Include="Map\GenStep_PocketDimensionStartSpot.cs" />
     <Compile Include="TradePatches.cs" />

@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <RecordDef>
+    <defName>CM_PocketDimension_Record_ButtonsPressed</defName>
+    <label>switches flicked</label>
+    <description>The number of switches I have flicked.</description>
+    <type>Int</type>
+  </RecordDef>
+
+</Defs>

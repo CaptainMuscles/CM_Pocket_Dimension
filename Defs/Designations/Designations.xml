@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <DesignationDef>
+    <defName>CM_PocketDimension_Designation_PressButton</defName>
+    <texturePath>Designations/Flick</texturePath>
+    <targetType>Thing</targetType>
+    <designateCancelable>false</designateCancelable>
+  </DesignationDef>
+
+</Defs>

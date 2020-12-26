@@ -24,5 +24,12 @@
 		<suspendable>false</suspendable>
 		<allowOpportunisticPrefix>true</allowOpportunisticPrefix>
 	</JobDef>
+	
+  <JobDef>
+    <defName>CM_PocketDimension_Job_PressButton</defName>
+    <driverClass>CM_PocketDimension.JobDriver_PressButton</driverClass>
+    <reportString>pressing button.</reportString>
+    <allowOpportunisticPrefix>true</allowOpportunisticPrefix>
+  </JobDef>
 
 </Defs>

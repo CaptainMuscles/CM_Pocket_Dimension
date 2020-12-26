@@ -16,10 +16,9 @@ namespace CM_PocketDimension
         // For backwards compatibility from when CompRefuelable was being used
         private float fuel = 0.0f;
 
-        private float temperatureEqualizeRate = 4.0f; // Put this in an xml configurable property? Number 14.0f pulled from Building_Vent hardcoding
+        private float temperatureEqualizeRate = 14.0f; // Put this in an xml configurable property? Number 14.0f pulled from Building_Vent hardcoding
         private int temperatureEqualizeInterval = 250; // Rare tick
 
-        private bool ventOpen = true;
         private int mapSize = 0;
         private int desiredMapSize = 1;
 
@@ -60,7 +59,7 @@ namespace CM_PocketDimension
         public override void ExposeData()
         {
             base.ExposeData();
-            Scribe_Values.Look<bool>(ref this.ventOpen, "ventOpen", true);
+            
             Scribe_Values.Look<int>(ref this.mapSize, "mapSize", 0);
             Scribe_Values.Look<int>(ref this.desiredMapSize, "desiredMapSize", 1);
             Scribe_Values.Look<int>(ref this.desiredComponentCount, "desiredComponentCount", 1);
@@ -351,6 +350,8 @@ namespace CM_PocketDimension
                 exit.uniqueName = "CM_PocketDimension_ExitName".Translate(this.uniqueName);
             else
                 exit.uniqueName = "CM_PocketDimension_ExitName".Translate(this.LabelCap);
+
+            exit.SetVentOpen(ventOpen);
 
             PocketDimensionUtility.MapParents[this.dimensionSeed] = mapParent;
 

@@ -21,6 +21,11 @@ namespace CM_PocketDimension
         public static JobDef CM_ExitPocket;
         public static JobDef CM_CarryToPocket;
         public static JobDef CM_PocketDimension_Job_SupplyBoxComponents;
+        public static JobDef CM_PocketDimension_Job_PressButton;
+
+        public static DesignationDef CM_PocketDimension_Designation_PressButton;
+
+        public static RecordDef CM_PocketDimension_Record_ButtonsPressed;
 
         public static WorkGiverDef CM_PocketDimension_WorkGiver_SupplyBoxComponents;
 

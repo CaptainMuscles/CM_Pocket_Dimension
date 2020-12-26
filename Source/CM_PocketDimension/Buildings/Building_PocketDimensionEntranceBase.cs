@@ -39,8 +39,12 @@ namespace CM_PocketDimension
 
         private static Graphic glowGraphic = GraphicDatabase.Get(typeof(Graphic_Multi), "Things/Building/PocketDimensionBox/Dim_Glow", ShaderDatabase.Cutout, new Vector2(1, 1), Color.white, Color.white);
 
-        private static float temperatureColorScale = 0.5f;
+        private static float baseRedness = 0.5f;
+        private static float rednessPerDegree = 0.02f;
+
         private static float energyCapacityColorScale = 0.1f;
+
+        protected bool ventOpen = true;
 
         public List<IntVec3> AdjCellsCardinalInBounds
         {
@@ -58,11 +62,21 @@ namespace CM_PocketDimension
             }
         }
 
+        public void SetVentOpen(bool open)
+        {
+            ventOpen = open;
+
+            CompHasButton compHasButton = this.GetComp<CompHasButton>();
+
+            if (compHasButton != null)
+                compHasButton.SetActiveState(ventOpen);
+        }
+
         public override void Draw()
         {
             base.Draw();
 
-            float relativeHeat = 0.0f;
+            float redness = 0.0f;
             float relativeCapacity = 0.0f;
             float energyPercent = 0.0f;
 
@@ -72,15 +86,10 @@ namespace CM_PocketDimension
             {
                 float myTemp = this.PositionHeld.GetTemperature(this.MapHeld);
                 float otherTemp = otherSide.PositionHeld.GetTemperature(otherSide.MapHeld);
-                if (myTemp == 0.0f)
-                {
-                    relativeHeat = 0.5f;
-                }
-                else
-                {
-                    relativeHeat = (((otherTemp - myTemp) / myTemp) * temperatureColorScale) + 0.5f;
-                    relativeHeat = Mathf.Clamp(relativeHeat, 0.0f, 1.0f);
-                }
+
+                redness = baseRedness;
+                redness += (otherTemp - myTemp) * rednessPerDegree;
+                redness = Mathf.Clamp(redness, 0.0f, 1.0f);
 
 
                 CompPocketDimensionBatteryShare myBatteryShare = this.GetComp<CompPocketDimensionBatteryShare>();
@@ -92,11 +101,11 @@ namespace CM_PocketDimension
                     float myEnergyCapacity = otherBatteryShare.StoredEnergyMax;
                     if (myEnergyCapacity == 0.0f)
                     {
-                        relativeCapacity = 0.5f;
+                        relativeCapacity = 0.0f;
                     }
                     else
                     {
-                        relativeCapacity = (((otherEnergyCapacity - myEnergyCapacity) / myEnergyCapacity) * energyCapacityColorScale) + 0.5f;
+                        relativeCapacity = (((otherEnergyCapacity - myEnergyCapacity) / Mathf.Min(myEnergyCapacity, otherEnergyCapacity)) * energyCapacityColorScale) + 0.5f;
                         relativeCapacity = Mathf.Clamp(relativeCapacity, 0.0f, 1.0f);
 
                         energyPercent = myBatteryShare.EnergyPercent;
@@ -104,7 +113,7 @@ namespace CM_PocketDimension
                 }
             }
 
-            Color glowColor = new Color(relativeHeat, energyPercent, relativeCapacity);
+            Color glowColor = new Color(redness, energyPercent, relativeCapacity);
             glowGraphic.GetColoredVersion(ShaderDatabase.Cutout, glowColor, glowColor).Draw(new Vector3(this.DrawPos.x, this.DrawPos.y + 1f, this.DrawPos.z), Rot4.North, this);
         }
 
@@ -115,6 +124,7 @@ namespace CM_PocketDimension
             Scribe_Values.Look<bool>(ref this.GetLost, "getLost", false);
             Scribe_Values.Look<string>(ref this.uniqueName, "uniqueName", null);
             Scribe_Values.Look<string>(ref this.dimensionSeed, "dimensionSeed", string.Empty);
+            Scribe_Values.Look<bool>(ref this.ventOpen, "ventOpen", true);
         }
 
         public override void SpawnSetup(Map map, bool respawningAfterLoad)
@@ -236,23 +246,44 @@ namespace CM_PocketDimension
         {
             string inspectString = "";
 
-            if (this.Spawned && this.MapCreated && compBatteryShare != null && compPowerBattery != null)
+            if (this.Spawned && this.MapCreated)
             {
-                inspectString += "PowerBatteryStored".Translate() + ": " + compPowerBattery.StoredEnergy.ToString("F0") + " / " + compBatteryShare.StoredEnergyMax.ToString("F0") + " Wd";
+                if (ventOpen)
+                    inspectString += "CM_PocketDimension_VentOpen".Translate();
+                else
+                    inspectString += "CM_PocketDimension_VentClosed".Translate();
 
-                if (compPowerBattery.StoredEnergy > 0.0f)
+                if (compBatteryShare != null && compPowerBattery != null)
                 {
-                    inspectString += "\n" + "SelfDischarging".Translate() + ": " + 5f.ToString("F0") + " W";
-                }
+                    inspectString += "\n" + "PowerBatteryStored".Translate() + ": " + compPowerBattery.StoredEnergy.ToString("F0") + " / " + compBatteryShare.StoredEnergyMax.ToString("F0") + " Wd";
 
-                if (Prefs.DevMode)
-                {
-                    inspectString += "\n" + compBatteryShare.GetDebugString();
+                    if (compPowerBattery.StoredEnergy > 0.0f)
+                    {
+                        inspectString += "\n" + "SelfDischarging".Translate() + ": " + 5f.ToString("F0") + " W";
+                    }
+
+                    if (Prefs.DevMode)
+                    {
+                        inspectString += "\n" + compBatteryShare.GetDebugString();
+                    }
                 }
             }
 
             // Deliberately ignoring comp and quest related output from parent classes
             return inspectString;// + "\n" + base.GetInspectString();
+        }
+
+        protected override void ReceiveCompSignal(string signal)
+        {
+            Building_PocketDimensionEntranceBase otherSide = PocketDimensionUtility.GetOtherSide(this);
+
+            if (signal == "CM_PocketDimension_ButtonPressed_On")
+                ventOpen = true;
+            else if(signal == "CM_PocketDimension_ButtonPressed_Off")
+                ventOpen = false;
+
+            if (otherSide != null)
+                otherSide.SetVentOpen(ventOpen);
         }
 
         public bool ExistsInWorld()

@@ -32,4 +32,6 @@
 	<CM_PocketDimension_ExitName>{0} exit</CM_PocketDimension_ExitName>
 	<CM_PocketDimension_MapSize>Map size: {0}</CM_PocketDimension_MapSize>
 	<CM_PocketDimension_NoComponentsToSupply>need {0}</CM_PocketDimension_NoComponentsToSupply>
+	<CM_PocketDimension_VentOpen>Vent open.</CM_PocketDimension_VentOpen>
+	<CM_PocketDimension_VentClosed>Vent closed.</CM_PocketDimension_VentClosed>
 </LanguageData>
