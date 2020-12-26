@@ -3,8 +3,8 @@
 
   <RecordDef>
     <defName>CM_PocketDimension_Record_ButtonsPressed</defName>
-    <label>switches flicked</label>
-    <description>The number of switches I have flicked.</description>
+    <label>buttons pressed</label>
+    <description>The number of buttons I have pressed.</description>
     <type>Int</type>
   </RecordDef>
 
