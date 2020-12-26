@@ -2,9 +2,11 @@
 
 ### Added
 - New original artwork by koolpin!
+- Color on window part of pocket dimension boxes determined by temperature, battery capacity and battery charge.
 - Faint glow effect on pocket dimension boxes and exits.
 - Vent effect on boxes much stronger.
 - Vent on boxes can be toggled on/off on either side.
+- Dimensional hoppers now stuffable.
 
 ### Removed
 - Dependency on Vanilla Props and Decor
