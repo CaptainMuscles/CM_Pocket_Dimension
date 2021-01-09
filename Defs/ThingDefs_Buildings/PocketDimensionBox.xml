@@ -8,7 +8,7 @@
 	<thingClass>CM_PocketDimension.Building_PocketDimensionEmpty</thingClass>
     <description>An empty containment field for a pocket dimension.</description>
     <graphicData>	
-      <texPath>Things/Building/SpacerProps/SpacerContainer/SpacerContainer</texPath>
+      <texPath>Things/Building/PocketDimensionBox/Dim_Empty</texPath>
       <graphicClass>Graphic_Multi</graphicClass>
 	  <drawSize>(1,1)</drawSize>
     </graphicData>
