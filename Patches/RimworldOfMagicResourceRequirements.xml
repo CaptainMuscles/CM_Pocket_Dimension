@@ -22,7 +22,7 @@
 							<shaderType>CutoutComplex</shaderType>
 							<drawRotated>false</drawRotated>
 							<graphicClass>Graphic_Multi</graphicClass>
-							<drawSize>(1,1)</drawSize>
+							<drawSize>(1.125,1.125)</drawSize>
 						</graphicData>
 						<defaultPlacingRot>South</defaultPlacingRot>
 						<altitudeLayer>Building</altitudeLayer>
@@ -108,7 +108,7 @@
 						  <shaderType>CutoutComplex</shaderType>
 						  <drawRotated>false</drawRotated>
 						  <graphicClass>Graphic_Multi</graphicClass>
-						  <drawSize>(1,1)</drawSize>
+						  <drawSize>(1.125,1.125)</drawSize>
 						</graphicData>
 						<defaultPlacingRot>South</defaultPlacingRot>
 						<altitudeLayer>Building</altitudeLayer>

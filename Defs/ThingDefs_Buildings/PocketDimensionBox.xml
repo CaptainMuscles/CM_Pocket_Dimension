@@ -10,7 +10,7 @@
     <graphicData>	
       <texPath>Things/Building/PocketDimensionBox/Dim_Empty</texPath>
       <graphicClass>Graphic_Multi</graphicClass>
-	  <drawSize>(1,1)</drawSize>
+	  <drawSize>(1.125,1.125)</drawSize>
     </graphicData>
     <defaultPlacingRot>South</defaultPlacingRot>
     <altitudeLayer>Building</altitudeLayer>
@@ -78,7 +78,7 @@
 	  <shaderType>CutoutComplex</shaderType>
 	  <drawRotated>false</drawRotated>
       <graphicClass>Graphic_Multi</graphicClass>
-	  <drawSize>(1,1)</drawSize>
+	  <drawSize>(1.125,1.125)</drawSize>
     </graphicData>
     <defaultPlacingRot>South</defaultPlacingRot>
     <altitudeLayer>Building</altitudeLayer>
@@ -181,7 +181,7 @@
 	  <shaderType>CutoutComplex</shaderType>
 	  <drawRotated>false</drawRotated>
       <graphicClass>Graphic_Multi</graphicClass>
-	  <drawSize>(1,1)</drawSize>
+	  <drawSize>(1.125,1.125)</drawSize>
     </graphicData>
     <defaultPlacingRot>South</defaultPlacingRot>
     <altitudeLayer>Building</altitudeLayer>
@@ -270,7 +270,7 @@
 	  <shaderType>CutoutComplex</shaderType>
 	  <drawRotated>false</drawRotated>
       <graphicClass>Graphic_Multi</graphicClass>
-	  <drawSize>(1,1)</drawSize>
+	  <drawSize>(1.125,1.125)</drawSize>
     </graphicData>
     <defaultPlacingRot>South</defaultPlacingRot>
     <altitudeLayer>Building</altitudeLayer>
@@ -360,7 +360,7 @@
 	  <shaderType>CutoutComplex</shaderType>
 	  <drawRotated>false</drawRotated>
       <graphicClass>Graphic_Multi</graphicClass>
-	  <drawSize>(1,1)</drawSize>
+	  <drawSize>(1.125,1.125)</drawSize>
     </graphicData>
     <defaultPlacingRot>South</defaultPlacingRot>
     <altitudeLayer>Building</altitudeLayer>
@@ -450,7 +450,7 @@
 	  <shaderType>CutoutComplex</shaderType>
 	  <drawRotated>false</drawRotated>
       <graphicClass>Graphic_Multi</graphicClass>
-	  <drawSize>(1,1)</drawSize>
+	  <drawSize>(1.125,1.125)</drawSize>
     </graphicData>
     <defaultPlacingRot>South</defaultPlacingRot>
     <altitudeLayer>Building</altitudeLayer>
@@ -580,14 +580,15 @@
     <label>dimensional containment wall</label>
     <description>An impassable wall.</description>
     <thingClass>CM_PocketDimension.Building_PocketDimensionWall</thingClass>
-    <category>Building</category>
     <graphicData>
-      <texPath>Things/Building/Linked/Wall</texPath>
-      <graphicClass>Graphic_Appearances</graphicClass>
+      <texPath>Things/Building/PocketDimensionBox/Dim_Wall_Atlas</texPath>
+	  <shaderType>CutoutComplex</shaderType>
+      <graphicClass>Graphic_Multi</graphicClass>
       <linkType>CornerFiller</linkType>
       <linkFlags>
         <li>Wall</li>
         <li>Rock</li>
+		<li>MapEdge</li>
       </linkFlags>
       <damageData>
         <cornerTL>Damage/Corner</cornerTL>
@@ -600,7 +601,7 @@
         <edgeRight>Damage/Edge</edgeRight>
       </damageData>
     </graphicData>
-    <uiIconPath>Things/Building/Linked/RockSmooth_Atlas</uiIconPath>
+    <uiIconPath>blank</uiIconPath>
     <statBases>
       <MaxHitPoints>300</MaxHitPoints>
       <WorkToBuild>135</WorkToBuild>
@@ -615,40 +616,19 @@
     <castEdgeShadows>true</castEdgeShadows>
     <fillPercent>1</fillPercent>
     <coversFloor>true</coversFloor>
-    <placingDraggableDimensions>1</placingDraggableDimensions>
     <tickerType>Never</tickerType>
     <rotatable>false</rotatable>
     <!--<selectable>true</selectable>-->
     <neverMultiSelect>true</neverMultiSelect>
-    <useStuffTerrainAffordance>true</useStuffTerrainAffordance>
-    <terrainAffordanceNeeded>Heavy</terrainAffordanceNeeded> <!-- Best affordance needed for stone -->
     <holdsRoof>true</holdsRoof>
     <staticSunShadowHeight>1.0</staticSunShadowHeight>
-    <blockLight>false</blockLight>
+    <blockLight>true</blockLight>
     <canOverlapZones>false</canOverlapZones>
-    <fertility>0</fertility>
     <stuffCategories>
       <li>Metallic</li>
       <li>Woody</li>
       <li>Stony</li>
     </stuffCategories>
-    <building>
-	  <claimable>false</claimable>
-	  <deconstructible>false</deconstructible>
-      <isInert>true</isInert>
-      <ai_chillDestination>false</ai_chillDestination>
-      <blueprintGraphicData>
-        <texPath>Things/Building/Linked/Wall_Blueprint_Atlas</texPath>
-      </blueprintGraphicData>
-    </building>
-    <comps>
-      <li Class="CompProperties_MeditationFocus">
-        <statDef>MeditationFocusStrength</statDef>
-        <focusTypes>
-          <li>Minimal</li>
-        </focusTypes>
-      </li>
-    </comps>
     <damageMultipliers>
       <li>
         <damageDef>Bomb</damageDef>
