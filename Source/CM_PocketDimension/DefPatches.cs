@@ -50,21 +50,39 @@ namespace CM_PocketDimension
                 terrain.avoidWander = terrainToCopy.avoidWander;
                 terrain.altitudeLayer = terrainToCopy.altitudeLayer;
                 terrain.artisticSkillPrerequisite = terrainToCopy.artisticSkillPrerequisite;
+                terrain.blocksAltitudes = terrainToCopy.blocksAltitudes.NullOrEmpty()
+                                                    ? new List<AltitudeLayer>()
+                                                    : new List<AltitudeLayer>(terrainToCopy.blocksAltitudes);
                 terrain.blueprintDef = terrainToCopy.blueprintDef;
                 terrain.buildingPrerequisites = terrainToCopy.buildingPrerequisites.NullOrEmpty()
                                                     ? new List<ThingDef>()
                                                     : new List<ThingDef>(terrainToCopy.buildingPrerequisites);
                 terrain.burnedDef = terrainToCopy.burnedDef;
+                terrain.bridge = terrainToCopy.bridge;
+                terrain.canGenerateDefaultDesignator = terrainToCopy.canGenerateDefaultDesignator;
                 terrain.changeable = terrainToCopy.changeable;
                 terrain.clearBuildingArea = terrainToCopy.clearBuildingArea;
+                //terrain.color = terrainToCopy.color;
+                terrain.colorPerStuff = terrainToCopy.colorPerStuff.NullOrEmpty()
+                                                    ? new List<ColorForStuff>()
+                                                    : new List<ColorForStuff>(terrainToCopy.colorPerStuff);
+                terrain.constructEffect = terrainToCopy.constructEffect;
                 terrain.constructionSkillPrerequisite = terrainToCopy.constructionSkillPrerequisite;
-                terrain.driesTo = terrainToCopy.driesTo;
+                //terrain.costList = terrainToCopy.costList.NullOrEmpty()
+                //                                    ? new List<ThingDefCountRange>()
+                //                                    : new List<ThingDefCountRange>(terrainToCopy.costList);
+                terrain.costStuffCount = terrainToCopy.costStuffCount;
+                terrain.defaultPlacingRot = terrainToCopy.defaultPlacingRot;
+                //terrain.designationCategory = DefDatabase<DesignationCategoryDef>.GetNamed("Floors");
+                //terrain.designationHotKey = terrainToCopy.designationHotKey;
                 terrain.destroyBuildingsOnDestroyed = terrainToCopy.destroyBuildingsOnDestroyed;
                 terrain.destroyEffect = terrainToCopy.destroyEffect;
                 terrain.destroyEffectWater = terrainToCopy.destroyEffectWater;
                 terrain.destroyOnBombDamageThreshold = terrainToCopy.destroyOnBombDamageThreshold;
-                terrain.defaultPlacingRot = terrainToCopy.defaultPlacingRot;
-                //terrain.designationCategory = DefDatabase<DesignationCategoryDef>.GetNamed("Floors");
+                //terrain.designatorDropdown = terrainToCopy.designatorDropdown;
+                terrain.dominantStyleCategory = terrainToCopy.dominantStyleCategory;
+                terrain.driesTo = terrainToCopy.driesTo;
+                
                 terrain.edgeType = terrainToCopy.edgeType;
                 terrain.extinguishesFire = terrainToCopy.extinguishesFire;
                 terrain.extraDeteriorationFactor = terrainToCopy.extraDeteriorationFactor;
@@ -74,11 +92,14 @@ namespace CM_PocketDimension
                 terrain.filthAcceptanceMask = terrainToCopy.filthAcceptanceMask;
                 terrain.frameDef = terrainToCopy.frameDef;
                 terrain.generatedFilth = terrainToCopy.generatedFilth;
+                terrain.graphic = terrainToCopy.graphic;
+                terrain.installBlueprintDef = terrainToCopy.installBlueprintDef;
+                terrain.isAltar = terrainToCopy.isAltar;
                 terrain.holdSnow = terrainToCopy.holdSnow;
                 terrain.layerable = terrainToCopy.layerable;
                 terrain.maxTechLevelToBuild = terrainToCopy.maxTechLevelToBuild;
                 terrain.minTechLevelToBuild = terrainToCopy.minTechLevelToBuild;
-                terrain.menuHidden = terrainToCopy.menuHidden;
+                //terrain.menuHidden = terrainToCopy.menuHidden;
                 terrain.passability = terrainToCopy.passability;
                 terrain.pathCost = terrainToCopy.pathCost;
                 terrain.pathCostIgnoreRepeat = terrainToCopy.pathCostIgnoreRepeat;
@@ -87,6 +108,7 @@ namespace CM_PocketDimension
                                            : new List<Type>(terrainToCopy.placeWorkers);
                 terrain.placingDraggableDimensions = terrainToCopy.placingDraggableDimensions;
                 terrain.renderPrecedence = terrainToCopy.renderPrecedence;
+                //terrain.repairEffect = terrainToCopy.repairEffect;
                 terrain.researchPrerequisites = terrainToCopy.researchPrerequisites.NullOrEmpty()
                                                     ? new List<ResearchProjectDef>()
                                                     : new List<ResearchProjectDef>(terrainToCopy.researchPrerequisites);
@@ -95,6 +117,12 @@ namespace CM_PocketDimension
                 terrain.smoothedTerrain = terrainToCopy.smoothedTerrain;
                 terrain.specialDisplayRadius = terrainToCopy.specialDisplayRadius;
                 terrain.statBases = terrainToCopy.statBases.NullOrEmpty() ? new List<StatModifier>() : new List<StatModifier>(terrainToCopy.statBases);
+                terrain.stuffCategories = terrainToCopy.stuffCategories.NullOrEmpty()
+                                                    ? new List<StuffCategoryDef>()
+                                                    : new List<StuffCategoryDef>(terrainToCopy.stuffCategories);
+                //terrain.stuffUiIcons = terrainToCopy.stuffUiIcons.NullOrEmpty()
+                //                                    ? new Dictionary<StuffAppearanceDef, Texture2D>()
+                //                                    : new Dictionary<StuffAppearanceDef, Texture2D>(terrainToCopy.stuffUiIcons);
                 terrain.tags = terrainToCopy.tags.NullOrEmpty() ? new List<string>() : new List<string>(terrainToCopy.tags);
                 terrain.takeFootprints = terrainToCopy.takeFootprints;
                 terrain.takeSplashes = terrainToCopy.takeSplashes;
@@ -102,6 +130,8 @@ namespace CM_PocketDimension
                 terrain.texturePath = terrainToCopy.texturePath;
                 terrain.tools = terrainToCopy.tools.NullOrEmpty() ? new List<Tool>() : new List<Tool>(terrainToCopy.tools);
                 terrain.traversedThought = terrainToCopy.traversedThought;
+                // uiIcon properties needed?
+                terrain.useStuffTerrainAffordance = terrainToCopy.useStuffTerrainAffordance;
                 terrain.waterDepthMaterial = terrainToCopy.waterDepthMaterial;
                 terrain.waterDepthShader = terrainToCopy.waterDepthShader;
                 terrain.waterDepthShaderParameters = terrainToCopy.waterDepthShaderParameters.NullOrEmpty()
@@ -112,11 +142,12 @@ namespace CM_PocketDimension
                 StuffProperties stuff = stuffThingDef.stuffProps;
                 terrain.color = stuff.color;
                 terrain.constructEffect = stuff.constructEffect;
-                terrain.repairEffect = stuff.constructEffect;
-                terrain.label = "ThingMadeOfStuffLabel".Translate(stuffThingDef.LabelAsStuff, terrainToCopy.label);
+                terrain.costList = new List<ThingDefCountClass>();
                 terrain.description = terrainToCopy.description;
                 terrain.defName = terrainToCopy.defName + "_" + stuffThingDef.defName;
-                terrain.costList = new List<ThingDefCountClass>();
+                terrain.label = "ThingMadeOfStuffLabel".Translate(stuffThingDef.LabelAsStuff, terrainToCopy.label);
+                terrain.repairEffect = stuff.constructEffect;
+                
 
                 //Log.Message(String.Format("Created {0} from {1}", terrain.defName, stuffThingDef.defName));
 

@@ -401,8 +401,8 @@ namespace CM_PocketDimension
             }
 
 
-                RoomGroup thisRoomGroup = this.GetRoomGroup();
-            RoomGroup otherRoomGroup = exit.GetRoomGroup();
+            Room thisRoomGroup = this.GetRoom();
+            Room otherRoomGroup = exit.GetRoom();
 
             if (thisRoomGroup == null || otherRoomGroup == null || thisRoomGroup == otherRoomGroup)
                 return;
@@ -418,7 +418,7 @@ namespace CM_PocketDimension
             EqualizeTemperatureForRoom(otherRoomGroup, averageTemperature, temperatureChangeAmount);
         }
 
-        private float GetTemperatureChangeAmount(RoomGroup room, float averageTemperature)
+        private float GetTemperatureChangeAmount(Room room, float averageTemperature)
         {
             if (!room.UsesOutdoorTemperature)
             {
@@ -441,7 +441,7 @@ namespace CM_PocketDimension
             return 0.0f;
         }
 
-        private void EqualizeTemperatureForRoom(RoomGroup room, float averageTemperature, float temperatureChangeAmount)
+        private void EqualizeTemperatureForRoom(Room room, float averageTemperature, float temperatureChangeAmount)
         {
             if (!room.UsesOutdoorTemperature)
             {

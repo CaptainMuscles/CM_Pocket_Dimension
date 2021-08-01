@@ -53,7 +53,7 @@ namespace CM_PocketDimension
                 List<Building> pocketDimensionEntrances = new List<Building>();
 
                 // Find valid prisoners.
-                foreach (LocalTargetInfo targetPrisoner in GenUI.TargetsAt_NewTemp(clickPos, TargetParametersPrisoner))//GenUI.TargetsAt(clickPos, TargetParametersPrisoner))
+                foreach (LocalTargetInfo targetPrisoner in GenUI.TargetsAt(clickPos, TargetParametersPrisoner))//GenUI.TargetsAt(clickPos, TargetParametersPrisoner))
                 {
                     // Less unnecessary processing to get list of entrances after we've ensured valid target(s)
                     if (!pocketDimensionEntrancesChecked)
@@ -79,7 +79,7 @@ namespace CM_PocketDimension
                         {
                             Job job = JobMaker.MakeJob(PocketDimensionDefOf.CM_CarryToPocket, targetPrisoner, entrance);
                             pawn.jobs.TryTakeOrderedJob(job);
-                            pawn.jobs.StartJob(job, JobCondition.InterruptForced);
+                            //pawn.jobs.StartJob(job, JobCondition.InterruptForced);
                         }, MenuOptionPriority.High), pawn, targetPrisoner);
                         opts.Add(option);
                     }
