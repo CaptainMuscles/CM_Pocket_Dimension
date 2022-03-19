@@ -603,8 +603,8 @@ namespace CM_PocketDimension
 
         public override void DeSpawn(DestroyMode mode = DestroyMode.Vanish)
         {
-            base.DeSpawn(mode);
             this.Map.GetComponent<Comps.MapComponent_PocketDimension>().Building_PocketDimensionBoxes.Remove(this);
+            base.DeSpawn(mode);
         }
     }
 }
