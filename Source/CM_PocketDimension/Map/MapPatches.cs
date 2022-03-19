@@ -44,12 +44,11 @@ namespace CM_PocketDimension
             [HarmonyPrefix]
             public static bool Prefix(MapPawns __instance, Map ___map, ref bool __result)
             {
-                // Check all pocket dimensions accessible to this map and allow their contents to block this maps removal
-                List<Thing> pocketDimensionBoxes = ___map.listerThings.AllThings.Where(thing => thing as Building_PocketDimensionBox != null).ToList();
+                // Check MapComponent for spawnd Building_PocketDimensionBox
+                List<Building_PocketDimensionBox> pocketDimensionBoxes = ___map.GetComponent<Comps.MapComponent_PocketDimension>().Building_PocketDimensionBoxes;
 
-                foreach (Thing thing in pocketDimensionBoxes)
+                foreach (Building_PocketDimensionBox box in pocketDimensionBoxes)
                 {
-                    Building_PocketDimensionBox box = thing as Building_PocketDimensionBox;
                     if (box != null)
                     {
                         Building_PocketDimensionEntranceBase boxExit = PocketDimensionUtility.GetOtherSide(box);
